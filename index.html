@@ -185,6 +185,15 @@
                 <i class="fa-solid fa-star-of-life"></i> 100 Coins = ₹10
             </div>
 
+            <!-- Strict 48 Hours Warning Badge -->
+            <div style="background: #fff7ed; border: 1px solid #ffedd5; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border-left: 5px solid #ea580c;">
+                <i class="fa-solid fa-clock-rotate-left" style="color: #ea580c; font-size: 20px;"></i>
+                <div style="font-size: 12.5px; color: #9a3412; line-height: 1.4;">
+                    <strong>⏰ Strict 48-Hour Deadline (समय सीमा):</strong><br>
+                    Order Delivered hone ke <strong>48 ghante ke andar</strong> hi Product ID aur screenshots submit karna mandatory hai. Uske baad claim expire ho jayega!
+                </div>
+            </div>
+
             <div class="bonus-box">
                 <span class="bonus-title">🎁 New Login Bonus</span>
                 <span class="bonus-coins">+5 Coins</span>
@@ -202,33 +211,39 @@
                 </ul>
             </div>
 
-            <!-- Form Upload using LIVE CAMERA -->
+            <!-- Form Upload Box -->
             <div class="upload-form">
-                <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-camera"></i> Submit Order Invoice to Claim Coins:</h3>
+                <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-file-invoice"></i> Submit Order Proof to Claim Coins:</h3>
                 
                 <div class="form-group">
-                    <label>Product ID * (Mandatory)</label>
+                    <label>Product ID * (Valid for 48 Hours Only)</label>
                     <input type="text" class="form-input" placeholder="Enter Product ID number">
+                    <small style="color:#dc2626; font-size:11px;">Note: Yeh ID delivery ke 48 ghante tak hi acceptable hai.</small>
                 </div>
 
+                <!-- Gallery Upload for Order Tracker Screenshot -->
                 <div class="form-group">
-                    <label>Order Status Screenshot *</label>
-                    <button class="camera-btn" onclick="alert('Camera opening for: Order Delivered Screenshot')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
-                    <small style="color:#64748b; font-size:11px;">Upload 'Order Delivered' live click screenshot only.</small>
+                    <label>Order "Delivered" Timeline Screenshot *</label>
+                    <div style="position:relative;">
+                        <input type="file" accept="image/*" id="screenshotFile" style="display:none;" onchange="document.getElementById('screen-text').innerText = this.files[0].name">
+                        <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('screenshotFile').click()"><i class="fa-solid fa-image"></i> Upload From Gallery (Screenshot)</button>
+                    </div>
+                    <small style="color:#64748b; font-size:11px; font-weight:500;" id="screen-text">Upload your Order Tracker Timeline. Screenshot 48 hours se purana nahi hona chahiye.</small>
                 </div>
 
+                <!-- Live Camera Only for Invoice -->
                 <div class="form-group">
                     <label>Invoice/Bill Photo *</label>
-                    <button class="camera-btn" onclick="alert('Camera opening for: Product Invoice Bill')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
-                    <small style="color:#cc0c39; font-size:11px; font-weight:bold;">⚠️ Gallery upload is NOT allowed. Click photo live.</small>
+                    <button class="camera-btn" onclick="alert('Camera opening: Apne product ka asli bill camera ke samne rakhein.')"><i class="fa-solid fa-camera"></i> Open Live Camera Only</button>
+                    <small style="color:#cc0c39; font-size:11px; font-weight:bold;">⚠️ Gallery upload is NOT allowed here. Click bill photo live.</small>
                 </div>
 
                 <div class="form-group">
                     <label>Product Box Photo (Optional)</label>
-                    <button class="camera-btn" onclick="alert('Camera opening for: Product Outer Box')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
+                    <button class="camera-btn" onclick="alert('Camera opening for Outer Box')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
                 </div>
 
-                <button class="submit-btn" onclick="alert('Your documents have been submitted for verification successfully!')">Submit Proof & Claim Coins</button>
+                <button class="submit-btn" onclick="alert('Your documents have been submitted successfully! Verification will take 24 hours.')">Submit Proof & Claim Coins</button>
             </div>
         </div>
     </div>
@@ -253,7 +268,6 @@
         <div class="modal-content">
             <span class="close-modal" id="closeModalBtn">&times;</span>
             
-            <!-- Swipe Slider Container -->
             <div class="slider-container">
                 <div class="slider-wrapper" id="sliderWrapper">
                     <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="slide-img" alt="View 1">
@@ -264,7 +278,6 @@
                 </div>
             </div>
 
-            <!-- Indicator Dots -->
             <div class="slider-dots">
                 <div class="dot active"></div>
                 <div class="dot"></div>
@@ -281,10 +294,9 @@
                 <a href="https://amzn.to/4x5k5sl" target="_blank" class="modal-buy-btn"><i class="fa-brands fa-amazon"></i> Buy on Amazon</a>
             </div>
 
-            <!-- RELATED PRODUCTS SECTION -->
             <div class="related-section">
                 <div class="related-title">🤝 Related Products (संबंधित उत्पाद)</div>
-                <div class="related-empty">No related products added yet. (Baad me aap jo add karoge wo yahan dikhenge)</div>
+                <div class="related-empty">No related products added yet.</div>
             </div>
         </div>
     </div>
@@ -298,9 +310,7 @@
         <button class="nav-item" data-tab="account-tab"><i class="fa-solid fa-user"></i><span>Account</span></button>
     </nav>
 
-    <!-- Super-Safe Javascript Systems -->
     <script>
-        // Tab Switching Robust System
         const navButtons = document.querySelectorAll('.nav-item');
         const tabContents = document.querySelectorAll('.tab-content');
 
@@ -308,7 +318,6 @@
             btn.addEventListener('click', function() {
                 navButtons.forEach(b => b.classList.remove('active'));
                 tabContents.forEach(t => t.classList.remove('active-tab'));
-
                 this.classList.add('active');
                 const targetTab = this.getAttribute('data-tab');
                 document.getElementById(targetTab).classList.add('active-tab');
@@ -316,7 +325,6 @@
             });
         });
 
-        // Category Filter Logic
         const catButtons = document.querySelectorAll('.cat-item');
         const productCards = document.querySelectorAll('.product-card');
 
@@ -324,9 +332,7 @@
             catBtn.addEventListener('click', function() {
                 catButtons.forEach(c => c.classList.remove('active-cat'));
                 this.classList.add('active-cat');
-
                 const categoryId = this.id.replace('cat-', '');
-                
                 productCards.forEach(card => {
                     if (categoryId === 'all' || card.getAttribute('data-category') === categoryId) {
                         card.style.display = 'flex';
@@ -334,35 +340,19 @@
                         card.style.display = 'none';
                     }
                 });
-
                 document.getElementById('currentSectionTitle').innerText = categoryId === 'all' ? "🔥 Today's Deals" : "🔥 " + categoryId.toUpperCase();
             });
         });
 
-        // Modal Slider Logic Fixed
         const tshirtCard = document.getElementById('tshirtCard');
         const modalView = document.getElementById('product-modal');
         const closeModalBtn = document.getElementById('closeModalBtn');
         const sliderWrapper = document.getElementById('sliderWrapper');
         const dots = document.querySelectorAll('.dot');
 
-        if(tshirtCard) {
-            tshirtCard.addEventListener('click', function() {
-                modalView.style.display = 'flex';
-            });
-        }
-
-        if(closeModalBtn) {
-            closeModalBtn.addEventListener('click', function() {
-                modalView.style.display = 'none';
-            });
-        }
-
-        modalView.addEventListener('click', function(e) {
-            if(e.target === modalView) {
-                modalView.style.display = 'none';
-            }
-        });
+        if(tshirtCard) { tshirtCard.addEventListener('click', function() { modalView.style.display = 'flex'; }); }
+        if(closeModalBtn) { closeModalBtn.addEventListener('click', function() { modalView.style.display = 'none'; }); }
+        modalView.addEventListener('click', function(e) { if(e.target === modalView) { modalView.style.display = 'none'; } });
 
         sliderWrapper.addEventListener('scroll', function() {
             let pageIndex = Math.round(sliderWrapper.scrollLeft / sliderWrapper.clientWidth);
@@ -370,16 +360,11 @@
             if(dots[pageIndex]) dots[pageIndex].classList.add('active');
         });
 
-        // Search System
         document.getElementById('searchInput').addEventListener('keyup', function() {
             let filterValue = this.value.toLowerCase();
             productCards.forEach(card => {
                 let name = card.querySelector('.product-name').innerText.toLowerCase();
-                if(name.includes(filterValue)) {
-                    card.style.display = 'flex';
-                } else {
-                    card.style.display = 'none';
-                }
+                if(name.includes(filterValue)) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
             });
         });
     </script>
