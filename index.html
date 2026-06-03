@@ -4,59 +4,79 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Shopping</title>
-    <!-- FontAwesome symbols -->
+    <!-- FontAwesome Library for Symbols -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        body { background-color: #f7f9fa; color: #333; padding-bottom: 80px; }
+        body { background-color: #f7f9fa; color: #333; padding-bottom: 85px; }
         
         header { background-color: #e63946; color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; }
         .search-container { padding: 10px 15px; background: #e63946; }
         .search-box { width: 100%; padding: 10px; border-radius: 25px; border: none; outline: none; font-size: 14px; padding-left: 15px; }
 
-        /* Coin Status Dashboard */
+        /* Top Coin Status Dashboard */
         .top-dash { background: white; margin: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .coin-status { display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: bold; color: #e63946; }
         .coin-status i { color: #ffd700; font-size: 20px; }
 
-        /* Premium Categories Slider (Aapki List) */
+        /* Categories Slider */
         .category-section { background: white; padding: 15px 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; }
         .category-grid { display: flex; overflow-x: auto; white-space: nowrap; gap: 15px; padding-bottom: 5px; }
         .category-grid::-webkit-scrollbar { display: none; }
         
         .cat-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #444; font-size: 11px; font-weight: bold; min-width: 75px; cursor: pointer; background: none; border: none; outline: none; }
-        .cat-icon { width: 52px; height: 52px; background: #fff1f2; color: #e63946; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; border: 1px solid #ffe4e6; transition: all 0.2s; }
-        .cat-item.active-cat .cat-icon { background: #e63946; color: white; border-color: #e63946; transform: scale(1.05); }
+        .cat-icon { width: 52px; height: 52px; background: #fff1f2; color: #e63946; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; border: 1px solid #ffe4e6; }
+        .cat-item.active-cat .cat-icon { background: #e63946; color: white; border-color: #e63946; }
 
-        .container { padding: 0 12px; display: none; }
-        .container.active-tab { display: block; }
+        /* Tabs Logic */
+        .tab-content { padding: 0 12px; display: none; }
+        .tab-content.active-tab { display: block; }
         .section-title { font-size: 15px; color: #e63946; margin: 15px 0 12px 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
 
-        /* --- Amazon/Myntra Clean Layout Product Grid --- */
+        /* Amazon Layout Product Grid */
         .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: #fff; padding: 10px 0; }
         .product-card { background: white; padding: 10px 5px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; position: relative; }
         
-        .product-img-box { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; background: #f8f8f8; overflow: hidden; border-radius: 4px; position: relative; }
+        .product-img-box { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; background: #f8f8f8; overflow: hidden; border-radius: 4px; }
         .product-img { max-width: 100%; max-height: 100%; object-fit: cover; }
         
         .product-info-block { padding: 8px 4px 4px 4px; }
         .product-name { font-size: 14px; font-weight: 400; color: #333; line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
         
-        /* Price Layout matching screenshot */
         .price-layout { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
         .main-price { font-size: 15px; font-weight: bold; color: #111; }
         .original-price { font-size: 12px; color: #777; text-decoration: line-through; }
         
-        /* Red Deal Badges matching screenshot */
         .deal-badge-row { display: flex; align-items: center; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
         .discount-tag { background: #cc0c39; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
         .limited-tag { color: #cc0c39; font-size: 11px; font-weight: bold; }
 
-        /* --- POPUP MODAL SLIDER WINDOW --- */
+        /* EARN PAGE STYLING (Aapke Naye Rules) */
+        .earn-container { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .earn-main-title { font-size: 24px; color: #e63946; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .rate-badge { background: #fff1f2; color: #e63946; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; border: 1px dashed #e63946; margin-bottom: 20px; }
+        
+        .bonus-box { display: flex; justify-content: space-between; background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #e63946; }
+        .bonus-title { font-weight: bold; font-size: 14px; }
+        .bonus-coins { color: #cc0c39; font-weight: bold; }
+
+        .info-card { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 20px; }
+        .info-card h4 { font-size: 14px; color: #334155; margin-bottom: 8px; text-transform: uppercase; }
+        .info-card ul { list-style-type: square; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.5; }
+
+        /* Live Camera Form Inside Earn Tab */
+        .upload-form { border-top: 2px dashed #e2e8f0; padding-top: 15px; margin-top: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .form-input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+        
+        .camera-btn { width: 100%; background: #475569; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .submit-btn { width: 100%; background: #e63946; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(230,57,70,0.2); }
+
+        /* POPUP SLIDER MODAL WINDOW */
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: flex-end; }
-        .modal-content { background: white; width: 100%; max-height: 85vh; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px; overflow-y: auto; position: relative; animation: slideUp 0.3s ease-out; }
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
-        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #333; cursor: pointer; background: #f0f0f0; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+        .modal-content { background: white; width: 100%; max-height: 85vh; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px; overflow-y: auto; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #333; cursor: pointer; background: #f0f0f0; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
 
         .slider-container { width: 100%; height: 280px; overflow: hidden; position: relative; background: #fff; border-radius: 12px; margin-top: 15px; margin-bottom: 15px; }
         .slider-wrapper { display: flex; width: 100%; height: 100%; overflow-x: auto; snap-type: x mandatory; scroll-behavior: smooth; }
@@ -77,10 +97,10 @@
         .related-title { font-size: 14px; font-weight: bold; color: #e63946; margin-bottom: 10px; text-transform: uppercase; }
         .related-empty { text-align: center; padding: 15px; font-size: 12px; color: #999; background: #f9f9f9; border-radius: 6px; }
 
-        /* Bottom Menu Navigation Bar */
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 60px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; flex: 1; }
-        .nav-item i { font-size: 20px; margin-bottom: 3px; }
+        /* Bottom Fixed Navigation Bar (Added Naya Earn Coin Button) */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 65px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; flex: 1; height: 100%; justify-content: center; }
+        .nav-item i { font-size: 19px; margin-bottom: 4px; }
         .nav-item.active { color: #e63946; font-weight: bold; }
     </style>
 </head>
@@ -89,39 +109,37 @@
     <header>Super Shopping</header>
 
     <div class="search-container">
-        <input type="text" class="search-box" id="searchInput" onkeyup="searchProducts()" placeholder="Search clothes, shoes, mobiles...">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search clothes, shoes, mobiles...">
     </div>
 
-    <!-- HOME TAB -->
-    <div id="home-tab" class="container active-tab">
-        
+    <!-- 1. HOME TAB -->
+    <div id="home-tab" class="tab-content active-tab">
         <div class="top-dash">
             <div class="coin-status"><i class="fa-solid fa-coins"></i> <span>5 Coins</span></div>
-            <div style="font-size:12px; color:#666; font-weight:bold;">⚡ Exclusive Offers</div>
+            <div style="font-size:12px; color:#666; font-weight:bold;">⚡ Deals Stream Live</div>
         </div>
 
-        <!-- Premium Category List (Aapki Di Hui List + Active Filtering) -->
+        <!-- Premium Categories Slider List -->
         <div class="category-section">
             <div class="category-grid">
-                <button class="cat-item active-cat" onclick="filterCategory('all', this)"><div class="cat-icon"><i class="fa-solid fa-border-all"></i></div>For You</button>
-                <button class="cat-item" onclick="filterCategory('cloths', this)"><div class="cat-icon"><i class="fa-solid fa-shirt"></i></div>Cloths</button>
-                <button class="cat-item" onclick="filterCategory('shoes', this)"><div class="cat-icon"><i class="fa-solid fa-shoe-prints"></i></div>Shoes</button>
-                <button class="cat-item" onclick="filterCategory('mobiles', this)"><div class="cat-icon"><i class="fa-solid fa-mobile-screen"></i></div>Mobiles</button>
-                <button class="cat-item" onclick="filterCategory('electronics', this)"><div class="cat-icon"><i class="fa-solid fa-plug"></i></div>Electronic</button>
-                <button class="cat-item" onclick="filterCategory('beauty', this)"><div class="cat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>Beauty</button>
-                <button class="cat-item" onclick="filterCategory('toys', this)"><div class="cat-icon"><i class="fa-solid fa-gamepad"></i></div>Toys</button>
-                <button class="cat-item" onclick="filterCategory('food', this)"><div class="cat-icon"><i class="fa-solid fa-bowl-food"></i></div>Food</button>
-                <button class="cat-item" onclick="filterCategory('furniture', this)"><div class="cat-icon"><i class="fa-solid fa-couch"></i></div>Furniture</button>
+                <button class="cat-item active-cat" id="cat-all"><div class="cat-icon"><i class="fa-solid fa-border-all"></i></div>For You</button>
+                <button class="cat-item" id="cat-cloths"><div class="cat-icon"><i class="fa-solid fa-shirt"></i></div>Cloths</button>
+                <button class="cat-item" id="cat-shoes"><div class="cat-icon"><i class="fa-solid fa-shoe-prints"></i></div>Shoes</button>
+                <button class="cat-item" id="cat-mobiles"><div class="cat-icon"><i class="fa-solid fa-mobile-screen"></i></div>Mobiles</button>
+                <button class="cat-item" id="cat-electronics"><div class="cat-icon"><i class="fa-solid fa-plug"></i></div>Electronic</button>
+                <button class="cat-item" id="cat-beauty"><div class="cat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>Beauty</button>
+                <button class="cat-item" id="cat-toys"><div class="cat-icon"><i class="fa-solid fa-gamepad"></i></div>Toys</button>
+                <button class="cat-item" id="cat-food"><div class="cat-icon"><i class="fa-solid fa-bowl-food"></i></div>Food</button>
+                <button class="cat-item" id="cat-furniture"><div class="cat-icon"><i class="fa-solid fa-couch"></i></div>Furniture</button>
             </div>
         </div>
 
         <div class="section-title" id="currentSectionTitle">🔥 Today's Deals</div>
         
-        <!-- Clean Amazon Layout Grid (No Borders) -->
         <div class="products-grid" id="productsGrid">
             
-            <!-- Product 1: Maroon T-Shirt (Category: cloths) -->
-            <div class="product-card" data-category="cloths" onclick="openSliderModal()">
+            <!-- Product 1: Maroon T-Shirt -->
+            <div class="product-card" data-category="cloths" id="tshirtCard">
                 <div class="product-img-box">
                     <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="product-img" alt="Maroon T-Shirt">
                 </div>
@@ -138,7 +156,7 @@
                 </div>
             </div>
 
-            <!-- Sample Shoes Item (Category: shoes) -->
+            <!-- Product 2: Sample Shoes -->
             <div class="product-card" data-category="shoes">
                 <div class="product-img-box">
                     <i class="fa-solid fa-shoe-prints" style="font-size:50px; color:#ddd;"></i>
@@ -156,35 +174,89 @@
                 </div>
             </div>
 
-            <!-- Sample Mobile Item (Category: mobiles) -->
-            <div class="product-card" data-category="mobiles">
-                <div class="product-img-box">
-                    <i class="fa-solid fa-mobile-screen" style="font-size:50px; color:#ddd;"></i>
-                </div>
-                <div class="product-info-block">
-                    <div class="product-name">Sample Android Mobile (5G)</div>
-                    <div class="price-layout">
-                        <span class="main-price">₹11,499.00</span>
-                        <span class="original-price">₹19,999.00</span>
-                    </div>
-                    <div class="deal-badge-row">
-                        <span class="discount-tag">42% off</span>
-                        <span class="limited-tag">Limited time deal</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <!-- SWIPE SLIDER POPUP MODAL WINDOW -->
-    <div id="product-modal" class="modal" onclick="closeSliderModal(event)">
-        <div class="modal-content" onclick="event.stopPropagation()">
-            <span class="close-modal" onclick="document.getElementById('product-modal').style.display='none'">&times;</span>
+    <!-- 2. EARN COINS TAB (Aapka Naye Wala Mast System) -->
+    <div id="earn-tab" class="tab-content">
+        <div class="earn-container">
+            <div class="earn-main-title">💰 Earn Coins Dashboard</div>
             
-            <!-- Swipe Slider -->
+            <div class="rate-badge">
+                <i class="fa-solid fa-star-of-life"></i> 100 Coins = ₹10
+            </div>
+
+            <div class="bonus-box">
+                <span class="bonus-title">🎁 New Login Bonus</span>
+                <span class="bonus-coins">+5 Coins</span>
+            </div>
+            <div class="bonus-box">
+                <span class="bonus-title">🔗 Friend Referral Reward</span>
+                <span class="bonus-coins">+10 Coins</span>
+            </div>
+
+            <div class="info-card">
+                <h4>💡 How to Use Coins:</h4>
+                <ul>
+                    <li>To fully purchase premium E-Books for free.</li>
+                    <li>To partially pay for products (Coins + Cash combo).</li>
+                </ul>
+            </div>
+
+            <!-- Form Upload using LIVE CAMERA -->
+            <div class="upload-form">
+                <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-camera"></i> Submit Order Invoice to Claim Coins:</h3>
+                
+                <div class="form-group">
+                    <label>Product ID * (Mandatory)</label>
+                    <input type="text" class="form-input" placeholder="Enter Product ID number">
+                </div>
+
+                <div class="form-group">
+                    <label>Order Status Screenshot *</label>
+                    <button class="camera-btn" onclick="alert('Camera opening for: Order Delivered Screenshot')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
+                    <small style="color:#64748b; font-size:11px;">Upload "Order Delivered" live click screenshot only.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Invoice/Bill Photo *</label>
+                    <button class="camera-btn" onclick="alert('Camera opening for: Product Invoice Bill')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
+                    <small style="color:#cc0c39; font-size:11px; font-weight:bold;">⚠️ Gallery upload is NOT allowed. Click photo live.</small>
+                </div>
+
+                <div class="form-group">
+                    <label>Product Box Photo (Optional)</label>
+                    <button class="camera-btn" onclick="alert('Camera opening for: Product Outer Box')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
+                </div>
+
+                <button class="submit-btn" onclick="alert('Your documents have been submitted for verification successfully!')">Submit Proof & Claim Coins</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. EBOOK TAB -->
+    <div id="ebook-tab" class="tab-content">
+        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-book" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>Premium Ebooks Section</h2><p style="color:#666; font-size:13px; margin-top:5px;">Aap apne coins se yahan E-books purchase kar payenge.</p></div>
+    </div>
+
+    <!-- 4. WALLET TAB -->
+    <div id="wallet-tab" class="tab-content">
+        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-wallet" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>Your Wallet Status</h2><p style="color:#666; font-size:14px; margin-top:5px;">Current Balance: 5 Coins (Value ₹0.50)</p></div>
+    </div>
+
+    <!-- 5. ACCOUNT TAB -->
+    <div id="account-tab" class="tab-content">
+        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-user" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>User Profile Account</h2><p style="color:#666; font-size:13px;">NK55514 Member Profile Section.</p></div>
+    </div>
+
+    <!-- SWIPE SLIDER POPUP MODAL WINDOW -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            
+            <!-- Swipe Slider Container -->
             <div class="slider-container">
-                <div class="slider-wrapper" id="sliderWrapper" onscroll="updateDots()">
+                <div class="slider-wrapper" id="sliderWrapper">
                     <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="slide-img" alt="View 1">
                     <img src="WhatsApp Image 2026-06-03 at 14.17.33.jpeg" class="slide-img" alt="View 2">
                     <img src="WhatsApp Image 2026-06-03 at 14.17.34 (1).jpeg" class="slide-img" alt="View 3">
@@ -193,7 +265,7 @@
                 </div>
             </div>
 
-            <!-- Dots Indicator -->
+            <!-- Indicator Dots -->
             <div class="slider-dots">
                 <div class="dot active"></div>
                 <div class="dot"></div>
@@ -218,86 +290,9 @@
         </div>
     </div>
 
-    <!-- OTHER TABS -->
-    <div id="ebook-tab" class="container">
-        <div style="text-align:center; padding:50px 20px;"><i class="fa-solid fa-book" style="font-size:40px; color:#ccc;"></i><h2>Ebooks Section</h2></div>
-    </div>
-    <div id="wallet-tab" class="container">
-        <div style="text-align:center; padding:50px 20px;"><i class="fa-solid fa-wallet" style="font-size:40px; color:#ccc;"></i><h2>Wallet Section</h2></div>
-    </div>
-    <div id="account-tab" class="container">
-        <div style="text-align:center; padding:50px 20px;"><i class="fa-solid fa-user" style="font-size:40px; color:#ccc;"></i><h2>Account Profile</h2></div>
-    </div>
-
     <!-- BOTTOM FIXED NAV BAR -->
     <nav class="bottom-nav">
-        <button class="nav-item active" onclick="switchTab('home-tab', this)"><i class="fa-solid fa-house"></i><span>Home</span></button>
-        <button class="nav-item" onclick="switchTab('ebook-tab', this)"><i class="fa-solid fa-book"></i><span>Ebook</span></button>
-        <button class="nav-item" onclick="switchTab('wallet-tab', this)"><i class="fa-solid fa-wallet"></i><span>Wallet</span></button>
-        <button class="nav-item" onclick="switchTab('account-tab', this)"><i class="fa-solid fa-user"></i><span>Account</span></button>
-    </nav>
-
-    <script>
-        // Category Filter Logic
-        function filterCategory(category, element) {
-            var cards = document.getElementsByClassName('product-card');
-            var grid = document.getElementById('productsGrid');
-            var found = false;
-
-            // Manage Category Button Active State
-            var catItems = document.getElementsByClassName('cat-item');
-            for (var i = 0; i < catItems.length; i++) { catItems[i].classList.remove('active-cat'); }
-            element.classList.add('active-cat');
-
-            // Filter Cards
-            for (var i = 0; i < cards.length; i++) {
-                if (category === 'all' || cards[i].getAttribute('data-category') === category) {
-                    cards[i].style.display = 'flex';
-                    found = true;
-                } else {
-                    cards[i].style.display = 'none';
-                }
-            }
-            
-            // Update Title
-            document.getElementById('currentSectionTitle').innerText = category === 'all' ? "🔥 Today's Deals" : "🔥 " + category.toUpperCase();
-        }
-
-        // Search Bar Filtering Logic
-        function searchProducts() {
-            var input = document.getElementById('searchInput').value.toLowerCase();
-            var cards = document.getElementsByClassName('product-card');
-            for (var i = 0; i < cards.length; i++) {
-                var name = cards[i].querySelector('.product-name').innerText.toLowerCase();
-                if (name.includes(input)) {
-                    cards[i].style.display = 'flex';
-                } else {
-                    cards[i].style.display = 'none';
-                }
-            }
-        }
-
-        // Popup Slider Controls
-        function openSliderModal() { document.getElementById('product-modal').style.display = 'flex'; }
-        function closeSliderModal(e) { document.getElementById('product-modal').style.display = 'none'; }
-
-        function updateDots() {
-            var wrapper = document.getElementById('sliderWrapper');
-            var dots = document.getElementsByClassName('dot');
-            var pageIndex = Math.round(wrapper.scrollLeft / wrapper.clientWidth);
-            for (var i = 0; i < dots.length; i++) { dots[i].classList.remove('active'); }
-            if(dots[pageIndex]) dots[pageIndex].classList.add('active');
-        }
-
-        // Tab Switching Controls
-        function switchTab(tabId, element) {
-            var tabs = document.getElementsByClassName('container');
-            for (var i = 0; i < tabs.length; i++) { tabs[i].classList.remove('active-tab'); }
-            document.getElementById(tabId).classList.add('active-tab');
-            var navItems = document.getElementsByClassName('nav-item');
-            for (var i = 0; i < navItems.length; i++) { navItems[i].classList.remove('active'); }
-            element.classList.add('active');
-        }
-    </style>
-</body>
-</html>
+        <button class="nav-item active" data-tab="home-tab"><i class="fa-solid fa-house"></i><span>Home</span></button>
+        <button class="nav-item" data-tab="earn-tab"><i class="fa-solid fa-gift"></i><span>Earn Coins</span></button>
+        <button class="nav-item" data-tab="ebook-tab"><i class="fa-solid fa-book"></i><span>Ebook</span></button>
+        <button class="nav-i
