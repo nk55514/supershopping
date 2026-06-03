@@ -12,10 +12,16 @@
         /* Header */
         header { background-color: #e63946; color: white; padding: 15px; text-align: center; font-size: 24px; font-weight: bold; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
         
-        /* Language Selector */
-        .lang-bar { display: flex; justify-content: center; background-color: #fff; padding: 8px; border-bottom: 2px solid #e63946; gap: 10px; }
+        /* Language Bar */
+        .lang-bar { display: flex; justify-content: center; background-color: #fff; padding: 8px; border-bottom: 1px solid #eee; gap: 10px; }
         .lang-btn { background: #e63946; color: white; border: none; padding: 5px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; font-weight: bold; }
         
+        /* Category Navigation Bar */
+        .category-bar { display: flex; overflow-x: auto; white-space: nowrap; background-color: #fff; padding: 10px; border-bottom: 2px solid #e63946; gap: 10px; -webkit-overflow-scrolling: touch; }
+        .category-bar::-webkit-scrollbar { display: none; } /* Hide scrollbar for clean look */
+        .category-btn { background: #fff; color: #e63946; border: 1px solid #e63946; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; text-decoration: none; cursor: pointer; }
+        .category-btn:hover, .category-btn.active { background: #e63946; color: white; }
+
         /* Container */
         .container { max-width: 500px; margin: 0 auto; padding: 15px; }
         
@@ -31,7 +37,7 @@
         .rules-box li { margin-bottom: 5px; line-height: 1.4; }
 
         /* Product Section Title */
-        .section-title { font-size: 18px; color: #e63946; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid #e63946; padding-bottom: 5px; }
+        .section-title { font-size: 18px; color: #e63946; margin-top: 15px; margin-bottom: 15px; font-weight: bold; text-transform: uppercase; border-bottom: 2px solid #e63946; padding-bottom: 5px; scroll-margin-top: 70px; }
 
         /* Product Card */
         .product-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); position: relative; overflow: hidden; border: 1px solid #eee; }
@@ -63,6 +69,14 @@
         <button class="lang-btn">Hinglish</button>
     </div>
 
+    <!-- Category Sliding Navigation Bar -->
+    <div class="category-bar">
+        <a href="#all-deals" class="category-btn active">🔥 All Deals</a>
+        <a href="#smartwatches" class="category-btn">⌚ Smartwatches</a>
+        <a href="#mobiles" class="category-btn">📱 Mobiles</a>
+        <a href="#ebooks" class="category-btn">📚 E-Books</a>
+    </div>
+
     <div class="container">
 
         <!-- Dashboard -->
@@ -84,47 +98,41 @@
             </ul>
         </div>
 
-        <!-- Product Showcase -->
-        <div class="section-title">🔥 Today's Best Offers</div>
+        <!-- ALL DEALS SECTION -->
+        <div id="all-deals" class="section-title">🔥 Today's Best Offers</div>
 
-        <!-- Sample Product 1 -->
+        <!-- SMARTWATCHES CATEGORY SECTION -->
+        <div id="smartwatches" class="section-title">⌚ Best Smartwatches</div>
+        
+        <!-- Smartwatch Product Card -->
         <div class="product-card">
             <div class="deal-tag">Best Deal</div>
             <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=600&auto=format&fit=crop" class="product-img" alt="Product Image">
             <div class="product-name">Premium Smart Watch (Fitness Tracker)</div>
-            <div class="product-desc">Full touch display with heart rate monitoring, sleep tracking, and multi-sports mode. Multi-day battery backup.</div>
+            <div class="product-desc">Full touch display with heart rate monitoring, sleep tracking, and multi-sports mode.</div>
             
-            <!-- Comparison Grid -->
-            <!-- Amazon -->
             <div class="price-row">
-                <div class="store-info">
-                    <span class="store-name" style="color: #ff9900;">Amazon</span>
-                    <span class="store-price">₹1,499</span>
-                </div>
-                <!-- Yahan REPLACE_WITH_AMAZON_LINK ki jagah apna affiliate link dalna hai baad me -->
+                <div class="store-info"><span class="store-name" style="color: #ff9900;">Amazon</span><span class="store-price">₹1,499</span></div>
                 <a href="https://www.amazon.com" target="_blank" class="buy-btn">Buy on Amazon</a>
             </div>
-            
-            <!-- Flipkart -->
             <div class="price-row">
-                <div class="store-info">
-                    <span class="store-name" style="color: #2874f0;">Flipkart</span>
-                    <span class="store-price">₹1,549</span>
-                </div>
+                <div class="store-info"><span class="store-name" style="color: #2874f0;">Flipkart</span><span class="store-price">₹1,549</span></div>
                 <a href="https://www.flipkart.com" target="_blank" class="buy-btn">Buy on Flipkart</a>
             </div>
-            
-            <!-- Meesho -->
             <div class="price-row">
-                <div class="store-info">
-                    <span class="store-name" style="color: #f43397;">Meesho</span>
-                    <span class="store-price">₹1,399</span>
-                </div>
+                <div class="store-info"><span class="store-name" style="color: #f43397;">Meesho</span><span class="store-price">₹1,399</span></div>
                 <a href="https://www.meesho.com" target="_blank" class="buy-btn">Buy on Meesho</a>
             </div>
-
             <div class="updated-text">Last Updated: Just Now</div>
         </div>
+
+        <!-- MOBILES CATEGORY SECTION -->
+        <div id="mobiles" class="section-title">📱 Top Smartphones</div>
+        <p style="text-align: center; color: #999; font-size: 14px; margin: 20px 0;">No products in this category yet. (Naye products jald aayenge!)</p>
+
+        <!-- EBOOKS CATEGORY SECTION -->
+        <div id="ebooks" class="section-title">📚 Premium E-Books</div>
+        <p style="text-align: center; color: #999; font-size: 14px; margin: 20px 0;">No products in this category yet. (Naye ebooks jald aayenge!)</p>
 
     </div>
 
