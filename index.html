@@ -51,7 +51,7 @@
         .discount-tag { background: #cc0c39; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
         .limited-tag { color: #cc0c39; font-size: 11px; font-weight: bold; }
 
-        /* EARN PAGE STYLING (Aapke Naye Rules) */
+        /* EARN PAGE STYLING */
         .earn-container { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .earn-main-title { font-size: 24px; color: #e63946; font-weight: bold; text-align: center; margin-bottom: 15px; }
         .rate-badge { background: #fff1f2; color: #e63946; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; border: 1px dashed #e63946; margin-bottom: 20px; }
@@ -97,7 +97,7 @@
         .related-title { font-size: 14px; font-weight: bold; color: #e63946; margin-bottom: 10px; text-transform: uppercase; }
         .related-empty { text-align: center; padding: 15px; font-size: 12px; color: #999; background: #f9f9f9; border-radius: 6px; }
 
-        /* Bottom Fixed Navigation Bar (Added Naya Earn Coin Button) */
+        /* Bottom Fixed Navigation Bar */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 65px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; flex: 1; height: 100%; justify-content: center; }
         .nav-item i { font-size: 19px; margin-bottom: 4px; }
@@ -105,7 +105,6 @@
     </style>
 </head>
 <body>
-
     <header>Super Shopping</header>
 
     <div class="search-container">
@@ -177,7 +176,7 @@
         </div>
     </div>
 
-    <!-- 2. EARN COINS TAB (Aapka Naye Wala Mast System) -->
+    <!-- 2. EARN COINS TAB -->
     <div id="earn-tab" class="tab-content">
         <div class="earn-container">
             <div class="earn-main-title">💰 Earn Coins Dashboard</div>
@@ -215,7 +214,7 @@
                 <div class="form-group">
                     <label>Order Status Screenshot *</label>
                     <button class="camera-btn" onclick="alert('Camera opening for: Order Delivered Screenshot')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
-                    <small style="color:#64748b; font-size:11px;">Upload "Order Delivered" live click screenshot only.</small>
+                    <small style="color:#64748b; font-size:11px;">Upload 'Order Delivered' live click screenshot only.</small>
                 </div>
 
                 <div class="form-group">
@@ -295,4 +294,94 @@
         <button class="nav-item active" data-tab="home-tab"><i class="fa-solid fa-house"></i><span>Home</span></button>
         <button class="nav-item" data-tab="earn-tab"><i class="fa-solid fa-gift"></i><span>Earn Coins</span></button>
         <button class="nav-item" data-tab="ebook-tab"><i class="fa-solid fa-book"></i><span>Ebook</span></button>
-        <button class="nav-i
+        <button class="nav-item" data-tab="wallet-tab"><i class="fa-solid fa-wallet"></i><span>Wallet</span></button>
+        <button class="nav-item" data-tab="account-tab"><i class="fa-solid fa-user"></i><span>Account</span></button>
+    </nav>
+
+    <!-- Super-Safe Javascript Systems -->
+    <script>
+        // Tab Switching Robust System
+        const navButtons = document.querySelectorAll('.nav-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                navButtons.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(t => t.classList.remove('active-tab'));
+
+                this.classList.add('active');
+                const targetTab = this.getAttribute('data-tab');
+                document.getElementById(targetTab).classList.add('active-tab');
+                window.scrollTo({top: 0, behavior: 'smooth'});
+            });
+        });
+
+        // Category Filter Logic
+        const catButtons = document.querySelectorAll('.cat-item');
+        const productCards = document.querySelectorAll('.product-card');
+
+        catButtons.forEach(catBtn => {
+            catBtn.addEventListener('click', function() {
+                catButtons.forEach(c => c.classList.remove('active-cat'));
+                this.classList.add('active-cat');
+
+                const categoryId = this.id.replace('cat-', '');
+                
+                productCards.forEach(card => {
+                    if (categoryId === 'all' || card.getAttribute('data-category') === categoryId) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+
+                document.getElementById('currentSectionTitle').innerText = categoryId === 'all' ? "🔥 Today's Deals" : "🔥 " + categoryId.toUpperCase();
+            });
+        });
+
+        // Modal Slider Logic Fixed
+        const tshirtCard = document.getElementById('tshirtCard');
+        const modalView = document.getElementById('product-modal');
+        const closeModalBtn = document.getElementById('closeModalBtn');
+        const sliderWrapper = document.getElementById('sliderWrapper');
+        const dots = document.querySelectorAll('.dot');
+
+        if(tshirtCard) {
+            tshirtCard.addEventListener('click', function() {
+                modalView.style.display = 'flex';
+            });
+        }
+
+        if(closeModalBtn) {
+            closeModalBtn.addEventListener('click', function() {
+                modalView.style.display = 'none';
+            });
+        }
+
+        modalView.addEventListener('click', function(e) {
+            if(e.target === modalView) {
+                modalView.style.display = 'none';
+            }
+        });
+
+        sliderWrapper.addEventListener('scroll', function() {
+            let pageIndex = Math.round(sliderWrapper.scrollLeft / sliderWrapper.clientWidth);
+            dots.forEach(d => d.classList.remove('active'));
+            if(dots[pageIndex]) dots[pageIndex].classList.add('active');
+        });
+
+        // Search System
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filterValue = this.value.toLowerCase();
+            productCards.forEach(card => {
+                let name = card.querySelector('.product-name').innerText.toLowerCase();
+                if(name.includes(filterValue)) {
+                    card.style.display = 'flex';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
