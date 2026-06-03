@@ -18,7 +18,7 @@
         
         /* Category Navigation Bar */
         .category-bar { display: flex; overflow-x: auto; white-space: nowrap; background-color: #fff; padding: 10px; border-bottom: 2px solid #e63946; gap: 10px; -webkit-overflow-scrolling: touch; }
-        .category-bar::-webkit-scrollbar { display: none; } /* Hide scrollbar for clean look */
+        .category-bar::-webkit-scrollbar { display: none; }
         .category-btn { background: #fff; color: #e63946; border: 1px solid #e63946; padding: 6px 15px; border-radius: 20px; font-size: 13px; font-weight: bold; text-decoration: none; cursor: pointer; }
         .category-btn:hover, .category-btn.active { background: #e63946; color: white; }
 
@@ -42,16 +42,16 @@
         /* Product Card */
         .product-card { background: white; border-radius: 12px; padding: 15px; margin-bottom: 25px; box-shadow: 0 4px 12px rgba(0,0,0,0.08); position: relative; overflow: hidden; border: 1px solid #eee; }
         .deal-tag { position: absolute; top: 12px; left: 12px; background: #e63946; color: white; padding: 4px 10px; font-size: 11px; font-weight: bold; border-radius: 4px; text-transform: uppercase; }
-        .product-img { width: 100%; max-height: 220px; object-fit: contain; margin-bottom: 12px; margin-top: 15px; }
+        .product-img { width: 100%; max-height: 280px; object-fit: contain; margin-bottom: 12px; margin-top: 15px; border-radius: 8px; }
         .product-name { font-size: 16px; font-weight: bold; margin-bottom: 8px; color: #111; }
         .product-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4; }
         
         /* Price Comparison Grid */
-        .price-row { display: flex; align-items: center; justify-content: space-between; background: #fdfdfd; padding: 10px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #f0f0f0; }
+        .price-row { display: flex; align-items: center; justify-content: space-between; background: #fdfdfd; padding: 12px; border-radius: 8px; margin-bottom: 8px; border: 1px solid #f0f0f0; }
         .store-info { display: flex; flex-direction: column; }
         .store-name { font-size: 14px; font-weight: bold; }
-        .store-price { font-size: 16px; color: #e63946; font-weight: bold; margin-top: 2px; }
-        .buy-btn { background-color: #e63946; color: white; text-decoration: none; padding: 8px 16px; font-size: 13px; font-weight: bold; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(230,57,70,0.2); }
+        .store-price { font-size: 18px; color: #e63946; font-weight: bold; margin-top: 2px; }
+        .buy-btn { background-color: #e63946; color: white; text-decoration: none; padding: 10px 20px; font-size: 14px; font-weight: bold; border-radius: 6px; text-align: center; box-shadow: 0 2px 4px rgba(230,57,70,0.2); }
         .buy-btn:hover { background-color: #c92a36; }
         
         .updated-text { font-size: 11px; color: #999; text-align: right; margin-top: 10px; font-style: italic; }
@@ -72,8 +72,8 @@
     <!-- Category Sliding Navigation Bar -->
     <div class="category-bar">
         <a href="#all-deals" class="category-btn active">🔥 All Deals</a>
+        <a href="#fashion" class="category-btn">👕 Fashion</a>
         <a href="#smartwatches" class="category-btn">⌚ Smartwatches</a>
-        <a href="#mobiles" class="category-btn">📱 Mobiles</a>
         <a href="#ebooks" class="category-btn">📚 E-Books</a>
     </div>
 
@@ -101,38 +101,36 @@
         <!-- ALL DEALS SECTION -->
         <div id="all-deals" class="section-title">🔥 Today's Best Offers</div>
 
-        <!-- SMARTWATCHES CATEGORY SECTION -->
-        <div id="smartwatches" class="section-title">⌚ Best Smartwatches</div>
+        <!-- FASHION CATEGORY SECTION -->
+        <div id="fashion" class="section-title">👕 Men's Fashion Deals</div>
         
-        <!-- Smartwatch Product Card -->
+        <!-- Naya T-Shirt Product Card -->
         <div class="product-card">
-            <div class="deal-tag">Best Deal</div>
-            <img src="https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=600&auto=format&fit=crop" class="product-img" alt="Product Image">
-            <div class="product-name">Premium Smart Watch (Fitness Tracker)</div>
-            <div class="product-desc">Full touch display with heart rate monitoring, sleep tracking, and multi-sports mode.</div>
+            <div class="deal-tag">Best Seller</div>
+            <!-- Aapki bheji hui image ka placeholder link -->
+            <img src="https://images.unsplash.com/photo-1521572267360-ee0c2909d518?q=80&w=600&auto=format&fit=crop" class="product-img" alt="Maroon Oversized T-Shirt">
+            <div class="product-name">AUSK Men's Maroon Graphic Printed Oversized T-Shirt</div>
+            <div class="product-desc">Premium quality breathable fabric cotton blend t-shirt. Features a stylish modern graphic print on front. Perfect for casual wear, loose comfort fit.</div>
             
+            <!-- Amazon Affiliate Link Row -->
             <div class="price-row">
-                <div class="store-info"><span class="store-name" style="color: #ff9900;">Amazon</span><span class="store-price">₹1,499</span></div>
-                <a href="https://www.amazon.com" target="_blank" class="buy-btn">Buy on Amazon</a>
-            </div>
-            <div class="price-row">
-                <div class="store-info"><span class="store-name" style="color: #2874f0;">Flipkart</span><span class="store-price">₹1,549</span></div>
-                <a href="https://www.flipkart.com" target="_blank" class="buy-btn">Buy on Flipkart</a>
-            </div>
-            <div class="price-row">
-                <div class="store-info"><span class="store-name" style="color: #f43397;">Meesho</span><span class="store-price">₹1,399</span></div>
-                <a href="https://www.meesho.com" target="_blank" class="buy-btn">Buy on Meesho</a>
+                <div class="store-info">
+                    <span class="store-name" style="color: #ff9900;">Amazon Price (Incl. GST)</span>
+                    <span class="store-price">₹243</span>
+                </div>
+                <!-- Aapka asli affiliate link yahan set ho gaya hai -->
+                <a href="https://amzn.to/4x5k5sl" target="_blank" class="buy-btn">Buy on Amazon</a>
             </div>
             <div class="updated-text">Last Updated: Just Now</div>
         </div>
 
-        <!-- MOBILES CATEGORY SECTION -->
-        <div id="mobiles" class="section-title">📱 Top Smartphones</div>
-        <p style="text-align: center; color: #999; font-size: 14px; margin: 20px 0;">No products in this category yet. (Naye products jald aayenge!)</p>
+        <!-- SMARTWATCHES CATEGORY SECTION -->
+        <div id="smartwatches" class="section-title">⌚ Best Smartwatches</div>
+        <p style="text-align: center; color: #999; font-size: 14px; margin: 20px 0;">No products in this category yet.</p>
 
         <!-- EBOOKS CATEGORY SECTION -->
         <div id="ebooks" class="section-title">📚 Premium E-Books</div>
-        <p style="text-align: center; color: #999; font-size: 14px; margin: 20px 0;">No products in this category yet. (Naye ebooks jald aayenge!)</p>
+        <p style="text-align: center; color: #999; font-size: 14px; margin: 20px 0;">No products in this category yet.</p>
 
     </div>
 
