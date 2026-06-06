@@ -4,100 +4,70 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Super Shopping</title>
-    <!-- FontAwesome Library for Symbols -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f7f9fa; color: #333; padding-bottom: 85px; }
-        
         header { background-color: #e63946; color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; }
         .search-container { padding: 10px 15px; background: #e63946; }
         .search-box { width: 100%; padding: 10px; border-radius: 25px; border: none; outline: none; font-size: 14px; padding-left: 15px; }
-
-        /* Top Coin Status Dashboard */
         .top-dash { background: white; margin: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .coin-status { display: flex; align-items: center; gap: 6px; font-size: 16px; font-weight: bold; color: #e63946; }
         .coin-status i { color: #ffd700; font-size: 20px; }
-
-        /* Categories Slider */
         .category-section { background: white; padding: 15px 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; }
         .category-grid { display: flex; overflow-x: auto; white-space: nowrap; gap: 15px; padding-bottom: 5px; }
         .category-grid::-webkit-scrollbar { display: none; }
-        
         .cat-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #444; font-size: 11px; font-weight: bold; min-width: 75px; cursor: pointer; background: none; border: none; outline: none; }
         .cat-icon { width: 52px; height: 52px; background: #fff1f2; color: #e63946; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; border: 1px solid #ffe4e6; }
         .cat-item.active-cat .cat-icon { background: #e63946; color: white; border-color: #e63946; }
-
-        /* Tabs Logic */
         .tab-content { padding: 0 12px; display: none; }
         .tab-content.active-tab { display: block; }
         .section-title { font-size: 15px; color: #e63946; margin: 15px 0 12px 0; font-weight: bold; text-transform: uppercase; letter-spacing: 0.5px; }
-
-        /* Amazon Layout Product Grid */
         .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: #fff; padding: 10px 0; }
         .product-card { background: white; padding: 10px 5px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; position: relative; }
-        
         .product-img-box { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; background: #f8f8f8; overflow: hidden; border-radius: 4px; }
         .product-img { max-width: 100%; max-height: 100%; object-fit: cover; }
-        
         .product-info-block { padding: 8px 4px 4px 4px; }
         .product-name { font-size: 14px; font-weight: 400; color: #333; line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
-        
         .price-layout { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
         .main-price { font-size: 15px; font-weight: bold; color: #111; }
         .original-price { font-size: 12px; color: #777; text-decoration: line-through; }
-        
         .deal-badge-row { display: flex; align-items: center; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
         .discount-tag { background: #cc0c39; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
         .limited-tag { color: #cc0c39; font-size: 11px; font-weight: bold; }
-
-        /* EARN PAGE STYLING */
         .earn-container { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
         .earn-main-title { font-size: 24px; color: #e63946; font-weight: bold; text-align: center; margin-bottom: 15px; }
         .rate-badge { background: #fff1f2; color: #e63946; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; border: 1px dashed #e63946; margin-bottom: 20px; }
-        
         .bonus-box { display: flex; justify-content: space-between; background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #e63946; }
         .bonus-title { font-weight: bold; font-size: 14px; }
         .bonus-coins { color: #cc0c39; font-weight: bold; }
-
         .info-card { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 20px; }
         .info-card h4 { font-size: 14px; color: #334155; margin-bottom: 8px; text-transform: uppercase; }
         .info-card ul { list-style-type: square; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.5; }
-
-        /* Live Camera Form Inside Earn Tab */
         .upload-form { border-top: 2px dashed #e2e8f0; padding-top: 15px; margin-top: 15px; }
         .form-group { margin-bottom: 15px; }
         .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #333; }
         .form-input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
-        
         .camera-btn { width: 100%; background: #475569; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
         .submit-btn { width: 100%; background: #e63946; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(230,57,70,0.2); }
-
-        /* POPUP SLIDER MODAL WINDOW */
         .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: flex-end; }
         .modal-content { background: white; width: 100%; max-height: 85vh; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px; overflow-y: auto; position: relative; }
         .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #333; cursor: pointer; background: #f0f0f0; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
-
         .slider-container { width: 100%; height: 280px; overflow: hidden; position: relative; background: #fff; border-radius: 12px; margin-top: 15px; margin-bottom: 15px; }
         .slider-wrapper { display: flex; width: 100%; height: 100%; overflow-x: auto; snap-type: x mandatory; scroll-behavior: smooth; }
         .slider-wrapper::-webkit-scrollbar { display: none; }
         .slide-img { min-width: 100%; height: 100%; object-fit: contain; snap-align: start; }
-        
         .slider-dots { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; }
         .dot { width: 8px; height: 8px; background: #ddd; border-radius: 50%; }
         .dot.active { background: #e63946; width: 18px; border-radius: 4px; }
-
         .modal-title { font-size: 16px; font-weight: bold; color: #111; margin-bottom: 8px; }
         .modal-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4; }
         .modal-price-row { display: flex; justify-content: space-between; align-items: center; background: #fff5f5; padding: 12px; border-radius: 10px; border: 1px solid #ffe3e3; margin-bottom: 20px; }
         .modal-price { font-size: 18px; color: #cc0c39; font-weight: bold; }
         .modal-buy-btn { background: #e63946; color: white; text-decoration: none; padding: 12px 25px; font-size: 14px; font-weight: bold; border-radius: 8px; }
-
         .related-section { margin-top: 25px; border-top: 2px dashed #eee; padding-top: 15px; }
         .related-title { font-size: 14px; font-weight: bold; color: #e63946; margin-bottom: 10px; text-transform: uppercase; }
         .related-empty { text-align: center; padding: 15px; font-size: 12px; color: #999; background: #f9f9f9; border-radius: 6px; }
-
-        /* Bottom Fixed Navigation Bar */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 65px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; flex: 1; height: 100%; justify-content: center; }
         .nav-item i { font-size: 19px; margin-bottom: 4px; }
@@ -106,267 +76,60 @@
 </head>
 <body>
     <header>Super Shopping</header>
-
     <div class="search-container">
         <input type="text" class="search-box" id="searchInput" placeholder="Search clothes, shoes, mobiles...">
     </div>
-
-    <!-- 1. HOME TAB -->
     <div id="home-tab" class="tab-content active-tab">
         <div class="top-dash">
             <div class="coin-status"><i class="fa-solid fa-coins"></i> <span>5 Coins</span></div>
             <div style="font-size:12px; color:#666; font-weight:bold;">⚡ Deals Stream Live</div>
         </div>
-
-        <!-- Premium Categories Slider List -->
         <div class="category-section">
             <div class="category-grid">
                 <button class="cat-item active-cat" id="cat-all"><div class="cat-icon"><i class="fa-solid fa-border-all"></i></div>For You</button>
                 <button class="cat-item" id="cat-cloths"><div class="cat-icon"><i class="fa-solid fa-shirt"></i></div>Cloths</button>
                 <button class="cat-item" id="cat-shoes"><div class="cat-icon"><i class="fa-solid fa-shoe-prints"></i></div>Shoes</button>
                 <button class="cat-item" id="cat-mobiles"><div class="cat-icon"><i class="fa-solid fa-mobile-screen"></i></div>Mobiles</button>
-                <button class="cat-item" id="cat-electronics"><div class="cat-icon"><i class="fa-solid fa-plug"></i></div>Electronic</button>
-                <button class="cat-item" id="cat-beauty"><div class="cat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>Beauty</button>
-                <button class="cat-item" id="cat-toys"><div class="cat-icon"><i class="fa-solid fa-gamepad"></i></div>Toys</button>
-                <button class="cat-item" id="cat-food"><div class="cat-icon"><i class="fa-solid fa-bowl-food"></i></div>Food</button>
-                <button class="cat-item" id="cat-furniture"><div class="cat-icon"><i class="fa-solid fa-couch"></i></div>Furniture</button>
             </div>
         </div>
-
         <div class="section-title" id="currentSectionTitle">🔥 Today's Deals</div>
-        
         <div class="products-grid" id="productsGrid">
-            
-            <!-- Product 1: Maroon T-Shirt -->
             <div class="product-card" data-category="cloths" id="tshirtCard">
-                <div class="product-img-box">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="product-img" alt="Maroon T-Shirt">
-                </div>
-                <div class="product-info-block">
-                    <div class="product-name">AUSK Men's Maroon Graphic Printed Oversized T-Shirt</div>
-                    <div class="price-layout">
-                        <span class="main-price">₹243.00</span>
-                        <span class="original-price">₹1,099.00</span>
-                    </div>
-                    <div class="deal-badge-row">
-                        <span class="discount-tag">77% off</span>
-                        <span class="limited-tag">Limited time deal</span>
-                    </div>
-                </div>
+                <div class="product-img-box"><img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="product-img" alt="T-Shirt"></div>
+                <div class="product-info-block"><div class="product-name">AUSK Men's Maroon T-Shirt</div><div class="price-layout"><span class="main-price">₹243.00</span></div></div>
             </div>
-
-            <!-- Product 2: Sample Shoes -->
-            <div class="product-card" data-category="shoes">
-                <div class="product-img-box">
-                    <i class="fa-solid fa-shoe-prints" style="font-size:50px; color:#ddd;"></i>
-                </div>
-                <div class="product-info-block">
-                    <div class="product-name">Centrino Men's Formal Loafer Shoes</div>
-                    <div class="price-layout">
-                        <span class="main-price">₹699.00</span>
-                        <span class="original-price">₹2,499.00</span>
-                    </div>
-                    <div class="deal-badge-row">
-                        <span class="discount-tag">72% off</span>
-                        <span class="limited-tag">Limited time deal</span>
-                    </div>
-                </div>
-            </div>
-
         </div>
     </div>
 
-    <!-- 2. EARN COINS TAB -->
     <div id="earn-tab" class="tab-content">
-        <div class="earn-container">
+        <div class="earn-container" id="earnFormContainer">
             <div class="earn-main-title">💰 Earn Coins Dashboard</div>
-            
-            <div class="rate-badge">
-                <i class="fa-solid fa-star-of-life"></i> 100 Coins = ₹10
-            </div>
-
-            <!-- Strict 48 Hours Warning Badge -->
-            <div style="background: #fff7ed; border: 1px solid #ffedd5; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border-left: 5px solid #ea580c;">
-                <i class="fa-solid fa-clock-rotate-left" style="color: #ea580c; font-size: 20px;"></i>
-                <div style="font-size: 12.5px; color: #9a3412; line-height: 1.4;">
-                    <strong>⏰ Strict 48-Hour Deadline (समय सीमा):</strong><br>
-                    Order Delivered hone ke <strong>48 ghante ke andar</strong> hi Product ID aur screenshots submit karna mandatory hai. Uske baad claim expire ho jayega!
-                </div>
-            </div>
-
-            <div class="bonus-box">
-                <span class="bonus-title">🎁 New Login Bonus</span>
-                <span class="bonus-coins">+5 Coins</span>
-            </div>
-            <div class="bonus-box">
-                <span class="bonus-title">🔗 Friend Referral Reward</span>
-                <span class="bonus-coins">+10 Coins</span>
-            </div>
-
-            <div class="info-card">
-                <h4>💡 How to Use Coins:</h4>
-                <ul>
-                    <li>To fully purchase premium E-Books for free.</li>
-                    <li>To partially pay for products (Coins + Cash combo).</li>
-                </ul>
-            </div>
-
-            <!-- Form Upload Box -->
             <div class="upload-form">
-                <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-file-invoice"></i> Submit Order Proof to Claim Coins:</h3>
-                
-                <div class="form-group">
-                    <label>Product ID * (Valid for 48 Hours Only)</label>
-                    <input type="text" class="form-input" placeholder="Enter Product ID number">
-                    <small style="color:#dc2626; font-size:11px;">Note: Yeh ID delivery ke 48 ghante tak hi acceptable hai.</small>
-                </div>
-
-                <!-- Gallery Upload for Order Tracker Screenshot -->
-                <div class="form-group">
-                    <label>Order "Delivered" Timeline Screenshot *</label>
-                    <div style="position:relative;">
-                        <input type="file" accept="image/*" id="screenshotFile" style="display:none;" onchange="document.getElementById('screen-text').innerText = this.files[0].name">
-                        <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('screenshotFile').click()"><i class="fa-solid fa-image"></i> Upload From Gallery (Screenshot)</button>
-                    </div>
-                    <small style="color:#64748b; font-size:11px; font-weight:500;" id="screen-text">Upload your Order Tracker Timeline. Screenshot 48 hours se purana nahi hona chahiye.</small>
-                </div>
-
-                <!-- Live Camera Only for Invoice -->
-                <div class="form-group">
-                    <label>Invoice/Bill Photo *</label>
-                    <button class="camera-btn" onclick="alert('Camera opening: Apne product ka asli bill camera ke samne rakhein.')"><i class="fa-solid fa-camera"></i> Open Live Camera Only</button>
-                    <small style="color:#cc0c39; font-size:11px; font-weight:bold;">⚠️ Gallery upload is NOT allowed here. Click bill photo live.</small>
-                </div>
-
-                <div class="form-group">
-                    <label>Product Box Photo (Optional)</label>
-                    <button class="camera-btn" onclick="alert('Camera opening for Outer Box')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
-                </div>
-
-                <button class="submit-btn" onclick="alert('Your documents have been submitted successfully! Verification will take 24 hours.')">Submit Proof & Claim Coins</button>
+                <div class="form-group"><label>1. Order ID *</label><input type="text" class="form-input" id="orderIdInput"></div>
+                <div class="form-group"><label>2. Product ID *</label><input type="text" class="form-input" id="productIdInput"></div>
+                <div class="form-group"><label>3. Delivered Screenshot *</label><button class="camera-btn" onclick="alert('Upload from gallery')"><i class="fa-solid fa-image"></i> Upload</button></div>
+                <div class="form-group"><label>4. Invoice Bill (Live) *</label><button class="camera-btn" onclick="alert('Open Camera')"><i class="fa-solid fa-camera"></i> Live Photo</button></div>
+                <div class="form-group"><label>5. Product Photo (Live) *</label><button class="camera-btn" onclick="alert('Open Camera')"><i class="fa-solid fa-camera"></i> Live Photo</button></div>
+                <div class="form-group"><label>6. Product Box Photo (Optional)</label><button class="camera-btn" style="background:#64748b;" onclick="alert('Open Camera')"><i class="fa-solid fa-camera"></i> Live Photo</button><small style="color:#64748b; font-size:10px;">Privacy Protected.</small></div>
+                <div style="margin: 15px 0; font-size: 12px;"><input type="checkbox" id="securityCheck"> <label for="securityCheck">Main agree karta hoon ki galat info dene par mera account permanent ban ho jayega.</label></div>
+                <button class="submit-btn" onclick="submitOrderProof()">Submit Proof</button>
             </div>
         </div>
+        <div id="successMsgBox" style="display:none; text-align:center; padding:20px;"><h2>Submitted!</h2><p>Verification timeline: 24 to 48 Hours.</p></div>
     </div>
 
-    <!-- 3. EBOOK TAB -->
-    <div id="ebook-tab" class="tab-content">
-        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-book" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>Premium Ebooks Section</h2><p style="color:#666; font-size:13px; margin-top:5px;">Aap apne coins se yahan E-books purchase kar payenge.</p></div>
-    </div>
-
-    <!-- 4. WALLET TAB -->
-    <div id="wallet-tab" class="tab-content">
-        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-wallet" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>Your Wallet Status</h2><p style="color:#666; font-size:14px; margin-top:5px;">Current Balance: 5 Coins (Value ₹0.50)</p></div>
-    </div>
-
-    <!-- 5. ACCOUNT TAB -->
-    <div id="account-tab" class="tab-content">
-        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-user" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>User Profile Account</h2><p style="color:#666; font-size:13px;">NK55514 Member Profile Section.</p></div>
-    </div>
-
-    <!-- SWIPE SLIDER POPUP MODAL WINDOW -->
-    <div id="product-modal" class="modal">
-        <div class="modal-content">
-            <span class="close-modal" id="closeModalBtn">&times;</span>
-            
-            <div class="slider-container">
-                <div class="slider-wrapper" id="sliderWrapper">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="slide-img" alt="View 1">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.33.jpeg" class="slide-img" alt="View 2">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.34 (1).jpeg" class="slide-img" alt="View 3">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.34.jpeg" class="slide-img" alt="View 4">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.35.jpeg" class="slide-img" alt="View 5">
-                </div>
-            </div>
-
-            <div class="slider-dots">
-                <div class="dot active"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-                <div class="dot"></div>
-            </div>
-
-            <div class="modal-title">AUSK Men's Maroon Graphic Printed Oversized T-Shirt</div>
-            <div class="modal-desc">Premium quality breathable fabric cotton blend t-shirt. Features a stylish modern graphic print on front. Perfect casual loose fit. Swipe left/right on images to view more angles.</div>
-            
-            <div class="modal-price-row">
-                <div class="modal-price">₹243.00 <span style="font-size:11px; color:#cc0c39; font-weight:bold;">(77% Off)</span></div>
-                <a href="https://amzn.to/4x5k5sl" target="_blank" class="modal-buy-btn"><i class="fa-brands fa-amazon"></i> Buy on Amazon</a>
-            </div>
-
-            <div class="related-section">
-                <div class="related-title">🤝 Related Products (संबंधित उत्पाद)</div>
-                <div class="related-empty">No related products added yet.</div>
-            </div>
-        </div>
-    </div>
-
-    <!-- BOTTOM FIXED NAV BAR -->
     <nav class="bottom-nav">
         <button class="nav-item active" data-tab="home-tab"><i class="fa-solid fa-house"></i><span>Home</span></button>
         <button class="nav-item" data-tab="earn-tab"><i class="fa-solid fa-gift"></i><span>Earn Coins</span></button>
-        <button class="nav-item" data-tab="ebook-tab"><i class="fa-solid fa-book"></i><span>Ebook</span></button>
-        <button class="nav-item" data-tab="wallet-tab"><i class="fa-solid fa-wallet"></i><span>Wallet</span></button>
-        <button class="nav-item" data-tab="account-tab"><i class="fa-solid fa-user"></i><span>Account</span></button>
     </nav>
 
     <script>
-        const navButtons = document.querySelectorAll('.nav-item');
-        const tabContents = document.querySelectorAll('.tab-content');
-
-        navButtons.forEach(btn => {
-            btn.addEventListener('click', function() {
-                navButtons.forEach(b => b.classList.remove('active'));
-                tabContents.forEach(t => t.classList.remove('active-tab'));
-                this.classList.add('active');
-                const targetTab = this.getAttribute('data-tab');
-                document.getElementById(targetTab).classList.add('active-tab');
-                window.scrollTo({top: 0, behavior: 'smooth'});
-            });
-        });
-
-        const catButtons = document.querySelectorAll('.cat-item');
-        const productCards = document.querySelectorAll('.product-card');
-
-        catButtons.forEach(catBtn => {
-            catBtn.addEventListener('click', function() {
-                catButtons.forEach(c => c.classList.remove('active-cat'));
-                this.classList.add('active-cat');
-                const categoryId = this.id.replace('cat-', '');
-                productCards.forEach(card => {
-                    if (categoryId === 'all' || card.getAttribute('data-category') === categoryId) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                document.getElementById('currentSectionTitle').innerText = categoryId === 'all' ? "🔥 Today's Deals" : "🔥 " + categoryId.toUpperCase();
-            });
-        });
-
-        const tshirtCard = document.getElementById('tshirtCard');
-        const modalView = document.getElementById('product-modal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const sliderWrapper = document.getElementById('sliderWrapper');
-        const dots = document.querySelectorAll('.dot');
-
-        if(tshirtCard) { tshirtCard.addEventListener('click', function() { modalView.style.display = 'flex'; }); }
-        if(closeModalBtn) { closeModalBtn.addEventListener('click', function() { modalView.style.display = 'none'; }); }
-        modalView.addEventListener('click', function(e) { if(e.target === modalView) { modalView.style.display = 'none'; } });
-
-        sliderWrapper.addEventListener('scroll', function() {
-            let pageIndex = Math.round(sliderWrapper.scrollLeft / sliderWrapper.clientWidth);
-            dots.forEach(d => d.classList.remove('active'));
-            if(dots[pageIndex]) dots[pageIndex].classList.add('active');
-        });
-
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filterValue = this.value.toLowerCase();
-            productCards.forEach(card => {
-                let name = card.querySelector('.product-name').innerText.toLowerCase();
-                if(name.includes(filterValue)) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
-            });
-        });
+        function submitOrderProof() {
+            if(document.getElementById('securityCheck').checked) {
+                document.getElementById('earnFormContainer').style.display = 'none';
+                document.getElementById('successMsgBox').style.display = 'block';
+            } else { alert('Penalty warning box check karna zaruri hai!'); }
+        }
     </script>
 </body>
 </html>
