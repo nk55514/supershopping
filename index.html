@@ -614,3 +614,305 @@
     </script>
 </body>
 </html>
+<!-- ================================================================= -->
+<!-- SUPER UPDATE: OVERRIDE SCRIPT FOR SECURITY, SEARCH & PROFILE POLICY -->
+<!-- ================================================================= -->
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+    console.log("Super Update System Triggered Successfully!");
+
+    // 1. FIXING THE EARN COINS FORM (REMOVE STEP 6 & MAKE STEP 5 OPTIONAL PRIVACY)
+    const uploadForm = document.querySelector(".upload-form");
+    if (uploadForm) {
+        uploadForm.innerHTML = `
+            <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-file-invoice"></i> Submit Order Proof to Claim Coins:</h3>
+            <div class="form-group">
+                <label>1. Amazon/Flipkart Order ID * (Mandatory)</label>
+                <input type="text" class="form-input" id="orderIdInput" placeholder="e.g. OD123456789">
+            </div>
+            <div class="form-group">
+                <label>2. Product ID * (Valid for 48 Hours Only)</label>
+                <input type="text" class="form-input" id="productIdInput" placeholder="Enter Product ID number">
+                <small style="color:#dc2626; font-size:11px;">Note: Yeh ID delivery ke 48 ghante tak hi acceptable hai.</small>
+            </div>
+            <div class="form-group">
+                <label>3. Order "Delivered" Timeline Screenshot *</label>
+                <div style="position:relative;">
+                    <input type="file" accept="image/*" id="screenshotFile" style="display:none;" onchange="document.getElementById('screen-text').innerText = this.files[0].name">
+                    <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('screenshotFile').click()"><i class="fa-solid fa-image"></i> Upload From Gallery (Screenshot)</button>
+                </div>
+                <small style="color:#64748b; font-size:11px; font-weight:500;" id="screen-text">Upload your Order Tracker Timeline. Screenshot 48 hours se purana nahi hona chahiye.</small>
+            </div>
+            <div class="form-group">
+                <label>4. Invoice/Bill Photo (Live Only) *</label>
+                <button class="camera-btn" onclick="alert('Camera opening: Apne product ka asli bill camera ke samne rakhein.')"><i class="fa-solid fa-camera"></i> Open Live Camera Only</button>
+                <small style="color:#cc0c39; font-size:11px; font-weight:bold;">⚠️ Gallery upload is NOT allowed here. Click bill photo live.</small>
+            </div>
+            <div class="form-group">
+                <label>5. Product Photo (Optional - Privacy Protected)</label>
+                <button class="camera-btn" onclick="alert('Camera opening: Privacy secure hai, aap chahein toh product ki live photo click karein.')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
+                <small style="color:#64748b; font-size:11px;">Aapki privacy ki wajah se is product photo option ko optional rakha gaya hai.</small>
+            </div>
+            <div style="margin: 20px 0; font-size: 12.5px; color: #1e293b; display: flex; gap: 8px; align-items: flex-start; background: #fff1f2; padding: 10px; border-radius: 6px; border: 1px solid #ffe4e6;">
+                <input type="checkbox" id="securityCheck" style="margin-top: 3px; cursor:pointer;"> 
+                <label style="cursor:pointer;" for="securityCheck"><strong>⚠️ Penalty Warning Agreement:</strong> Main confirm karta hoon ki upar di gayi saari details 100% asli hain. Agar maine koi bhi galat, fake ya manipulated info submit ki, toh mera account hamesha ke liye permanent block kar diya jayega.</label>
+            </div>
+            <button class="submit-btn" onclick="submitOrderProof()">Submit Proof & Claim Coins</button>
+        `;
+    }
+
+    // 2. INJECTING TRUST & POLICY CENTER & DYNAMIC 3-DOT SYSTEM INTO ACCOUNT TAB
+    const accountTab = document.getElementById("account-tab");
+    if (accountTab) {
+        accountTab.innerHTML = `
+            <div class="profile-card-container" style="background: white; padding: 25px 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.05); margin-top: 15px; position: relative;">
+                <div style="display: flex; justify-content: space-between; align-items: center; position: relative; margin-bottom: 20px;">
+                    <div style="font-weight: bold; font-size: 16px; color: #1e293b;"><i class="fa-solid fa-id-card"></i> User Profile Account</div>
+                    <div>
+                        <button id="threeDotBtn" style="background: none; border: none; font-size: 22px; color: #333; cursor: pointer; padding: 5px 10px;"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                        <div id="accountDropdown" style="display: none; position: absolute; top: 35px; right: 0; background: white; min-width: 150px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 500; overflow: hidden;">
+                            <button onclick="openProfileEdit()" style="width: 100%; background: none; border: none; padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 500; color: #334155; cursor: pointer; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-user-pen" style="color:#0284c7;"></i> Edit Profile</button>
+                            <button onclick="viewWishlist()" style="width: 100%; background: none; border: none; padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 500; color: #334155; cursor: pointer; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-heart" style="color:#dc2626;"></i> Wishlist</button>
+                            <button onclick="alert('Logging out safely...')" style="width: 100%; background: none; border: none; padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 500; color: #dc2626; cursor: pointer; display: flex; align-items: center; gap: 10px;"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="profileDisplayView">
+                    <div id="profAvatar" style="width: 90px; height: 90px; background: #e2e8f0; border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #94a3b8; overflow: hidden; border: 2px solid #e63946;">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div class="profile-name-text" id="displayFullName" style="font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 4px;">Nitish Kumar Maurya</div>
+                    <div class="profile-username-text" id="displayUsername" style="font-size: 13px; color: #64748b; font-weight: 500; margin-bottom: 15px;">@nk55514</div>
+                    <div class="profile-details-grid" style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 8px; font-size: 13.5px; line-height: 1.8; color: #334155;">
+                        <div><strong><i class="fa-solid fa-phone"></i> Phone:</strong> <span id="displayPhone">+91 XXXXX XXXXX</span></div>
+                        <div><strong><i class="fa-solid fa-location-dot"></i> Address:</strong> <span id="displayAddress">Not provided</span></div>
+                    </div>
+                </div>
+
+                <div id="profileEditFormView" style="display: none; text-align: left; border-top: 1px solid #e2e8f0; padding-top: 15px;">
+                    <h4 style="font-size: 14px; margin-bottom: 12px; color: #e63946;"><i class="fa-solid fa-user-gear"></i> Edit Details:</h4>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label style="font-size:12px; font-weight:bold;">Name</label>
+                        <input type="text" class="form-input" id="editName" value="Nitish Kumar" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label style="font-size:12px; font-weight:bold;">Surname</label>
+                        <input type="text" class="form-input" id="editSurname" value="Maurya" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label style="font-size:12px; font-weight:bold;">Username</label>
+                        <input type="text" class="form-input" id="editUsernameInput" value="nk55514" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label style="font-size:12px; font-weight:bold;">Phone Number</label>
+                        <input type="text" class="form-input" id="editPhone" value="+91 XXXXX XXXXX" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label style="font-size:12px; font-weight:bold;">Address (Optional)</label>
+                        <input type="text" class="form-input" id="editAddress" placeholder="Enter your full address" style="width:100%; padding:8px; border:1px solid #ccc; border-radius:6px;">
+                    </div>
+                    <div class="form-group" style="margin-bottom:12px;">
+                        <label style="font-size:12px; font-weight:bold;">Profile Photo</label>
+                        <input type="file" accept="image/*" id="galleryProfilePhoto" style="display:none;" onchange="loadProfileImage(this)">
+                        <button class="camera-btn" style="background:#0284c7; padding:8px; font-size:12px;" onclick="document.getElementById('galleryProfilePhoto').click()"><i class="fa-solid fa-image"></i> Select Profile from Gallery</button>
+                    </div>
+                    <div style="display:flex; gap:10px; margin-top:15px;">
+                        <button class="submit-btn" style="background:#10b981; padding:10px;" onclick="saveProfileChanges()">Save</button>
+                        <button class="submit-btn" style="background:#64748b; padding:10px;" onclick="closeProfileEdit()">Cancel</button>
+                    </div>
+                </div>
+
+                <div class="wishlist-section" id="wishlistSectionArea" style="display:none; text-align: left; margin-top: 20px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding-bottom:5px;">
+                        <h4 style="font-size:14px; color:#e63946;"><i class="fa-solid fa-heart"></i> Your Saved Items:</h4>
+                        <button style="background:none; border:none; color:#64748b; font-size:12px; cursor:pointer;" onclick="hideWishlist()">Back</button>
+                    </div>
+                    <div class="wishlist-grid" id="wishlistItemsContainer" style="display:grid; grid-template-columns: repeat(2, 1fr); gap:10px; margin-top:10px;">
+                        <p style="font-size:12px; color:#999; grid-column: span 2; text-align:center; padding:15px;">Wishlist is empty.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- OFFICIAL STORE TRUST & POLICY BOX -->
+            <div style="background: white; padding: 15px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); border-top: 4px solid #e63946; text-align: left;">
+                <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px; display:flex; align-items:center; gap:6px;"><i class="fa-solid fa-shield-halved" style="color:#e63946;"></i> Super Shopping Trust & Policy Center:</h4>
+                <ul style="padding-left:15px; font-size:12px; color:#475569; line-height:1.6; display:flex; flex-direction:column; gap:6px;">
+                    <li><strong>Coins Verification:</strong> Order proof submit karne ke baad verification me <strong>24 - 48 Hours</strong> ka samay lagta hai, uske baad coins add hote hain.</li>
+                    <li><strong>Withdrawal Policy:</strong> Wallet se cash withdraw karne par paise aapke UPI address par <strong>5 se 6 din</strong> ke andar safely transfer kiye jaate hain.</li>
+                    <li><strong>Instant E-Books Store:</strong> Coins balance ya Coin+Cash combo dono tarike se premium E-books purchase karna <strong>Instant (Turant)</strong> automated hai.</li>
+                    <li><strong>E-Book Reward Cashback:</strong> Har premium E-book khareedne par aapko <strong>+5 Coins ka return bonus</strong> milega (Verification time: 24-48 hours).</li>
+                    <li><strong>Anti-Return Strict Rule:</strong> Agar koi user product receive hone ke baad reward coins lekar product **Return ya Cancel** karta hai, toh utne coins automatic minus (kat) kiye jayenge. Aisa baar-baar karne par account permanent **Block** kar diya jayega.</li>
+                    <li><strong>Device Security:</strong> Ek phone/device me sirf ek hi account allowed hai. Multiple fake accounts chalane par saare accounts ban kar diye jayenge.</li>
+                </ul>
+            </div>
+        `;
+        
+        // Setup dropdown triggers safely
+        document.getElementById("threeDotBtn").addEventListener("click", function(e) {
+            e.stopPropagation();
+            const dropdown = document.getElementById("accountDropdown");
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+        });
+        document.addEventListener("click", function() {
+            const dropdown = document.getElementById("accountDropdown");
+            if(dropdown) dropdown.style.display = "none";
+        });
+    }
+
+    // 3. SMART PRODUCT SEARCH BAR FEEDBACK MODAL INJECTION
+    const searchInput = document.getElementById("searchInput");
+    if(searchInput) {
+        // Create popup component in HTML body dynamically
+        const feedbackModal = document.createElement("div");
+        feedbackModal.id = "searchFeedbackModal";
+        feedbackModal.style.cssText = "display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; padding:20px;";
+        feedbackModal.innerHTML = `
+            <div style="background:white; padding:25px 20px; border-radius:15px; max-width:400px; width:100%; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+                <i class="fa-solid fa-magnifying-glass-minus" style="font-size:45px; color:#e63946; margin-bottom:15px;"></i>
+                <h3 style="font-size:16px; color:#1e293b; margin-bottom:8px;">Product Not Found! (उत्पाद नहीं मिला)</h3>
+                <p style="font-size:13px; color:#475569; line-height:1.5; margin-bottom:15px;">
+                    Sincere Apologies. Aap jo product search kar rhe hain, wah hamare store par abhi available nahi hai. Lekin hamari team agle <strong>24 - 48 hours</strong> me use sabse saste rate me yahan live kar degi!
+                </p>
+                <div style="text-align:left; margin-bottom:15px;">
+                    <label style="font-size:12px; font-weight:bold; color:#334155;">Niche feedback me aapne product ki details ya link daal de:</label>
+                    <textarea id="searchFeedbackText" rows="3" style="width:100%; margin-top:5px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px;" placeholder="e.g. Black running shoes ya link daalein..."></textarea>
+                </div>
+                <div style="display:flex; gap:10px;">
+                    <button class="submit-btn" style="background:#10b981; padding:10px 0;" onclick="submitSearchFeedback()">Submit Feedback</button>
+                    <button class="submit-btn" style="background:#64748b; padding:10px 0;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(feedbackModal);
+
+        // Intercept search keyup events
+        searchInput.addEventListener("keyup", function() {
+            let filterValue = this.value.toLowerCase().trim();
+            if (filterValue.length > 2) {
+                const productGrid = document.getElementById("productsGrid");
+                const visibleCards = Array.from(productGrid.querySelectorAll(".product-card")).filter(card => card.style.display !== "none");
+                
+                if (visibleCards.length === 0) {
+                    document.getElementById("searchFeedbackModal").style.display = "flex";
+                }
+            }
+        });
+    }
+
+    // 4. INJECT LIKE AND SHARE OVERLAYS TO ALL ACTIVE PRODUCT CARDS AUTOMATICALLY
+    document.querySelectorAll(".product-card").forEach(card => {
+        if(!card.querySelector(".prod-action-overlay")) {
+            const cardId = card.id || "prod_" + Math.random().toString(36).substr(2, 9);
+            card.id = cardId;
+            const pName = card.querySelector(".product-name") ? card.querySelector(".product-name").innerText.replace(/'/g, "\\'") : "Product Deal";
+            const pImg = card.querySelector(".product-img") ? card.querySelector(".product-img").src : "fa-gift";
+            const pPrice = card.querySelector(".main-price") ? card.querySelector(".main-price").innerText : "₹0.00";
+            
+            const actionOverlay = document.createElement("div");
+            actionOverlay.className = "prod-action-overlay";
+            actionOverlay.style.cssText = "position:absolute; top:8px; right:8px; display:flex; flex-direction:column; gap:8px; z-index:10;";
+            actionOverlay.innerHTML = `
+                <button class="action-circle-btn" style="width:32px; height:32px; background:rgba(255,255,255,0.9); border:none; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#64748b; font-size:14px; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.1);" onclick="toggleLike(event, '${cardId}', '${pName}', '${pImg}', '${pPrice}')"><i class="fa-solid fa-heart"></i></button>
+                <button class="action-circle-btn" style="width:32px; height:32px; background:rgba(255,255,255,0.9); border:none; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#64748b; font-size:14px; cursor:pointer; box-shadow:0 2px 4px rgba(0,0,0,0.1);" onclick="shareProduct(event, '${pName}', window.location.href)"><i class="fa-solid fa-share-nodes"></i></button>
+            `;
+            const imgBox = card.querySelector(".product-img-box");
+            if(imgBox) {
+                imgBox.style.position = "relative";
+                imgBox.appendChild(actionOverlay);
+            }
+        }
+    });
+});
+
+// GLOBAL OVERRIDE LOGIC FUNCTIONS
+function openProfileEdit() {
+    document.getElementById("profileDisplayView").style.display = "none";
+    document.getElementById("wishlistSectionArea").style.display = "none";
+    document.getElementById("profileEditFormView").style.display = "block";
+}
+function closeProfileEdit() {
+    document.getElementById("profileEditFormView").style.display = "none";
+    document.getElementById("profileDisplayView").style.display = "block";
+}
+function loadProfileImage(input) {
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById("profAvatar").innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; object-fit:cover;">`;
+        };
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+function saveProfileChanges() {
+    const name = document.getElementById("editName").value.trim();
+    const surname = document.getElementById("editUsernameInput").value.trim();
+    const phone = document.getElementById("editPhone").value.trim();
+    const address = document.getElementById("editAddress").value.trim();
+    if(!name || !surname || !username || !phone) { alert("Compulsory fields cannot be left blank!"); return; }
+    document.getElementById("displayFullName").innerText = name + " " + surname;
+    document.getElementById("displayUsername").innerText = "@" + username;
+    document.getElementById("displayPhone").innerText = phone;
+    document.getElementById("displayAddress").innerText = address ? address : "Not provided";
+    closeProfileEdit();
+    alert("Profile saved locally! Details safely protected.");
+}
+
+let wishlistData = [];
+function toggleLike(e, id, name, img, price) {
+    e.stopPropagation();
+    const btn = e.currentTarget;
+    btn.style.color = btn.style.color === "rgb(220, 38, 38)" ? "#64748b" : "#dc2626";
+    if(btn.style.color === "rgb(220, 38, 38)") {
+        wishlistData.push({ id, name, img, price });
+        alert("Added to Wishlist! ❤️");
+    } else {
+        wishlistData = wishlistData.filter(item => item.id !== id);
+        alert("Removed from Wishlist.");
+    }
+    renderWishlist();
+}
+function renderWishlist() {
+    const container = document.getElementById("wishlistItemsContainer");
+    if(!container) return;
+    if(wishlistData.length === 0) {
+        container.innerHTML = '<p style="font-size:12px; color:#999; grid-column: span 2; text-align:center; padding:15px;">Wishlist is empty.</p>';
+        return;
+    }
+    container.innerHTML = "";
+    wishlistData.forEach(item => {
+        let imgHTML = item.img.includes("http") ? `<img src="${item.img}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;">` : `<i class="fa-solid fa-shirt" style="font-size:25px;color:#cc0c39;"></i>`;
+        container.innerHTML += `
+            <div style="background:#fff; padding:8px; border-radius:6px; display:flex; gap:10px; align-items:center; border:1px solid #e2e8f0; text-align:left;">
+                ${imgHTML}
+                <div style="overflow:hidden;">
+                    <div style="font-size:11px; font-weight:bold; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; color:#333;">${item.name}</div>
+                    <div style="font-size:11px; color:#e63946; font-weight:bold;">${item.price}</div>
+                </div>
+            </div>
+        `;
+    });
+}
+function viewWishlist() {
+    document.getElementById("profileDisplayView").style.display = "none";
+    document.getElementById("profileEditFormView").style.display = "none";
+    document.getElementById("wishlistSectionArea").style.display = "block";
+}
+function hideWishlist() {
+    document.getElementById("wishlistSectionArea").style.display = "none";
+    document.getElementById("profileDisplayView").style.display = "block";
+}
+function shareProduct(e, name, url) {
+    e.stopPropagation();
+    if (navigator.share) {
+        navigator.share({ title: name, text: 'Check out this awesome shopping deal!', url: url });
+    } else { alert('Sharing Product URL: ' + url); }
+}
+function submitSearchFeedback() {
+    const text = document.getElementById("searchFeedbackText").value.trim();
+    if(!text) { alert("Please type something in feedback first!"); return; }
+    alert("Thank you! Aapka feedback record ho gaya hai. Team 24-48 hours me item add karegi.");
+    document.getElementById("searchFeedbackText").value = "";
+    document.getElementById("searchFeedbackModal").style.display = "none";
+}
+</script>
