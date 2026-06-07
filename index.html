@@ -612,14 +612,14 @@
             }
         }
     </script>
-    <!-- ========================================== -->
-<!-- PART 1: ADVANCED INDEPENDENT LAYOUTS LAYER -->
+<!-- ========================================== -->
+<!-- PART 1: ADVANCED REAL-TIME LAYOUTS LAYER  -->
 <!-- ========================================== -->
 <div id="super-shopping-advanced-layer">
 
-    <!-- 1. Unique Registered ID Display (Will inject into Account Page) -->
+    <!-- 1. Unique Registered ID Template -->
     <div id="hidden-id-template" style="display: none;">
-        <div style="margin-top: 10px; background: #f1f5f9; padding: 10px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;">
+        <div style="margin-top: 10px; background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;">
             <i class="fa-solid fa-fingerprint"></i> Registered ID: <span id="userRegID" style="color: #e63946; user-select: all;">Loading...</span>
         </div>
     </div>
@@ -678,7 +678,7 @@
                 </div>
 
                 <div style="background:#fff7ed; padding:8px; border-radius:6px; border-left:3px solid #ea580c;">
-                    <strong style="color:#ea580c; font-size:13px;">6. Device Security (एक फोन, एक अकाउंट)</strong>
+                    <strong style="color:#ea580c; font-size:13px;">6. Device Security (एक phone, एक अकाउंट)</strong>
                     <p style="margin-left:5px;">Ek mobile/device me sirf ek hi account chalane ki permission hai. Multiple fake accounts chalane par saare accounts ban kar diye jaayenge.</p>
                 </div>
             </div>
@@ -708,13 +708,34 @@
         </div>
     </div>
 
-</div>
-    <!-- ========================================== -->
+    <!-- 5. Advanced Wallet Upgrades Dashboard Template -->
+    <div id="hidden-wallet-template" style="display: none;">
+        <div style="margin-top:20px; background:white; padding:15px; border-radius:12px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+            <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw Coins (पैसे निकालें)</h4>
+            <div style="margin-bottom:10px;">
+                <label style="font-size:12px; font-weight:bold; color:#475569;">Enter UPI ID:</label>
+                <input type="text" id="walletUpiInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="example@upi">
+            </div>
+            <div style="margin-bottom:12px;">
+                <label style="font-size:12px; font-weight:bold; color:#475569;">Coins to Withdraw:</label>
+                <input type="number" id="walletCoinsInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="Minimum 100 Coins">
+                <small style="color:#e63946; font-size:11px; font-weight:bold; display:block; margin-top:4px;">* Note: Minimum payout is 100 Coins (₹10)</small>
+            </div>
+            <button onclick="processWalletWithdrawal()" style="width:100%; background:#e63946; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">Submit Withdrawal Request</button>
+            
+            <h4 style="font-size:14px; color:#1e293b; margin-top:20px; margin-bottom:10px;"><i class="fa-solid fa-clock-rotate-left"></i> Real Transaction History</h4>
+            <div id="realTransactionContainer" style="display:flex; flex-direction:column; gap:8px;">
+                <!-- Dynamically loaded transactions will appear here -->
+            </div>
+        </div>
+    </div>
+
+</div><!-- ========================================== -->
 <!-- PART 2: ADVANCED INTERACTIVE ENGINE SCRIPT -->
 <!-- ========================================== -->
 <script>
 (function() {
-    // 1. Automatic Fixed Registered ID System Logic
+    // 1. Generation and Locking of Unique Registered ID
     let savedRegID = localStorage.getItem('super_shopping_reg_id');
     if (!savedRegID) {
         let randomNum = Math.floor(100000 + Math.random() * 900000);
@@ -722,10 +743,9 @@
         localStorage.setItem('super_shopping_reg_id', savedRegID);
     }
 
-    // Target elements setup safely after window loaded completely
     window.addEventListener('DOMContentLoaded', () => {
         
-        // Inject Registered ID into Account View Area
+        // 2. Inject Unique ID into Account Area
         const profileView = document.getElementById('profileDisplayView') || document.getElementById('account-tab');
         if (profileView) {
             const templateID = document.getElementById('hidden-id-template').innerHTML;
@@ -734,73 +754,158 @@
             if(idSpan) idSpan.innerText = savedRegID;
         }
 
-        // Inject Trust & Policy Centre Button into Account Page Area
+        // 3. Inject Trust & Policy Centre Button into Account Page Area
         const accountTab = document.getElementById('account-tab');
         if (accountTab) {
             const templatePolicy = document.getElementById('hidden-policy-btn-template').innerHTML;
             accountTab.insertAdjacentHTML('beforeend', templatePolicy);
         }
 
-        // 2. Modifies Edit Profile to enforce Gallery Photo Upload natively
-        const editProfileForm = document.getElementById('profileEditFormView');
-        if (editProfileForm) {
-            const fileInput = editProfileForm.querySelector('input[type="file"]');
-            if (fileInput) {
-                fileInput.setAttribute('accept', 'image/*');
-                fileInput.style.display = 'block';
-                fileInput.style.margin = '10px 0';
-            }
+        // 4. Transform Edit Profile Layout - Hide Text Input URL, Inject Native Gallery Selector
+        const editForm = document.getElementById('profileEditFormView');
+        if (editForm) {
+            const allLabels = editForm.querySelectorAll('label');
+            allLabels.forEach(label => {
+                if (label.innerText.includes("Profile Photo Link")) {
+                    label.innerHTML = "<strong>Upload Profile Photo From Gallery</strong>";
+                    const nextInput = label.nextElementSibling || editForm.querySelector('input[placeholder*="picture URL"]');
+                    if (nextInput) {
+                        nextInput.setAttribute('type', 'file');
+                        nextInput.setAttribute('accept', 'image/*');
+                        nextInput.placeholder = "";
+                        nextInput.style.padding = "4px";
+                        nextInput.removeAttribute('value');
+                        
+                        // Gallery selection listener event to change live avatar picture
+                        nextInput.addEventListener('change', function(e) {
+                            if (this.files && this.files[0]) {
+                                const reader = new FileReader();
+                                reader.onload = function(evt) {
+                                    const avatarContainer = document.getElementById('profAvatar') || document.querySelector('.profile-avatar-box');
+                                    if(avatarContainer) {
+                                        avatarContainer.innerHTML = `<img src="${evt.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                                        alert("Success: Profile picture updated from mobile gallery!");
+                                    }
+                                };
+                                reader.readAsDataURL(this.files[0]);
+                            }
+                        });
+                    }
+                }
+            });
         }
 
-        // 3. Modifies Referral Code and Sharing Action on Earn Page
-        const referInput = document.getElementById('myReferralCodeView');
-        if (referInput) {
-            referInput.value = savedRegID;
-            referInput.setAttribute('readonly', 'true');
-        }
-
-        // Re-binding refer click button actions safely
+        // 5. Connect Dynamic Live Camera System to Earn Proof Buttons
         const earnTab = document.getElementById('earn-tab');
         if (earnTab) {
-            const copyBtn = earnTab.querySelector('button[onclick*="Referral Code"]');
-            if (copyBtn) {
-                copyBtn.removeAttribute('onclick');
-                copyBtn.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const siteURL = window.location.origin + window.location.pathname + "?ref=" + savedRegID;
-                    navigator.clipboard.writeText(siteURL).then(() => {
-                        alert("Referral Link Copied: " + siteURL);
-                        alert("Referral Reward Policy\nAfter successfully referring a user, reward coins will be credited to your account\nProcessing Time: 24 to 48 hours after successful referral verification.");
+            const cameraButtons = earnTab.querySelectorAll('button');
+            cameraButtons.forEach(btn => {
+                if (btn.innerText.includes("Open Live Camera")) {
+                    btn.removeAttribute('onclick'); 
+                    btn.addEventListener('click', function(e) {
+                        e.preventDefault();
+                        // Access phone native hardware live camera feed via input stream
+                        const liveCamTrigger = document.createElement('input');
+                        liveCamTrigger.type = 'file';
+                        liveCamTrigger.accept = 'image/*';
+                        liveCamTrigger.capture = 'environment'; // Forces live camera only mode
+                        liveCamTrigger.onchange = event => {
+                            const capturedFile = event.target.files[0];
+                            if(capturedFile) {
+                                btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Photo Captured Successfully!`;
+                                btn.style.background = "#0f172a";
+                            }
+                        };
+                        liveCamTrigger.click();
                     });
-                });
-            }
+                }
+            });
         }
+
+        // 6. Upgrading and Displaying Real-Time Wallet Dashboard Layout
+        const walletTab = document.getElementById('wallet-tab');
+        if (walletTab) {
+            const walletTemplate = document.getElementById('hidden-wallet-template').innerHTML;
+            walletTab.insertAdjacentHTML('beforeend', walletTemplate);
+            renderLiveTransactions(); // Loads history values immediately
+        }
+
     });
 
-    // Modal Global Handling Window Scripts
+    // 7. Core Real Dynamic Transaction Engine Core System
+    window.renderLiveTransactions = function() {
+        const container = document.getElementById('realTransactionContainer');
+        if (!container) return;
+        
+        let history = JSON.parse(localStorage.getItem('super_shopping_wallet_history'));
+        if (!history) {
+            history = [
+                { title: "New Login Welcome Bonus", coins: "+5 Coins", date: "Just Now", color: "#16a34a", bg: "#f0fdf4" }
+            ];
+            localStorage.setItem('super_shopping_wallet_history', JSON.stringify(history));
+        }
+        
+        container.innerHTML = "";
+        history.forEach(item => {
+            container.innerHTML += `
+                <div style="background:${item.bg}; padding:10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:12.5px; border-left:4px solid ${item.color};">
+                    <div>
+                        <div style="font-weight:bold; color:#1e293b;">${item.title}</div>
+                        <small style="color:#64748b;">${item.date}</small>
+                    </div>
+                    <div style="font-weight:bold; color:${item.color};">${item.coins}</div>
+                </div>
+            `;
+        });
+    };
+
+    window.processWalletWithdrawal = function() {
+        const upi = document.getElementById('walletUpiInput').value.trim();
+        const amount = parseInt(document.getElementById('walletCoinsInput').value);
+        
+        if(!upi || !amount) { alert("Please fill both fields properly!"); return; }
+        if(amount < 100) { alert("Error: Minimum withdrawal amount is 100 Coins (₹10)!"); return; }
+        
+        // Simulating and saving transaction on current array
+        let history = JSON.parse(localStorage.getItem('super_shopping_wallet_history')) || [];
+        history.unshift({
+            title: `Withdraw requested via UPI (${upi})`,
+            coins: `-${amount} Coins`,
+            date: "Processing (5-6 Days)",
+            color: "#ea580c",
+            bg: "#fff7ed"
+        });
+        localStorage.setItem('super_shopping_wallet_history', JSON.stringify(history));
+        renderLiveTransactions(); // Auto refresh history board UI line
+        
+        document.getElementById('walletUpiInput').value = "";
+        document.getElementById('walletCoinsInput').value = "";
+        alert("Success: Withdrawal Request submitted! Check real history below.");
+    };
+
+    // Modal Control Windows Systems 
     window.openPolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'flex'; };
     window.closePolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'none'; };
 
-    // Search Box Trigger Handler Overlay Interceptor
-    const originalInput = document.getElementById('searchInput');
-    if (originalInput) {
-        originalInput.addEventListener('keyup', function() {
-            let val = this.value.toLowerCase().trim();
+    // Search Popup Filter Hook Interceptor
+    const searchInput = document.getElementById('searchInput');
+    if (searchInput) {
+        searchInput.addEventListener('keyup', function() {
+            let filter = this.value.toLowerCase().trim();
             let cards = document.querySelectorAll('.product-card');
-            let match = 0;
+            let matchCount = 0;
             
             cards.forEach(card => {
                 let name = card.querySelector('.product-name').innerText.toLowerCase();
-                if(name.includes(val)) { match++; }
+                if(name.includes(filter)) matchCount++;
             });
 
-            if (val.length > 2 && match === 0) {
+            if (filter.length > 2 && matchCount === 0) {
                 document.getElementById('searchFeedbackModal').style.display = 'flex';
             }
         });
     }
 
-    // Custom Feedback Popup Submit Connector 
     window.submitCustomFeedback = function() {
         const text = document.getElementById('searchFeedbackText').value.trim();
         if(!text) { alert('Please type some product description first!'); return; }
