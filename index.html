@@ -612,5 +612,52 @@
             }
         }
     </script>
+    <!-- PART 1: ADVANCED FEATURES LAYER -->
+<div id="new-features-layer">
+    <!-- Policy Box -->
+    <div style="background: white; padding: 15px; border-radius: 12px; margin-top: 20px; border-top: 4px solid #e63946; font-size: 12px; color: #475569; display: none;" id="policy-box">
+        <h4 style="color:#1e293b; margin-bottom:8px;">Trust & Policy Center:</h4>
+        <ul>
+            <li>Coins Verification: 24-48 Hours.</li>
+            <li>Referral Reward: Verification ke baad 24-48 Hours me.</li>
+            <li>Return/Cancel Penalty: Account permanent block.</li>
+        </ul>
+    </div>
+    <!-- Feedback Popup -->
+    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+        <div style="background:white; padding:20px; border-radius:15px; max-width:350px; text-align:center;">
+            <h3>Product Not Found!</h3>
+            <p style="font-size:13px; margin:10px 0;">Product abhi store par nahi hai, team 24-48 hours me live kar degi.</p>
+            <textarea id="feedbackText" style="width:100%; height:60px;" placeholder="Details daalein..."></textarea>
+            <button onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+        </div>
+    </div>
+</div><!-- PART 2: FEATURE LOGIC SCRIPT -->
+<script>
+    // 1. Gallery Upload Logic
+    function handleGalleryUpload() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = 'image/*';
+        input.onchange = e => {
+            const file = e.target.files[0];
+            alert("Photo Selected: " + file.name + ". Verification pending.");
+        };
+        input.click();
+    }
+
+    // 2. Search Popup Logic
+    document.getElementById('searchInput').addEventListener('keyup', function() {
+        if(this.value.length > 3) {
+            // Agar product nahi mila toh popup
+            document.getElementById('searchFeedbackModal').style.display = 'flex';
+        }
+    });
+
+    // Policy box ko Account tab me dikhane ke liye
+    if(document.getElementById('account-tab')) {
+        document.getElementById('policy-box').style.display = 'block';
+    }
+</script>
     </body>
 </html>
