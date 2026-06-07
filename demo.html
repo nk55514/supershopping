@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Shopping</title>
+    <title>Super Shopping - Testing Demo</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
@@ -16,92 +16,302 @@
         .coin-status i { color: #ffd700; font-size: 20px; }
         .category-section { background: white; padding: 15px 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; }
         .category-grid { display: flex; overflow-x: auto; white-space: nowrap; gap: 15px; padding-bottom: 5px; }
-        .cat-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #444; font-size: 11px; font-weight: bold; min-width: 75px; cursor: pointer; background: none; border: none; }
+        .cat-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #444; font-size: 11px; font-weight: bold; min-width: 75px; cursor: pointer; background: none; border: none; outline: none; }
         .cat-icon { width: 52px; height: 52px; background: #fff1f2; color: #e63946; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; border: 1px solid #ffe4e6; }
         .cat-item.active-cat .cat-icon { background: #e63946; color: white; }
         .tab-content { padding: 0 12px; display: none; }
         .tab-content.active-tab { display: block; }
-        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; padding: 10px 0; }
-        .product-card { background: white; padding: 10px; border: 1px solid #f1f5f9; border-radius: 8px; position: relative; }
-        .product-img-box { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; background: #f8f8f8; overflow: hidden; border-radius: 4px; }
-        .prod-action-overlay { position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 8px; }
-        .action-circle-btn { width: 32px; height: 32px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; color: #64748b; cursor: pointer; }
-        .earn-container { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; }
-        .camera-btn { width: 100%; background: #475569; color: white; border: none; padding: 12px; border-radius: 6px; font-weight: bold; cursor: pointer; margin-bottom: 10px; }
-        .submit-btn { width: 100%; background: #e63946; color: white; border: none; padding: 14px; border-radius: 6px; font-weight: bold; }
-        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 65px; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #eee; z-index: 1000; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; color: #777; font-size: 11px; cursor: pointer; border: none; background: none; }
+        .section-title { font-size: 15px; color: #e63946; margin: 15px 0 12px 0; font-weight: bold; text-transform: uppercase; }
+        .products-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; background: #fff; padding: 10px 0; }
+        .product-card { background: white; padding: 10px 5px; display: flex; flex-direction: column; justify-content: space-between; cursor: pointer; position: relative; border: 1px solid #f1f5f9; border-radius: 8px; overflow: hidden; }
+        .product-img-box { width: 100%; height: 170px; display: flex; align-items: center; justify-content: center; background: #f8f8f8; overflow: hidden; border-radius: 4px; position: relative; }
+        .product-img { max-width: 100%; max-height: 100%; object-fit: cover; }
+        .prod-action-overlay { position: absolute; top: 8px; right: 8px; display: flex; flex-direction: column; gap: 8px; z-index: 10; }
+        .action-circle-btn { width: 32px; height: 32px; background: rgba(255,255,255,0.9); border: none; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 14px; cursor: pointer; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+        .product-info-block { padding: 8px 4px 4px 4px; }
+        .product-name { font-size: 14px; font-weight: 400; color: #333; line-height: 1.3; margin-bottom: 4px; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+        .price-layout { display: flex; align-items: center; flex-wrap: wrap; gap: 6px; margin-bottom: 4px; }
+        .main-price { font-size: 15px; font-weight: bold; color: #111; }
+        .original-price { font-size: 12px; color: #777; text-decoration: line-through; }
+        .deal-badge-row { display: flex; align-items: center; gap: 5px; margin-top: 4px; flex-wrap: wrap; }
+        .discount-tag { background: #cc0c39; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
+        .limited-tag { color: #cc0c39; font-size: 11px; font-weight: bold; }
+        .earn-container { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        .earn-main-title { font-size: 24px; color: #e63946; font-weight: bold; text-align: center; margin-bottom: 15px; }
+        .rate-badge { background: #fff1f2; color: #e63946; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; border: 1px dashed #e63946; margin-bottom: 20px; }
+        .bonus-box { display: flex; justify-content: space-between; background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #e63946; }
+        .bonus-title { font-weight: bold; font-size: 14px; }
+        .bonus-coins { color: #cc0c39; font-weight: bold; }
+        .info-card { background: #f1f5f9; padding: 15px; border-radius: 8px; margin-top: 15px; margin-bottom: 20px; }
+        .info-card h4 { font-size: 14px; color: #334155; margin-bottom: 8px; text-transform: uppercase; }
+        .info-card ul { list-style-type: square; padding-left: 20px; font-size: 13px; color: #475569; line-height: 1.5; }
+        .upload-form { border-top: 2px dashed #e2e8f0; padding-top: 15px; margin-top: 15px; }
+        .form-group { margin-bottom: 15px; }
+        .form-group label { display: block; font-size: 13px; font-weight: bold; margin-bottom: 5px; color: #333; }
+        .form-input { width: 100%; padding: 10px; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 14px; }
+        .camera-btn { width: 100%; background: #475569; color: white; border: none; padding: 12px; border-radius: 6px; font-size: 14px; font-weight: bold; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; margin-bottom: 10px; }
+        .submit-btn { width: 100%; background: #e63946; color: white; border: none; padding: 14px; border-radius: 6px; font-size: 15px; font-weight: bold; cursor: pointer; box-shadow: 0 3px 6px rgba(230,57,70,0.2); }
+        .account-header-row { display: flex; justify-content: space-between; align-items: center; position: relative; margin-bottom: 20px; }
+        .three-dot-menu-btn { background: none; border: none; font-size: 22px; color: #333; cursor: pointer; padding: 5px 10px; }
+        .dropdown-menu-list { display: none; position: absolute; top: 35px; right: 0; background: white; min-width: 150px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 500; overflow: hidden; }
+        .dropdown-menu-list button { width: 100%; background: none; border: none; padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 500; color: #334155; cursor: pointer; display: flex; align-items: center; gap: 10px; }
+        .dropdown-menu-list button:hover { background: #f8f9fa; }
+        .profile-card-container { background: white; padding: 25px 20px; border-radius: 12px; text-align: center; box-shadow: 0 2px 8px rgba(0,0,0,0.04); margin-top: 15px; position: relative; }
+        .profile-avatar-box { width: 90px; height: 90px; background: #e2e8f0; border-radius: 50%; margin: 0 auto 15px auto; display: flex; align-items: center; justify-content: center; font-size: 45px; color: #94a3b8; overflow: hidden; border: 2px solid #e63946; }
+        .profile-avatar-box img { width: 100%; height: 100%; object-fit: cover; }
+        .profile-name-text { font-size: 18px; font-weight: bold; color: #1e293b; margin-bottom: 4px; }
+        .profile-username-text { font-size: 13px; color: #64748b; font-weight: 500; margin-bottom: 15px; }
+        .profile-details-grid { text-align: left; background: #f8fafc; padding: 15px; border-radius: 8px; font-size: 13.5px; line-height: 1.8; color: #334155; }
+        .wishlist-section { display: none; margin-top: 20px; text-align: left; }
+        .wishlist-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-top: 10px; }
+        .modal { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(0,0,0,0.7); z-index: 2000; justify-content: center; align-items: flex-end; }
+        .modal-content { background: white; width: 100%; max-height: 85vh; border-top-left-radius: 20px; border-top-right-radius: 20px; padding: 20px; overflow-y: auto; position: relative; }
+        .close-modal { position: absolute; top: 15px; right: 20px; font-size: 24px; color: #333; cursor: pointer; background: #f0f0f0; width: 35px; height: 35px; border-radius: 50%; display: flex; align-items: center; justify-content: center; z-index: 10; }
+        .slider-container { width: 100%; height: 280px; overflow: hidden; position: relative; background: #fff; border-radius: 12px; margin-top: 15px; margin-bottom: 15px; }
+        .slider-wrapper { display: flex; width: 100%; height: 100%; overflow-x: auto; snap-type: x mandatory; scroll-behavior: smooth; }
+        .slider-wrapper::-webkit-scrollbar { display: none; }
+        .slide-img { min-width: 100%; height: 100%; object-fit: contain; snap-align: start; }
+        .slider-dots { display: flex; justify-content: center; gap: 5px; margin-bottom: 15px; }
+        .dot { width: 8px; height: 8px; background: #ddd; border-radius: 50%; }
+        .dot.active { background: #e63946; width: 18px; border-radius: 4px; }
+        .modal-title { font-size: 16px; font-weight: bold; color: #111; margin-bottom: 8px; }
+        .modal-desc { font-size: 13px; color: #666; margin-bottom: 15px; line-height: 1.4; }
+        .modal-price-row { display: flex; justify-content: space-between; align-items: center; background: #fff5f5; padding: 12px; border-radius: 10px; border: 1px solid #ffe3e3; margin-bottom: 20px; }
+        .modal-price { font-size: 18px; color: #cc0c39; font-weight: bold; }
+        .modal-buy-btn { background: #e63946; color: white; text-decoration: none; padding: 12px 25px; font-size: 14px; font-weight: bold; border-radius: 8px; }
+        .related-section { margin-top: 25px; border-top: 2px dashed #eee; padding-top: 15px; }
+        .related-title { font-size: 14px; font-weight: bold; color: #e63946; margin-bottom: 10px; text-transform: uppercase; }
+        .related-empty { text-align: center; padding: 15px; font-size: 12px; color: #999; background: #f9f9f9; border-radius: 6px; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 65px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 1000; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; flex: 1; height: 100%; justify-content: center; }
+        .nav-item i { font-size: 19px; margin-bottom: 4px; }
+        .nav-item.active { color: #e63946; font-weight: bold; }
     </style>
 </head>
 <body>
-  <header>Super Shopping</header>
-<div class="search-container"><input type="text" class="search-box" id="searchInput" placeholder="Search..."></div>
-<div id="home-tab" class="tab-content active-tab">
-    <div class="category-grid" style="display:flex; overflow-x:auto;">
-        <button class="cat-item active-cat" id="cat-all"><div class="cat-icon"><i class="fa-solid fa-border-all"></i></div>For You</button>
-        <button class="cat-item" id="cat-cloths"><div class="cat-icon"><i class="fa-solid fa-shirt"></i></div>Cloths</button>
+    <header>Super Shopping (Demo Testing)</header>
+    <div class="search-container">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search clothes, shoes, mobiles...">
     </div>
-    <div class="products-grid" id="productsGrid">
-        <div class="product-card" data-category="cloths" id="tshirtCard">
-            <div class="prod-action-overlay"><button class="action-circle-btn" onclick="toggleLike(event, 'tshirtCard', 'Maroon T-Shirt', 'img1.jpg', '₹243')"><i class="fa-solid fa-heart"></i></button></div>
-            <div class="product-img-box"><img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" style="max-width:100%;"></div>
-            <div class="product-name">AUSK Men's Maroon Graphic T-Shirt</div>
+    <div id="home-tab" class="tab-content active-tab">
+        <div class="top-dash">
+            <div class="coin-status"><i class="fa-solid fa-coins"></i> <span>5 Coins</span></div>
+            <div style="font-size:12px; color:#666; font-weight:bold;">⚡ Demo Mode Live</div>
+        </div>
+        <div class="category-section">
+            <div class="category-grid">
+                <button class="cat-item active-cat" id="cat-all"><div class="cat-icon"><i class="fa-solid fa-border-all"></i></div>For You</button>
+                <button class="cat-item" id="cat-cloths"><div class="cat-icon"><i class="fa-solid fa-shirt"></i></div>Cloths</button>
+                <button class="cat-item" id="cat-shoes"><div class="cat-icon"><i class="fa-solid fa-shoe-prints"></i></div>Shoes</button>
+                <button class="cat-item" id="cat-mobiles"><div class="cat-icon"><i class="fa-solid fa-mobile-screen"></i></div>Mobiles</button>
+            </div>
+        </div>
+        <div class="section-title" id="currentSectionTitle">🔥 Today's Deals</div>
+        <div class="products-grid" id="productsGrid">
+            <div class="product-card" data-category="cloths" id="tshirtCard">
+                <div class="prod-action-overlay">
+                    <button class="action-circle-btn" onclick="toggleLike(event, 'tshirtCard', 'AUSK Men\'s Maroon Graphic Printed Oversized T-Shirt', 'WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg', '₹243.00')"><i class="fa-solid fa-heart"></i></button>
+                    <button class="action-circle-btn" onclick="shareProduct(event, 'AUSK Men\'s Maroon Graphic T-Shirt', window.location.href)"><i class="fa-solid fa-share-nodes"></i></button>
+                </div>
+                <div class="product-img-box"><img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="product-img" alt="Maroon T-Shirt"></div>
+                <div class="product-info-block">
+                    <div class="product-name">AUSK Men's Maroon Graphic Printed Oversized T-Shirt</div>
+                    <div class="price-layout"><span class="main-price">₹243.00</span><span class="original-price">₹1,099.00</span></div>
+                    <div class="deal-badge-row"><span class="discount-tag">77% off</span><span class="limited-tag">Limited time deal</span></div>
+                </div>
+            </div>
+            <div class="product-card" data-category="shoes" id="shoesCard">
+                <div class="prod-action-overlay">
+                    <button class="action-circle-btn" onclick="toggleLike(event, 'shoesCard', 'Centrino Men\'s Formal Loafer Shoes', 'fa-shoe-prints', '₹699.00')"><i class="fa-solid fa-heart"></i></button>
+                    <button class="action-circle-btn" onclick="shareProduct(event, 'Centrino Men\'s Formal Loafer Shoes', window.location.href)"><i class="fa-solid fa-share-nodes"></i></button>
+                </div>
+                <div class="product-img-box"><i class="fa-solid fa-shoe-prints" style="font-size:50px; color:#ddd;"></i></div>
+                <div class="product-info-block">
+                    <div class="product-name">Centrino Men's Formal Loafer Shoes</div>
+                    <div class="price-layout"><span class="main-price">₹699.00</span><span class="original-price">₹2,499.00</span></div>
+                    <div class="deal-badge-row"><span class="discount-tag">72% off</span><span class="limited-tag">Limited time deal</span></div>
+                </div>
+            </div>
+        </div>
+    </div><div id="earn-tab" class="tab-content">
+        <div class="earn-container" id="earnFormContainer">
+            <div class="earn-main-title">💰 Earn Coins Dashboard</div>
+            <div class="rate-badge"><i class="fa-solid fa-star-of-life"></i> 100 Coins = ₹10</div>
+            <div style="background: #fff7ed; border: 1px solid #ffedd5; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border-left: 5px solid #ea580c;">
+                <i class="fa-solid fa-clock-rotate-left" style="color: #ea580c; font-size: 20px;"></i>
+                <div style="font-size: 12.5px; color: #9a3412; line-height: 1.4;"><strong>⏰ Strict 48-Hour Deadline:</strong><br>Order Delivered hone ke 48 ghante ke andar submit karna mandatory hai.</div>
+            </div>
+            <div class="bonus-box"><span class="bonus-title">🎁 New Login Bonus</span><span class="bonus-coins">+5 Coins</span></div>
+            <div class="bonus-box"><span class="bonus-title">🔗 Friend Referral Program</span><span class="bonus-coins" style="color:#16a34a;">+10 Coins (Pending Validation)</span></div>
+            <div style="background: #f0fdf4; border: 1px dashed #bbf7d0; padding: 12px; border-radius: 8px; margin: 15px 0; text-align: left;">
+                <h5 style="font-size:13px; color:#166534; margin-bottom:5px;"><i class="fa-solid fa-users-viewfinder"></i> Share & Earn:</h5>
+                <div style="display:flex; gap:8px;">
+                    <input type="text" class="form-input" style="padding:6px; font-size:12px; background:white; font-weight:bold; color:#166534;" id="myReferralCodeView" value="NK91XXXXXX" readonly>
+                    <button style="background:#16a34a; color:white; border:none; padding:0 12px; border-radius:6px; font-size:11px; font-weight:bold;" onclick="alert('Referral Link copied!')">Copy</button>
+                </div>
+            </div>
+            <div class="upload-form">
+                <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-file-invoice"></i> Submit Proof:</h3>
+                <div class="form-group"><label>1. Order ID *</label><input type="text" class="form-input" id="orderIdInput" placeholder="e.g. OD123456789"></div>
+                <div class="form-group"><label>2. Product ID *</label><input type="text" class="form-input" id="productIdInput" placeholder="Enter Product ID number"></div>
+                <div class="form-group">
+                    <label>3. Timeline Screenshot *</label>
+                    <input type="file" accept="image/*" id="screenshotFile" style="display:none;" onchange="document.getElementById('screen-text').innerText = this.files[0].name">
+                    <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('screenshotFile').click()"><i class="fa-solid fa-image"></i> Upload From Gallery</button>
+                    <small id="screen-text" style="color:#64748b; font-size:11px;">No file chosen</small>
+                </div>
+                <div class="form-group"><label>4. Invoice/Bill Photo (Live Only) *</label><button class="camera-btn" onclick="alert('Camera opened for Live Bill Verification.')"><i class="fa-solid fa-camera"></i> Open Live Camera</button></div>
+                <div class="form-group"><label>5. Product Photo (Optional - Privacy Protected)</label><button class="camera-btn" onclick="alert('Optional Camera opened safely.')"><i class="fa-solid fa-camera"></i> Open Live Camera</button></div>
+                <div style="margin: 20px 0; font-size: 12.5px; color: #1e293b; display: flex; gap: 8px; background: #fff1f2; padding: 10px; border-radius: 6px; border: 1px solid #ffe4e6;">
+                    <input type="checkbox" id="securityCheck"> <label for="securityCheck"><strong>⚠️ Penalty Warning Agreement:</strong> Details 100% sahi hain. Fake data par mera account block kiya jaye.</label>
+                </div>
+                <button class="submit-btn" onclick="submitOrderProof()">Submit & Claim Coins</button>
+            </div>
+        </div>
+        <div id="successMsgBox" style="display:none; background: white; padding: 30px 20px; border-radius: 12px; margin-top: 15px; text-align: center;">
+            <i class="fa-solid fa-circle-check" style="font-size: 55px; color: #10b981; margin-bottom: 15px;"></i>
+            <h2>Submitted Successfully!</h2>
+            <div style="background: #f0fdf4; padding: 10px; border-radius: 6px; margin: 15px 0; font-weight: bold; color: #166534;">🔍 Verification Status: 24 to 48 Hours</div>
+            <button class="camera-btn" style="background:#e63946;" onclick="resetEarnForm()">Back</button>
         </div>
     </div>
-</div>
-<div id="earn-tab" class="tab-content">
-    <div class="earn-container">
-        <h3>Submit Proof</h3>
-        <input type="text" class="form-input" id="orderIdInput" placeholder="Order ID">
-        <button class="camera-btn" onclick="alert('Camera')">Live Bill Photo</button>
-        <button class="camera-btn" onclick="alert('Camera')">Product Photo (Optional)</button>
-        <button class="submit-btn" onclick="submitOrderProof()">Submit</button>
+
+    <div id="ebook-tab" class="tab-content">
+        <div style="text-align:center; padding:40px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-book" style="font-size:40px; color:#e63946; margin-bottom:10px;"></i><h2>Premium E-Books Store</h2><p style="color:#666; font-size:13px;">Instant delivery + 5 Coins Return Reward on every buy.</p></div>
     </div>
-</div>
-<div id="account-tab" class="tab-content">
-    <div id="profileDisplayView">
-        <div id="profAvatar" style="width:80px; height:80px; border-radius:50%; background:#eee; margin:auto;"></div>
-        <div id="displayFullName">Nitish Maurya</div>
-        <button onclick="openProfileEdit()">Edit Profile</button>
+
+    <div id="wallet-tab" class="tab-content">
+        <div style="text-align:center; padding:40px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-wallet" style="font-size:40px; color:#475569; margin-bottom:10px;"></i><h2>Wallet Balance</h2><div style="font-size:24px; font-weight:bold; color:#1e293b;">5 Coins</div></div>
     </div>
-    <div id="profileEditFormView" style="display:none;">
-        <input type="text" id="editName" placeholder="Name">
-        <input type="file" id="galleryPhotoSelector" onchange="loadProfileImage(this)">
-        <button onclick="saveProfileChanges()">Save</button>
+
+    <div id="account-tab" class="tab-content">
+        <div class="profile-card-container">
+            <div class="account-header-row">
+                <div style="font-weight: bold; color: #1e293b;"><i class="fa-solid fa-id-card"></i> Profile</div>
+                <div>
+                    <button class="three-dot-menu-btn" onclick="toggleDropdownMenu(event)"><i class="fa-solid fa-ellipsis-vertical"></i></button>
+                    <div class="dropdown-menu-list" id="accountDropdown">
+                        <button onclick="openProfileEdit()"><i class="fa-solid fa-user-pen"></i> Edit Profile</button>
+                        <button onclick="viewWishlist()"><i class="fa-solid fa-heart"></i> Wishlist</button>
+                    </div>
+                </div>
+            </div>
+            <div id="profileDisplayView">
+                <div class="profile-avatar-box" id="profAvatar"><i class="fa-solid fa-user"></i></div>
+                <div class="profile-name-text" id="displayFullName">Nitish Kumar Maurya</div>
+                <div class="profile-username-text" id="displayUsername">@nk55514</div>
+                <div class="profile-details-grid">
+                    <div><strong>Phone:</strong> <span id="displayPhone">+91 XXXXX XXXXX</span></div>
+                    <div><strong>Address:</strong> <span id="displayAddress">Not provided</span></div>
+                </div>
+            </div>
+            <div id="profileEditFormView" style="display: none; text-align: left;">
+                <div class="form-group"><label>Name</label><input type="text" class="form-input" id="editName" value="Nitish Kumar"></div>
+                <div class="form-group"><label>Surname</label><input type="text" class="form-input" id="editSurname" value="Maurya"></div>
+                <div class="form-group">
+                    <label>Select From Gallery</label>
+                    <input type="file" accept="image/*" id="galleryPhotoSelector" style="display:none;" onchange="handleGalleryPhotoLoad(this)">
+                    <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('galleryPhotoSelector').click()"><i class="fa-solid fa-image"></i> Open Gallery</button>
+                </div>
+                <button class="submit-btn" style="background:#10b981;" onclick="saveProfileChanges()">Save</button>
+                <button class="submit-btn" style="background:#64748b; margin-top:5px;" onclick="closeProfileEdit()">Cancel</button>
+            </div>
+            <div class="wishlist-section" id="wishlistSectionArea">
+                <h4>Your Saved Items:</h4>
+                <div class="wishlist-grid" id="wishlistItemsContainer"><p style="font-size:12px; color:#999;">Empty.</p></div>
+                <button class="camera-btn" style="margin-top:10px;" onclick="hideWishlist()">Back</button>
+            </div>
+        </div>
+        <div style="background: white; padding: 15px; border-radius: 12px; margin-top: 15px; text-align: left; border-top: 4px solid #e63946;">
+            <h4 style="font-size:14px; margin-bottom:10px;"><i class="fa-solid fa-shield-halved"></i> Trust & Policy Center:</h4>
+            <ul style="padding-left:15px; font-size:12px; color:#475569; line-height:1.6;">
+                <li><strong>Coins Verification:</strong> Checking processes me 24-48 Hours lagte hain.</li>
+                <li><strong>Withdrawal:</strong> UPI cash out me 5-6 din ka processing time lagta hai.</li>
+                <li><strong>Strict Law:</strong> Return or Cancel karne par reward automatically minus hoga aur account block ho sakta hai.</li>
+            </ul>
+        </div>
     </div>
-</div>
-<nav class="bottom-nav">
-    <button class="nav-item active" data-tab="home-tab"><i class="fa-solid fa-house"></i><span>Home</span></button>
-    <button class="nav-item" data-tab="earn-tab"><i class="fa-solid fa-gift"></i><span>Earn</span></button>
-    <button class="nav-item" data-tab="account-tab"><i class="fa-solid fa-user"></i><span>Account</span></button>
-</nav>
-<script>
-    function toggleLike(e, id, name, img, price) {
-        e.stopPropagation();
-        e.currentTarget.style.color = (e.currentTarget.style.color === "red") ? "#64748b" : "red";
-    }
-    function openProfileEdit() {
-        document.getElementById('profileDisplayView').style.display = 'none';
-        document.getElementById('profileEditFormView').style.display = 'block';
-    }
-    function saveProfileChanges() {
-        document.getElementById('displayFullName').innerText = document.getElementById('editName').value;
-        document.getElementById('profileEditFormView').style.display = 'none';
-        document.getElementById('profileDisplayView').style.display = 'block';
-    }
-    function loadProfileImage(input) {
-        if (input.files && input.files[0]) {
-            const reader = new FileReader();
-            reader.onload = function(e) { document.getElementById('profAvatar').innerHTML = `<img src="${e.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`; };
-            reader.readAsDataURL(input.files[0]);
-        }
-    }
-    document.querySelectorAll('.nav-item').forEach(btn => {
-        btn.addEventListener('click', function() {
-            document.querySelectorAll('.tab-content').forEach(t => t.classList.remove('active-tab'));
-            document.getElementById(this.getAttribute('data-tab')).classList.add('active-tab');
+
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" id="closeModalBtn">&times;</span>
+            <div class="slider-container"><div class="slider-wrapper" id="sliderWrapper"><img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="slide-img" alt="View 1"></div></div>
+            <div class="modal-title">AUSK Men's Maroon Graphic T-Shirt</div>
+            <div class="modal-price-row"><div class="modal-price">₹243.00</div><a href="https://amzn.to/4x5k5sl" target="_blank" class="modal-buy-btn">Buy on Amazon</a></div>
+        </div>
+    </div>
+
+    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; padding:20px;">
+        <div style="background:white; padding:25px; border-radius:15px; max-width:400px; width:100%; text-align:center;">
+            <i class="fa-solid fa-magnifying-glass-minus" style="font-size:40px; color:#e63946;"></i>
+            <h3>Product Not Found! (उत्पाद नहीं मिला)</h3>
+            <p style="font-size:13px; color:#475569; margin:10px 0;">Sorry, aap jo search kar rhe hain wah store par available nhi h per <strong>24 - 48 hours</strong> me live kiya jayega. Feedback me details daal dein.</p>
+            <textarea id="searchFeedbackText" rows="2" style="width:100%; padding:8px; margin-bottom:10px;" placeholder="Product Name / Links..."></textarea>
+            <div style="display:flex; gap:10px;">
+                <button class="submit-btn" style="background:#10b981;" onclick="submitSearchFeedback()">Submit</button>
+                <button class="submit-btn" style="background:#64748b;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <nav class="bottom-nav">
+        <button class="nav-item active" data-tab="home-tab"><i class="fa-solid fa-house"></i><span>Home</span></button>
+        <button class="nav-item" data-tab="earn-tab"><i class="fa-solid fa-gift"></i><span>Earn</span></button>
+        <button class="nav-item" data-tab="ebook-tab"><i class="fa-solid fa-book"></i><span>Ebook</span></button>
+        <button class="nav-item" data-tab="wallet-tab"><i class="fa-solid fa-wallet"></i><span>Wallet</span></button>
+        <button class="nav-item" data-tab="account-tab"><i class="fa-solid fa-user"></i><span>Account</span></button>
+    </nav>
+
+    <script>
+        const navButtons = document.querySelectorAll('.nav-item');
+        const tabContents = document.querySelectorAll('.tab-content');
+        navButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                navButtons.forEach(b => b.classList.remove('active'));
+                tabContents.forEach(t => t.classList.remove('active-tab'));
+                this.classList.add('active');
+                document.getElementById(this.getAttribute('data-tab')).classList.add('active-tab');
+            });
         });
-    });
-</script>
+        const productCards = document.querySelectorAll('.product-card');
+        document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filterValue = this.value.toLowerCase().trim();
+            let matched = 0;
+            productCards.forEach(card => {
+                let name = card.querySelector('.product-name').innerText.toLowerCase();
+                if(name.includes(filterValue)) { card.style.display='flex'; matched++; } else { card.style.display='none'; }
+            });
+            if(filterValue.length > 2 && matched === 0) { document.getElementById('searchFeedbackModal').style.display='flex'; }
+        });
+        const tshirtCard = document.getElementById('tshirtCard');
+        const modalView = document.getElementById('product-modal');
+        if(tshirtCard) { tshirtCard.addEventListener('click', function(e) { if(!e.target.closest('.prod-action-overlay')) modalView.style.display='flex'; }); }
+        document.getElementById('closeModalBtn').addEventListener('click', function() { modalView.style.display='none'; });
+
+        function submitOrderProof() {
+            if(!document.getElementById('orderIdInput').value || !document.getElementById('productIdInput').value) { alert('Fill fields!'); return; }
+            if(!document.getElementById('securityCheck').checked) { alert('Agree terms!'); return; }
+            document.getElementById('earnFormContainer').style.display = 'none';
+            document.getElementById('successMsgBox').style.display = 'block';
+        }
+        function resetEarnForm() { document.getElementById('successMsgBox').style.display = 'none'; document.getElementById('earnFormContainer').style.display = 'block'; }
+        function toggleDropdownMenu(e) { e.stopPropagation(); const m = document.getElementById('accountDropdown'); m.style.display = (m.style.display==='block')?'none':'block'; }
+        document.addEventListener('click', function() { if(document.getElementById('accountDropdown')) document.getElementById('accountDropdown').style.display='none'; });
+        function openProfileEdit() { document.getElementById('profileDisplayView').style.display='none'; document.getElementById('profileEditFormView').style.display='block'; }
+        function closeProfileEdit() { document.getElementById('profileEditFormView').style.display='none'; document.getElementById('profileDisplayView').style.display='block'; }
+        function handleGalleryPhotoLoad(input) {
+            if (input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = function(e) { document.getElementById('profAvatar').innerHTML = `<img src="${e.target.result}" style="width:100%;height:100%;border-radius:50%;object-fit:cover;">`; };
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        function saveProfileChanges() { document.getElementById('displayFullName').innerText = document.getElementById('editName').value + ' ' + document.getElementById('editSurname').value; closeProfileEdit(); alert('Saved!'); }
+        function toggleLike(e, id, name, img, price) { e.stopPropagation(); alert('Wishlist status updated.'); }
+        function viewWishlist() { document.getElementById('profileDisplayView').style.display='none'; document.getElementById('wishlistSectionArea').style.display='block'; }
+        function hideWishlist() { document.getElementById('wishlistSectionArea').style.display='none'; document.getElementById('profileDisplayView').style.display='block'; }
+        function shareProduct(e, name, url) { e.stopPropagation(); alert('Share Link: ' + url); }
+        function submitSearchFeedback() { alert('Feedback recorded!'); document.getElementById('searchFeedbackModal').style.display='none'; }
+    </script>
 </body>
 </html>
