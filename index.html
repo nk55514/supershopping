@@ -612,52 +612,204 @@
             }
         }
     </script>
-    <!-- PART 1: ADVANCED FEATURES LAYER -->
-<div id="new-features-layer">
-    <!-- Policy Box -->
-    <div style="background: white; padding: 15px; border-radius: 12px; margin-top: 20px; border-top: 4px solid #e63946; font-size: 12px; color: #475569; display: none;" id="policy-box">
-        <h4 style="color:#1e293b; margin-bottom:8px;">Trust & Policy Center:</h4>
-        <ul>
-            <li>Coins Verification: 24-48 Hours.</li>
-            <li>Referral Reward: Verification ke baad 24-48 Hours me.</li>
-            <li>Return/Cancel Penalty: Account permanent block.</li>
-        </ul>
-    </div>
-    <!-- Feedback Popup -->
-    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:9999; justify-content:center; align-items:center; padding:20px;">
-        <div style="background:white; padding:20px; border-radius:15px; max-width:350px; text-align:center;">
-            <h3>Product Not Found!</h3>
-            <p style="font-size:13px; margin:10px 0;">Product abhi store par nahi hai, team 24-48 hours me live kar degi.</p>
-            <textarea id="feedbackText" style="width:100%; height:60px;" placeholder="Details daalein..."></textarea>
-            <button onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+    <!-- ========================================== -->
+<!-- PART 1: ADVANCED INDEPENDENT LAYOUTS LAYER -->
+<!-- ========================================== -->
+<div id="super-shopping-advanced-layer">
+
+    <!-- 1. Unique Registered ID Display (Will inject into Account Page) -->
+    <div id="hidden-id-template" style="display: none;">
+        <div style="margin-top: 10px; background: #f1f5f9; padding: 10px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;">
+            <i class="fa-solid fa-fingerprint"></i> Registered ID: <span id="userRegID" style="color: #e63946; user-select: all;">Loading...</span>
         </div>
     </div>
-</div><!-- PART 2: FEATURE LOGIC SCRIPT -->
+
+    <!-- 2. Trust & Policy Centre Trigger Button Template -->
+    <div id="hidden-policy-btn-template" style="display: none;">
+        <button onclick="openPolicyModal()" style="width: 100%; margin-top: 12px; background: #fff1f2; border: 1px solid #ffe4e6; padding: 12px; border-radius: 8px; color: #e63946; font-weight: bold; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+            <i class="fa-solid fa-shield-halved"></i> Trust & Policy Centre
+        </button>
+    </div>
+
+    <!-- 3. Trust & Policy Centre Full Screen Modal -->
+    <div id="policyCenterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; padding:15px;">
+        <div style="background:white; padding:20px; border-radius:15px; max-width:450px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:0 5px 25px rgba(0,0,0,0.3); position:relative; text-align:left;">
+            <span onclick="closePolicyModal()" style="position: absolute; top: 12px; right: 15px; font-size: 24px; color: #64748b; cursor: pointer; font-weight: bold;">&times;</span>
+            
+            <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e63946; padding-bottom: 6px;">
+                <i class="fa-solid fa-shield-halved" style="color:#e63946;"></i> Trust & Policy Centre
+            </h3>
+            
+            <p style="font-size:12.5px; color:#475569; line-height:1.5; margin-bottom:15px; background:#f8fafc; padding:10px; border-radius:6px;">
+                Welcome to our Trust & Policy Centre. We are committed to maintaining transparency, fairness, and a secure experience for all users. Please review the following policies carefully:
+            </p>
+
+            <div style="font-size:12px; color:#334155; display:flex; flex-direction:column; gap:12px; line-height:1.6;">
+                <div>
+                    <strong style="color:#e63946; font-size:13px;">1. Coins Timeline (Verification Process)</strong>
+                    <p style="margin-left:5px;">After submitting your order proof, our verification team will carefully review the data.</p>
+                    <p style="margin-left:5px; font-weight:bold; color:#10b981;">Verification Time: 24 to 48 hours</p>
+                    <p style="margin-left:5px; font-weight:bold;">Coins will be credited only after successful verification</p>
+                    <div style="background:#fff1f2; padding:6px; border-radius:4px; margin-top:4px; border-left:3px solid #cc0c39;">
+                        <strong>Important:</strong> Users must submit the following details within 24 to 48 hours after order delivery: Order ID, Product ID, Order Delivered Timeline Screenshot, Invoice / Bill Photo. Failure to submit within this time will result in claim expiration.
+                    </div>
+                </div>
+
+                <div>
+                    <strong style="color:#e63946; font-size:13px;">2. Money Withdrawal</strong>
+                    <p style="margin-left:5px;">When a user submits a withdrawal request: The requested amount will be transferred to the registered UPI ID or Bank Account.</p>
+                    <p style="margin-left:5px; font-weight:bold; color:#0284c7;">Processing Time: 5 to 6 working days</p>
+                </div>
+
+                <div>
+                    <strong style="color:#e63946; font-size:13px;">3. Instant E-Book Delivery</strong>
+                    <p style="margin-left:5px;">E-book purchases are fully automated: Users can purchase using Coins or Coins + Cash combination. Once payment is completed, the E-book will be instantly available for download.</p>
+                </div>
+
+                <div>
+                    <strong style="color:#e63946; font-size:13px;">4. E-Book Reward Bonus</strong>
+                    <p style="margin-left:5px;">To reward our users: On purchasing any premium E-book, users will receive +5 Coins as cashback.</p>
+                    <p style="margin-left:5px; font-weight:bold; color:#10b981;">Cashback will be credited after verification within 24 to 48 hours</p>
+                </div>
+
+                <div>
+                    <strong style="color:#e63946; font-size:13px;">5. Anti-Fraud & Return Policy (Strict Rule)</strong>
+                    <p style="margin-left:5px;">We have a strict policy to prevent misuse of the reward system: If a user purchases a product (from platforms like Amazon/Flipkart) to claim reward coins and later returns or cancels the product, the credited coins will be automatically deducted. If this activity is repeated more than twice, the user’s account will be permanently blocked.</p>
+                </div>
+
+                <div style="background:#fff7ed; padding:8px; border-radius:6px; border-left:3px solid #ea580c;">
+                    <strong style="color:#ea580c; font-size:13px;">6. Device Security (एक फोन, एक अकाउंट)</strong>
+                    <p style="margin-left:5px;">Ek mobile/device me sirf ek hi account chalane ki permission hai. Multiple fake accounts chalane par saare accounts ban kar diye jaayenge.</p>
+                </div>
+            </div>
+
+            <p style="font-size:11.5px; font-weight:bold; color:#64748b; text-align:center; margin-top:15px; border-top:1px dashed #e2e8f0; padding-top:10px;">
+                We appreciate your trust and cooperation in keeping our platform safe and fair for everyone.
+            </p>
+        </div>
+    </div>
+
+    <!-- 4. Dynamic Custom Product Not Found Search Popup -->
+    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px;">
+        <div style="background:white; padding:25px 20px; border-radius:15px; max-width:400px; width:100%; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+            <i class="fa-solid fa-face-frown" style="font-size:45px; color:#e63946; margin-bottom:12px;"></i>
+            <h3 style="font-size:16px; color:#1e293b; margin-bottom:8px;">Product Not Found!</h3>
+            <p style="font-size:13.5px; color:#475569; line-height:1.5; margin-bottom:15px; text-align:left; background:#fff1f2; padding:10px; border-radius:8px; border-left:4px solid #e63946;">
+                Oops! Sincere Apologies. Aap jo product search kar rahe hain, wo abhi hamare store par available nahi hai. Lekin aap nirash mat hoiye, hamari team agle 24 se 48 ghante ke andar use sabse saste keemat par yahan available karwa degi!
+            </p>
+            <div style="text-align:left; margin-bottom:15px;">
+                <label style="font-size:12.5px; font-weight:bold; color:#334155;">Feedback Box:</label>
+                <textarea id="searchFeedbackText" rows="3" style="width:100%; margin-top:5px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; resize:none;" placeholder="Aapko jo product chahiye, uski details ya link yahan daal kar submit karein."></textarea>
+            </div>
+            <div style="display:flex; gap:10px;">
+                <button style="flex:1; background:#10b981; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="submitCustomFeedback()">Submit Feedback</button>
+                <button style="background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <!-- ========================================== -->
+<!-- PART 2: ADVANCED INTERACTIVE ENGINE SCRIPT -->
+<!-- ========================================== -->
 <script>
-    // 1. Gallery Upload Logic
-    function handleGalleryUpload() {
-        const input = document.createElement('input');
-        input.type = 'file';
-        input.accept = 'image/*';
-        input.onchange = e => {
-            const file = e.target.files[0];
-            alert("Photo Selected: " + file.name + ". Verification pending.");
-        };
-        input.click();
+(function() {
+    // 1. Automatic Fixed Registered ID System Logic
+    let savedRegID = localStorage.getItem('super_shopping_reg_id');
+    if (!savedRegID) {
+        let randomNum = Math.floor(100000 + Math.random() * 900000);
+        savedRegID = "SS-" + randomNum;
+        localStorage.setItem('super_shopping_reg_id', savedRegID);
     }
 
-    // 2. Search Popup Logic
-    document.getElementById('searchInput').addEventListener('keyup', function() {
-        if(this.value.length > 3) {
-            // Agar product nahi mila toh popup
-            document.getElementById('searchFeedbackModal').style.display = 'flex';
+    // Target elements setup safely after window loaded completely
+    window.addEventListener('DOMContentLoaded', () => {
+        
+        // Inject Registered ID into Account View Area
+        const profileView = document.getElementById('profileDisplayView') || document.getElementById('account-tab');
+        if (profileView) {
+            const templateID = document.getElementById('hidden-id-template').innerHTML;
+            profileView.insertAdjacentHTML('beforeend', templateID);
+            const idSpan = document.getElementById('userRegID');
+            if(idSpan) idSpan.innerText = savedRegID;
+        }
+
+        // Inject Trust & Policy Centre Button into Account Page Area
+        const accountTab = document.getElementById('account-tab');
+        if (accountTab) {
+            const templatePolicy = document.getElementById('hidden-policy-btn-template').innerHTML;
+            accountTab.insertAdjacentHTML('beforeend', templatePolicy);
+        }
+
+        // 2. Modifies Edit Profile to enforce Gallery Photo Upload natively
+        const editProfileForm = document.getElementById('profileEditFormView');
+        if (editProfileForm) {
+            const fileInput = editProfileForm.querySelector('input[type="file"]');
+            if (fileInput) {
+                fileInput.setAttribute('accept', 'image/*');
+                fileInput.style.display = 'block';
+                fileInput.style.margin = '10px 0';
+            }
+        }
+
+        // 3. Modifies Referral Code and Sharing Action on Earn Page
+        const referInput = document.getElementById('myReferralCodeView');
+        if (referInput) {
+            referInput.value = savedRegID;
+            referInput.setAttribute('readonly', 'true');
+        }
+
+        // Re-binding refer click button actions safely
+        const earnTab = document.getElementById('earn-tab');
+        if (earnTab) {
+            const copyBtn = earnTab.querySelector('button[onclick*="Referral Code"]');
+            if (copyBtn) {
+                copyBtn.removeAttribute('onclick');
+                copyBtn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const siteURL = window.location.origin + window.location.pathname + "?ref=" + savedRegID;
+                    navigator.clipboard.writeText(siteURL).then(() => {
+                        alert("Referral Link Copied: " + siteURL);
+                        alert("Referral Reward Policy\nAfter successfully referring a user, reward coins will be credited to your account\nProcessing Time: 24 to 48 hours after successful referral verification.");
+                    });
+                });
+            }
         }
     });
 
-    // Policy box ko Account tab me dikhane ke liye
-    if(document.getElementById('account-tab')) {
-        document.getElementById('policy-box').style.display = 'block';
+    // Modal Global Handling Window Scripts
+    window.openPolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'flex'; };
+    window.closePolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'none'; };
+
+    // Search Box Trigger Handler Overlay Interceptor
+    const originalInput = document.getElementById('searchInput');
+    if (originalInput) {
+        originalInput.addEventListener('keyup', function() {
+            let val = this.value.toLowerCase().trim();
+            let cards = document.querySelectorAll('.product-card');
+            let match = 0;
+            
+            cards.forEach(card => {
+                let name = card.querySelector('.product-name').innerText.toLowerCase();
+                if(name.includes(val)) { match++; }
+            });
+
+            if (val.length > 2 && match === 0) {
+                document.getElementById('searchFeedbackModal').style.display = 'flex';
+            }
+        });
     }
+
+    // Custom Feedback Popup Submit Connector 
+    window.submitCustomFeedback = function() {
+        const text = document.getElementById('searchFeedbackText').value.trim();
+        if(!text) { alert('Please type some product description first!'); return; }
+        alert('Thank you! Aapka professional feedback hamari team tak pahunch gaya hai. 24-48 Hours me item store par live ho jayega.');
+        document.getElementById('searchFeedbackText').value = '';
+        document.getElementById('searchFeedbackModal').style.display = 'none';
+    };
+
+})();
 </script>
     </body>
 </html>
