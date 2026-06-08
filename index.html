@@ -612,28 +612,22 @@
             }
         }
     </script>
-<!-- ========================================== -->
-<!-- PART 1: ADVANCED REAL-TIME LAYOUTS LAYER  -->
-<!-- ========================================== -->
 <div id="super-shopping-advanced-layer">
 
-    <!-- 1. Unique Registered ID Template -->
     <div id="hidden-id-template" style="display: none;">
         <div style="margin-top: 10px; background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;">
             <i class="fa-solid fa-fingerprint"></i> Registered ID: <span id="userRegID" style="color: #e63946; user-select: all;">Loading...</span>
         </div>
     </div>
 
-    <!-- 2. Trust & Policy Centre Trigger Button Template -->
     <div id="hidden-policy-btn-template" style="display: none;">
-        <button onclick="openPolicyModal()" style="width: 100%; margin-top: 12px; background: #fff1f2; border: 1px solid #ffe4e6; padding: 12px; border-radius: 8px; color: #e63946; font-weight: bold; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
+        <button type="button" onclick="openPolicyModal()" style="width: 100%; margin-top: 12px; background: #fff1f2; border: 1px solid #ffe4e6; padding: 12px; border-radius: 8px; color: #e63946; font-weight: bold; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
             <i class="fa-solid fa-shield-halved"></i> Trust & Policy Centre
         </button>
     </div>
 
-    <!-- 3. Trust & Policy Centre Full Screen Modal -->
     <div id="policyCenterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; padding:15px;">
-        <div style="background:white; padding:20px; border-radius:15px; max-width:450px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:0 5px 25px rgba(0,0,0,0.3); position:relative; text-align:left;">
+        <div style="background:white; padding:20px; border-radius:15px; max-width:450px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:0 5px 25px rgba(0,0,0,0.3); position:relative; text-align:left; font-family: sans-serif;">
             <span onclick="closePolicyModal()" style="position: absolute; top: 12px; right: 15px; font-size: 24px; color: #64748b; cursor: pointer; font-weight: bold;">&times;</span>
             
             <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e63946; padding-bottom: 6px;">
@@ -689,8 +683,7 @@
         </div>
     </div>
 
-    <!-- 4. Dynamic Custom Product Not Found Search Popup -->
-    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px;">
+    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px; font-family: sans-serif;">
         <div style="background:white; padding:25px 20px; border-radius:15px; max-width:400px; width:100%; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
             <i class="fa-solid fa-face-frown" style="font-size:45px; color:#e63946; margin-bottom:12px;"></i>
             <h3 style="font-size:16px; color:#1e293b; margin-bottom:8px;">Product Not Found!</h3>
@@ -702,15 +695,14 @@
                 <textarea id="searchFeedbackText" rows="3" style="width:100%; margin-top:5px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; resize:none;" placeholder="Aapko jo product chahiye, uski details ya link yahan daal kar submit karein."></textarea>
             </div>
             <div style="display:flex; gap:10px;">
-                <button style="flex:1; background:#10b981; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="submitCustomFeedback()">Submit Feedback</button>
-                <button style="background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+                <button type="button" style="flex:1; background:#10b981; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="submitCustomFeedback()">Submit Feedback</button>
+                <button type="button" style="background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
             </div>
         </div>
     </div>
 
-    <!-- 5. Advanced Wallet Upgrades Dashboard Template -->
     <div id="hidden-wallet-template" style="display: none;">
-        <div style="margin-top:20px; background:white; padding:15px; border-radius:12px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
+        <div style="margin-top:20px; background:white; padding:15px; border-radius:12px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.05); font-family: sans-serif;">
             <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw Coins (पैसे निकालें)</h4>
             <div style="margin-bottom:10px;">
                 <label style="font-size:12px; font-weight:bold; color:#475569;">Enter UPI ID:</label>
@@ -721,24 +713,19 @@
                 <input type="number" id="walletCoinsInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="Minimum 100 Coins">
                 <small style="color:#e63946; font-size:11px; font-weight:bold; display:block; margin-top:4px;">* Note: Minimum payout is 100 Coins (₹10)</small>
             </div>
-            <button onclick="processWalletWithdrawal()" style="width:100%; background:#e63946; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">Submit Withdrawal Request</button>
+            <button type="button" onclick="processWalletWithdrawal()" style="width:100%; background:#e63946; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">Submit Withdrawal Request</button>
             
             <h4 style="font-size:14px; color:#1e293b; margin-top:20px; margin-bottom:10px;"><i class="fa-solid fa-clock-rotate-left"></i> Real Transaction History</h4>
             <div id="realTransactionContainer" style="display:flex; flex-direction:column; gap:8px;">
-                <!-- Dynamically loaded transactions will appear here -->
-            </div>
+                </div>
         </div>
     </div>
 
-</div><!-- ========================================== -->
-<!-- PART 2: ADVANCED INTERACTIVE ENGINE SCRIPT -->
-<!-- ========================================== -->
-<script>
+</div><script>
 (function() {
     // PASTE YOUR GOOGLE SHEET WEB APP URL HERE
-    const GOOGLE_SHEET_URL = https://script.google.com/macros/s/AKfycbweum6ZdGD7Prk3GmHoRfgOM3vjAFOY0gPenIKGGWqqWHf8n0c_ClaEvkP2rimUb5nS4w/exec
-
-    // Generation and Locking of Unique Registered ID
+    const GOOGLE_SHEET_URL =https://script.google.com/macros/s/AKfycbweum6ZdGD7Prk3GmHoRfgOM3vjAFOY0gPenIKGGWqqWHf8n0c_ClaEvkP2rimUb5nS4w/exec
+    // Fix and lock Unique Registered ID System
     let savedRegID = localStorage.getItem('super_shopping_reg_id');
     if (!savedRegID) {
         let randomNum = Math.floor(100000 + Math.random() * 900000);
@@ -746,66 +733,56 @@
         localStorage.setItem('super_shopping_reg_id', savedRegID);
     }
 
-    // Dynamic Device & IP Data Tracker Fetcher
     let userIP = "N/A";
     let userDeviceName = "Unknown Device";
-    
-    // Auto detect basic device info from user agent string
     if (navigator.userAgent.includes("Android")) userDeviceName = "Android Mobile";
     else if (navigator.userAgent.includes("iPhone")) userDeviceName = "iOS iPhone";
     else if (navigator.userAgent.includes("Windows")) userDeviceName = "Windows PC";
 
-    // Fetch IP Address silently 
+    // Silently fetch IP tracker data 
     fetch('https://api.ipify.org?format=json')
         .then(res => res.json())
         .then(data => { userIP = data.ip; syncUserDataWithSheet("User Login", "Device: " + userDeviceName); })
         .catch(() => { syncUserDataWithSheet("User Login", "Device: " + userDeviceName); });
 
-    window.addEventListener('DOMContentLoaded', () => {
-        // Sync Real Balance and Blocked status from Sheet on load
+    window.addEventListener('load', () => {
         fetchCoinsBalance();
 
-        // Inject Unique ID into Account Area
-        const profileView = document.getElementById('profileDisplayView') || document.getElementById('account-tab');
-        if (profileView) {
-            const templateID = document.getElementById('hidden-id-template').innerHTML;
-            profileView.insertAdjacentHTML('beforeend', templateID);
-            const idSpan = document.getElementById('userRegID');
-            if(idSpan) idSpan.innerText = savedRegID;
-        }
+        // Safe injection function to avoid braking tabs UI layout structures
+        setTimeout(() => {
+            // Find and bind account/profile view natively
+            const targetProfile = document.getElementById('profileDisplayView') || document.querySelector('.profile-section') || document.getElementById('account-tab');
+            if (targetProfile) {
+                const templateID = document.getElementById('hidden-id-template').innerHTML;
+                targetProfile.insertAdjacentHTML('beforeend', templateID);
+                const idSpan = document.getElementById('userRegID');
+                if(idSpan) idSpan.innerText = savedRegID;
 
-        // Inject Trust & Policy Centre Button into Account Page Area
-        const accountTab = document.getElementById('account-tab');
-        if (accountTab) {
-            const templatePolicy = document.getElementById('hidden-policy-btn-template').innerHTML;
-            accountTab.insertAdjacentHTML('beforeend', templatePolicy);
-        }
+                const templatePolicy = document.getElementById('hidden-policy-btn-template').innerHTML;
+                targetProfile.insertAdjacentHTML('beforeend', templatePolicy);
+            }
 
-        // Transform Edit Profile Layout - Hide Text Input URL, Inject Native Gallery Selector
-        const editForm = document.getElementById('profileEditFormView');
-        if (editForm) {
-            const allLabels = editForm.querySelectorAll('label');
-            allLabels.forEach(label => {
-                if (label.innerText.includes("Profile Photo Link")) {
-                    label.innerHTML = "<strong>Upload Profile Photo From Gallery</strong>";
-                    const nextInput = label.nextElementSibling || editForm.querySelector('input[placeholder*="picture URL"]');
-                    if (nextInput) {
-                        nextInput.setAttribute('type', 'file');
-                        nextInput.setAttribute('accept', 'image/*');
-                        nextInput.placeholder = "";
-                        nextInput.style.padding = "4px";
-                        nextInput.removeAttribute('value');
+            // Fix Edit Profile Form - Gallery Trigger Link Overlay Method
+            const profileInputs = document.querySelectorAll('input');
+            profileInputs.forEach(input => {
+                if(input.placeholder && input.placeholder.includes("picture URL")) {
+                    const parent = input.parentElement;
+                    if(parent) {
+                        const fileBtn = document.createElement('input');
+                        fileBtn.type = 'file';
+                        fileBtn.accept = 'image/*';
+                        fileBtn.style.margin = "8px 0";
+                        parent.insertBefore(fileBtn, input);
+                        input.style.display = 'none'; // Hide ugly old link URL input text field
                         
-                        nextInput.addEventListener('change', function(e) {
+                        fileBtn.addEventListener('change', function(e) {
                             if (this.files && this.files[0]) {
                                 const reader = new FileReader();
                                 reader.onload = function(evt) {
-                                    const avatarContainer = document.getElementById('profAvatar') || document.querySelector('.profile-avatar-box');
-                                    if(avatarContainer) {
-                                        avatarContainer.innerHTML = `<img src="${evt.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-                                        alert("Success: Profile picture updated from mobile gallery!");
-                                        syncUserDataWithSheet("Profile Photo Uploaded", "Image Local Data Cached");
-                                    }
+                                    const avatar = document.querySelector('.profile-avatar img') || document.querySelector('.avatar');
+                                    if(avatar) avatar.src = evt.target.result;
+                                    alert("Success: Profile picture updated from gallery!");
+                                    syncUserDataWithSheet("Profile Photo Uploaded", "Gallery File Upload Completed");
                                 };
                                 reader.readAsDataURL(this.files[0]);
                             }
@@ -813,95 +790,78 @@
                     }
                 }
             });
-        }
 
-        // Connect Dynamic Live Camera System to Earn Proof Buttons & Sync
-        const earnTab = document.getElementById('earn-tab');
-        if (earnTab) {
-            const cameraButtons = earnTab.querySelectorAll('button');
-            cameraButtons.forEach(btn => {
-                if (btn.innerText.includes("Open Live Camera")) {
-                    btn.removeAttribute('onclick'); 
+            // Fix Live Camera Hardware Binding Overlay safely
+            const buttons = document.querySelectorAll('button');
+            buttons.forEach(btn => {
+                if(btn.innerText && btn.innerText.includes("Open Live Camera")) {
+                    btn.removeAttribute('onclick');
                     btn.addEventListener('click', function(e) {
                         e.preventDefault();
-                        const liveCamTrigger = document.createElement('input');
-                        liveCamTrigger.type = 'file';
-                        liveCamTrigger.accept = 'image/*';
-                        liveCamTrigger.capture = 'environment';
-                        liveCamTrigger.onchange = event => {
-                            const capturedFile = event.target.files[0];
-                            if(capturedFile) {
-                                btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Photo Captured!`;
+                        const cameraInput = document.createElement('input');
+                        cameraInput.type = 'file';
+                        cameraInput.accept = 'image/*';
+                        cameraInput.capture = 'environment';
+                        cameraInput.onchange = event => {
+                            if(event.target.files[0]) {
+                                btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Capture Done!`;
                                 btn.style.background = "#0f172a";
-                                syncUserDataWithSheet("Order Proof Captured", "Live Document Saved");
+                                syncUserDataWithSheet("Order Proof Captured", "Camera capture success");
                             }
                         };
-                        liveCamTrigger.click();
+                        cameraInput.click();
                     });
                 }
             });
-        }
 
-        // Upgrading and Displaying Real-Time Wallet Dashboard Layout
-        const walletTab = document.getElementById('wallet-tab');
-        if (walletTab) {
-            const walletTemplate = document.getElementById('hidden-wallet-template').innerHTML;
-            walletTab.insertAdjacentHTML('beforeend', walletTemplate);
-            renderLiveTransactions();
-        }
+            // Fix Wallet Section dashboard inject safely without breaking layouts
+            const targetWallet = document.getElementById('wallet-tab') || document.querySelector('.wallet-section');
+            if (targetWallet) {
+                const walletTemplate = document.getElementById('hidden-wallet-template').innerHTML;
+                targetWallet.insertAdjacentHTML('beforeend', walletTemplate);
+                renderLiveTransactions();
+            }
+
+        }, 800);
     });
 
-    // Communication Engine with Google Sheets
+    // Sync activity log rows database engine 
     function syncUserDataWithSheet(activity, details) {
-        if(GOOGLE_SHEET_URL.includes("YAHAN_APNI_WEB_APP")) return;
-        
-        let currentUserName = localStorage.getItem('username') || "User_" + savedRegID;
-        let currentUserPhone = localStorage.getItem('userphone') || "N/A";
-
-        let payload = {
-            user_id: savedRegID,
-            user_name: currentUserName,
-            phone_no: currentUserPhone,
-            ip_address: userIP,
-            activity_type: activity,
-            data_details: details + " | " + userDeviceName
-        };
-
+        if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("YAHAN_APNI_WEB_APP")) return;
+        let uName = localStorage.getItem('username') || "User_" + savedRegID;
+        let uPhone = localStorage.getItem('userphone') || "N/A";
         fetch(GOOGLE_SHEET_URL, {
             method: 'POST',
             mode: 'no-cors',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
+            body: JSON.stringify({
+                user_id: savedRegID, user_name: uName, phone_no: uPhone,
+                ip_address: userIP, activity_type: activity, data_details: details + " | " + userDeviceName
+            })
         });
     }
 
-    // Fetch and Sync Manual Balances & Blocks from Google Sheet Live
+    // Live automatic sync mechanism for balance display blocks
     function fetchCoinsBalance() {
-        if(GOOGLE_SHEET_URL.includes("YAHAN_APNI_WEB_APP")) return;
-        
-        let currentUserName = localStorage.getItem('username') || "User_" + savedRegID;
-        let checkUrl = GOOGLE_SHEET_URL + "?user_id=" + savedRegID + "&activity_type=GET_BALANCE&user_name=" + encodeURIComponent(currentUserName);
-        
-        // Since Apps Script uses redirects for GET requests, we fetch via dynamic JSON parsing overlay
+        if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("YAHAN_APNI_WEB_APP")) return;
+        let uName = localStorage.getItem('username') || "User_" + savedRegID;
         fetch(GOOGLE_SHEET_URL, {
             method: 'POST',
-            body: JSON.stringify({ user_id: savedRegID, activity_type: "GET_BALANCE", user_name: currentUserName })
+            body: JSON.stringify({ user_id: savedRegID, activity_type: "GET_BALANCE", user_name: uName })
         })
         .then(res => res.json())
         .then(data => {
             if(data.success) {
                 if(data.blocked) {
-                    document.body.innerHTML = `<div style="text-align:center; margin-top:100px; padding:20px; font-family:sans-serif;"><h1 style="color:#e63946;">⚠️ Account Permanently Blocked</h1><p>Your account ${savedRegID} has been permanently blocked due to suspicious activity or violating platform rules.</p></div>`;
+                    document.body.innerHTML = `<div style="text-align:center; margin-top:100px; font-family:sans-serif;"><h1 style="color:#e63946;">⚠️ Account Blocked</h1><p>Rules violate karne ke kaaran aapka account permanently ban kar diya gaya hai.</p></div>`;
                     return;
                 }
-                // Dynamically update coin balance displays on old UI layouts seamlessly
-                const coinDisplays = document.querySelectorAll('.coin-balance, #coinCount, #userCoinsSpan');
-                coinDisplays.forEach(el => { el.innerText = data.balance + " Coins"; });
+                const displays = document.querySelectorAll('.coin-balance, #coinCount, #userCoinsSpan, .user-coins');
+                displays.forEach(el => { el.innerText = data.balance + " Coins"; });
             }
         }).catch(() => {});
     }
 
-    // Real Dynamic Transaction UI Render
     window.renderLiveTransactions = function() {
         const container = document.getElementById('realTransactionContainer');
         if (!container) return;
@@ -921,33 +881,32 @@
     window.processWalletWithdrawal = function() {
         const upi = document.getElementById('walletUpiInput').value.trim();
         const amount = parseInt(document.getElementById('walletCoinsInput').value);
-        if(!upi || !amount) { alert("Please fill both fields properly!"); return; }
-        if(amount < 100) { alert("Error: Minimum withdrawal amount is 100 Coins (₹10)!"); return; }
+        if(!upi || !amount) { alert("Please fill fields properly!"); return; }
+        if(amount < 100) { alert("Minimum withdrawal limit is 100 Coins!"); return; }
         
         let history = JSON.parse(localStorage.getItem('super_shopping_wallet_history')) || [];
-        history.unshift({ title: `Withdraw requested via UPI (${upi})`, coins: `-${amount} Coins`, date: "Processing (5-6 Days)", color: "#ea580c", bg: "#fff7ed" });
+        history.unshift({ title: `Withdraw via UPI (${upi})`, coins: `-${amount} Coins`, date: "Processing (5-6 Days)", color: "#ea580c", bg: "#fff7ed" });
         localStorage.setItem('super_shopping_wallet_history', JSON.stringify(history));
         renderLiveTransactions();
         
         syncUserDataWithSheet("Withdrawal Request", `UPI: ${upi} | Coins: ${amount}`);
-        
         document.getElementById('walletUpiInput').value = "";
         document.getElementById('walletCoinsInput').value = "";
-        alert("Success: Withdrawal Request submitted directly to Sheet!");
+        alert("Success: Withdrawal request saved directly to Sheet!");
     };
 
     window.openPolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'flex'; };
     window.closePolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'none'; };
 
-    // Custom Product Not Found Filter Interceptor Hook
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function() {
+    // Native Safe Search Hook Interceptor
+    const nativeSearch = document.getElementById('searchInput') || document.querySelector('input[type="search"]');
+    if (nativeSearch) {
+        nativeSearch.addEventListener('keyup', function() {
             let filter = this.value.toLowerCase().trim();
             let cards = document.querySelectorAll('.product-card');
             let matchCount = 0;
             cards.forEach(card => {
-                let name = card.querySelector('.product-name').innerText.toLowerCase();
+                let name = card.innerHTML.toLowerCase();
                 if(name.includes(filter)) matchCount++;
             });
             if (filter.length > 2 && matchCount === 0) {
@@ -958,9 +917,9 @@
 
     window.submitCustomFeedback = function() {
         const text = document.getElementById('searchFeedbackText').value.trim();
-        if(!text) { alert('Please type some product description first!'); return; }
-        syncUserDataWithSheet("Search Feedback Box", "User demand: " + text);
-        alert('Thank you! Aapka professional feedback hamari team tak pahunch gaya hai.');
+        if(!text) { alert('Please write details first!'); return; }
+        syncUserDataWithSheet("Search Feedback Box", "Product Demand: " + text);
+        alert('Thank you! Feedback recorded successfully.');
         document.getElementById('searchFeedbackText').value = '';
         document.getElementById('searchFeedbackModal').style.display = 'none';
     };
