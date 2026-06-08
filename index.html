@@ -612,120 +612,14 @@
             }
         }
     </script>
-<div id="super-shopping-advanced-layer">
-
-    <div id="hidden-id-template" style="display: none;">
-        <div style="margin-top: 10px; background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;">
-            <i class="fa-solid fa-fingerprint"></i> Registered ID: <span id="userRegID" style="color: #e63946; user-select: all;">Loading...</span>
-        </div>
-    </div>
-
-    <div id="hidden-policy-btn-template" style="display: none;">
-        <button type="button" onclick="openPolicyModal()" style="width: 100%; margin-top: 12px; background: #fff1f2; border: 1px solid #ffe4e6; padding: 12px; border-radius: 8px; color: #e63946; font-weight: bold; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
-            <i class="fa-solid fa-shield-halved"></i> Trust & Policy Centre
-        </button>
-    </div>
-
-    <div id="policyCenterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; padding:15px;">
-        <div style="background:white; padding:20px; border-radius:15px; max-width:450px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:0 5px 25px rgba(0,0,0,0.3); position:relative; text-align:left; font-family: sans-serif;">
-            <span onclick="closePolicyModal()" style="position: absolute; top: 12px; right: 15px; font-size: 24px; color: #64748b; cursor: pointer; font-weight: bold;">&times;</span>
-            
-            <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e63946; padding-bottom: 6px;">
-                <i class="fa-solid fa-shield-halved" style="color:#e63946;"></i> Trust & Policy Centre
-            </h3>
-            
-            <p style="font-size:12.5px; color:#475569; line-height:1.5; margin-bottom:15px; background:#f8fafc; padding:10px; border-radius:6px;">
-                Welcome to our Trust & Policy Centre. We are committed to maintaining transparency, fairness, and a secure experience for all users. Please review the following policies carefully:
-            </p>
-
-            <div style="font-size:12px; color:#334155; display:flex; flex-direction:column; gap:12px; line-height:1.6;">
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">1. Coins Timeline (Verification Process)</strong>
-                    <p style="margin-left:5px;">After submitting your order proof, our verification team will carefully review the data.</p>
-                    <p style="margin-left:5px; font-weight:bold; color:#10b981;">Verification Time: 24 to 48 hours</p>
-                    <p style="margin-left:5px; font-weight:bold;">Coins will be credited only after successful verification</p>
-                    <div style="background:#fff1f2; padding:6px; border-radius:4px; margin-top:4px; border-left:3px solid #cc0c39;">
-                        <strong>Important:</strong> Users must submit the following details within 24 to 48 hours after order delivery: Order ID, Product ID, Order Delivered Timeline Screenshot, Invoice / Bill Photo. Failure to submit within this time will result in claim expiration.
-                    </div>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">2. Money Withdrawal</strong>
-                    <p style="margin-left:5px;">When a user submits a withdrawal request: The requested amount will be transferred to the registered UPI ID or Bank Account.</p>
-                    <p style="margin-left:5px; font-weight:bold; color:#0284c7;">Processing Time: 5 to 6 working days</p>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">3. Instant E-Book Delivery</strong>
-                    <p style="margin-left:5px;">E-book purchases are fully automated: Users can purchase using Coins or Coins + Cash combination. Once payment is completed, the E-book will be instantly available for download.</p>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">4. E-Book Reward Bonus</strong>
-                    <p style="margin-left:5px;">To reward our users: On purchasing any premium E-book, users will receive +5 Coins as cashback.</p>
-                    <p style="margin-left:5px; font-weight:bold; color:#10b981;">Cashback will be credited after verification within 24 to 48 hours</p>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">5. Anti-Fraud & Return Policy (Strict Rule)</strong>
-                    <p style="margin-left:5px;">We have a strict policy to prevent misuse of the reward system: If a user purchases a product (from platforms like Amazon/Flipkart) to claim reward coins and later returns or cancels the product, the credited coins will be automatically deducted. If this activity is repeated more than twice, the user’s account will be permanently blocked.</p>
-                </div>
-
-                <div style="background:#fff7ed; padding:8px; border-radius:6px; border-left:3px solid #ea580c;">
-                    <strong style="color:#ea580c; font-size:13px;">6. Device Security (एक phone, एक अकाउंट)</strong>
-                    <p style="margin-left:5px;">Ek mobile/device me sirf ek hi account chalane ki permission hai. Multiple fake accounts chalane par saare accounts ban kar diye jaayenge.</p>
-                </div>
-            </div>
-
-            <p style="font-size:11.5px; font-weight:bold; color:#64748b; text-align:center; margin-top:15px; border-top:1px dashed #e2e8f0; padding-top:10px;">
-                We appreciate your trust and cooperation in keeping our platform safe and fair for everyone.
-            </p>
-        </div>
-    </div>
-
-    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px; font-family: sans-serif;">
-        <div style="background:white; padding:25px 20px; border-radius:15px; max-width:400px; width:100%; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
-            <i class="fa-solid fa-face-frown" style="font-size:45px; color:#e63946; margin-bottom:12px;"></i>
-            <h3 style="font-size:16px; color:#1e293b; margin-bottom:8px;">Product Not Found!</h3>
-            <p style="font-size:13.5px; color:#475569; line-height:1.5; margin-bottom:15px; text-align:left; background:#fff1f2; padding:10px; border-radius:8px; border-left:4px solid #e63946;">
-                Oops! Sincere Apologies. Aap jo product search kar rahe hain, wo abhi hamare store par available nahi hai. Lekin aap nirash mat hoiye, hamari team agle 24 se 48 ghante ke andar use sabse saste keemat par yahan available karwa degi!
-            </p>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label style="font-size:12.5px; font-weight:bold; color:#334155;">Feedback Box:</label>
-                <textarea id="searchFeedbackText" rows="3" style="width:100%; margin-top:5px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; resize:none;" placeholder="Aapko jo product chahiye, uski details ya link yahan daal kar submit karein."></textarea>
-            </div>
-            <div style="display:flex; gap:10px;">
-                <button type="button" style="flex:1; background:#10b981; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="submitCustomFeedback()">Submit Feedback</button>
-                <button type="button" style="background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <div id="hidden-wallet-template" style="display: none;">
-        <div style="margin-top:20px; background:white; padding:15px; border-radius:12px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.05); font-family: sans-serif;">
-            <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw Coins (पैसे निकालें)</h4>
-            <div style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:bold; color:#475569;">Enter UPI ID:</label>
-                <input type="text" id="walletUpiInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="example@upi">
-            </div>
-            <div style="margin-bottom:12px;">
-                <label style="font-size:12px; font-weight:bold; color:#475569;">Coins to Withdraw:</label>
-                <input type="number" id="walletCoinsInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="Minimum 100 Coins">
-                <small style="color:#e63946; font-size:11px; font-weight:bold; display:block; margin-top:4px;">* Note: Minimum payout is 100 Coins (₹10)</small>
-            </div>
-            <button type="button" onclick="processWalletWithdrawal()" style="width:100%; background:#e63946; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">Submit Withdrawal Request</button>
-            
-            <h4 style="font-size:14px; color:#1e293b; margin-top:20px; margin-bottom:10px;"><i class="fa-solid fa-clock-rotate-left"></i> Real Transaction History</h4>
-            <div id="realTransactionContainer" style="display:flex; flex-direction:column; gap:8px;">
-                </div>
-        </div>
-    </div>
-
-</div><script>
+<!-- ========================================== -->
+<!-- FINAL INJECTOR ENGINE: ZERO CONFLICT MODE -->
+<!-- ========================================== -->
+<script>
 (function() {
-    // PASTE YOUR GOOGLE SHEET WEB APP URL HERE
-    const GOOGLE_SHEET_URL =https://script.google.com/macros/s/AKfycbweum6ZdGD7Prk3GmHoRfgOM3vjAFOY0gPenIKGGWqqWHf8n0c_ClaEvkP2rimUb5nS4w/exec
-    // Fix and lock Unique Registered ID System
+    // AUTOMATIC INTEGRATED LIVE GOOGLE SHEET WEB APP URL
+    const GOOGLE_SHEET_URL = https://script.google.com/macros/s/AKfycbweum6ZdGD7Prk3GmHoRfgOM3vjAFOY0gPenIKGGWqqWHf8n0c_ClaEvkP2rimUb5nS4w/exec
+    // 1. Unique Registered ID Generator & Locker
     let savedRegID = localStorage.getItem('super_shopping_reg_id');
     if (!savedRegID) {
         let randomNum = Math.floor(100000 + Math.random() * 900000);
@@ -739,95 +633,152 @@
     else if (navigator.userAgent.includes("iPhone")) userDeviceName = "iOS iPhone";
     else if (navigator.userAgent.includes("Windows")) userDeviceName = "Windows PC";
 
-    // Silently fetch IP tracker data 
+    // Silently track network IP mapping
     fetch('https://api.ipify.org?format=json')
         .then(res => res.json())
-        .then(data => { userIP = data.ip; syncUserDataWithSheet("User Login", "Device: " + userDeviceName); })
-        .catch(() => { syncUserDataWithSheet("User Login", "Device: " + userDeviceName); });
+        .then(data => { userIP = data.ip; syncUserDataWithSheet("User Login", "Device Connected"); })
+        .catch(() => { syncUserDataWithSheet("User Login", "Device Connected"); });
 
-    window.addEventListener('load', () => {
-        fetchCoinsBalance();
+    // Inject layout code programmatically into body to prevent raw HTML crashes
+    const setupHTMLDOM = () => {
+        if (document.getElementById('policyCenterModal')) return; // Avoid double load
 
-        // Safe injection function to avoid braking tabs UI layout structures
-        setTimeout(() => {
-            // Find and bind account/profile view natively
-            const targetProfile = document.getElementById('profileDisplayView') || document.querySelector('.profile-section') || document.getElementById('account-tab');
-            if (targetProfile) {
-                const templateID = document.getElementById('hidden-id-template').innerHTML;
-                targetProfile.insertAdjacentHTML('beforeend', templateID);
-                const idSpan = document.getElementById('userRegID');
-                if(idSpan) idSpan.innerText = savedRegID;
+        const modalContainer = document.createElement('div');
+        modalContainer.innerHTML = `
+            <!-- Policy Modal -->
+            <div id="policyCenterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; padding:15px; font-family:sans-serif;">
+                <div style="background:white; padding:20px; border-radius:15px; max-width:450px; width:100%; max-height:85vh; overflow-y:auto; position:relative; text-align:left;">
+                    <span onclick="document.getElementById('policyCenterModal').style.display='none'" style="position: absolute; top: 12px; right: 15px; font-size: 24px; color: #64748b; cursor: pointer; font-weight: bold;">&times;</span>
+                    <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 12px; border-bottom: 2px solid #e63946; padding-bottom: 6px; display:flex; align-items:center; gap:8px;"><i class="fa-solid fa-shield-halved" style="color:#e63946;"></i> Trust & Policy Centre</h3>
+                    <p style="font-size:12.5px; color:#475569; line-height:1.5; margin-bottom:15px; background:#f8fafc; padding:10px; border-radius:6px;">Welcome to our Trust & Policy Centre. We are committed to maintaining transparency, fairness, and a secure experience for all users.</p>
+                    <div style="font-size:12px; color:#334155; display:flex; flex-direction:column; gap:12px; line-height:1.6;">
+                        <div><strong style="color:#e63946; font-size:13px;">1. Coins Timeline (Verification Process)</strong><p style="margin-left:5px;">Verification Time: 24 to 48 hours. Coins will be credited only after successful verification.</p><div style="background:#fff1f2; padding:6px; border-radius:4px; margin-top:4px; border-left:3px solid #cc0c39;"><strong>Important:</strong> Details must be submitted within 24 to 48 hours after order delivery.</div></div>
+                        <div><strong style="color:#e63946; font-size:13px;">2. Money Withdrawal</strong><p style="margin-left:5px;">Processing Time: 5 to 6 working days into registered UPI ID.</p></div>
+                        <div><strong style="color:#e63946; font-size:13px;">3. Instant E-Book Delivery</strong><p style="margin-left:5px;">Purchases are fully automated via Coins or Cash. E-book will be instantly available for download.</p></div>
+                        <div><strong style="color:#e63946; font-size:13px;">4. E-Book Reward Bonus</strong><p style="margin-left:5px;">On purchasing any premium E-book, users receive +5 Coins as cashback within 24 to 48 hours.</p></div>
+                        <div><strong style="color:#e63946; font-size:13px;">5. Anti-Fraud & Return Policy</strong><p style="margin-left:5px;">If a product is returned/cancelled after claiming coins, points will be deducted. Repeated twice will result in permanent block.</p></div>
+                        <div style="background:#fff7ed; padding:8px; border-radius:6px; border-left:3px solid #ea580c;"><strong style="color:#ea580c; font-size:13px;">6. Device Security (एक phone, एक अकाउंट)</strong><p style="margin-left:5px;">Ek mobile/device me sirf ek hi account chalane ki permission hai.</p></div>
+                    </div>
+                </div>
+            </div>
+            <!-- Search Feedback Modal -->
+            <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px; font-family:sans-serif;">
+                <div style="background:white; padding:25px 20px; border-radius:15px; max-width:400px; width:100%; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
+                    <i class="fa-solid fa-face-frown" style="font-size:45px; color:#e63946; margin-bottom:12px;"></i>
+                    <h3 style="font-size:16px; color:#1e293b; margin-bottom:8px;">Product Not Found!</h3>
+                    <p style="font-size:13.5px; color:#475569; line-height:1.5; margin-bottom:15px; text-align:left; background:#fff1f2; padding:10px; border-radius:8px; border-left:4px solid #e63946;">Oops! Sincere Apologies. Aap jo product search kar rahe hain, wo abhi hamare store par available nahi hai. Lekin aap nirash mat hoiye, hamari team agle 24 se 48 ghante ke andar use sabse saste keemat par yahan available karwa degi!</p>
+                    <div style="text-align:left; margin-bottom:15px;">
+                        <label style="font-size:12.5px; font-weight:bold; color:#334155;">Feedback Box:</label>
+                        <textarea id="searchFeedbackText" rows="3" style="width:100%; margin-top:5px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; resize:none;" placeholder="Aapko jo product chahiye, uski details yahan daal kar submit karein."></textarea>
+                    </div>
+                    <div style="display:flex; gap:10px;">
+                        <button type="button" id="submitFeedbackBtn" style="flex:1; background:#10b981; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;">Submit Feedback</button>
+                        <button type="button" style="background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
+                    </div>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(modalContainer);
+        
+        // Bind live listeners inside dynamic templates
+        document.getElementById('submitFeedbackBtn').addEventListener('click', submitCustomFeedback);
+    };
 
-                const templatePolicy = document.getElementById('hidden-policy-btn-template').innerHTML;
-                targetProfile.insertAdjacentHTML('beforeend', templatePolicy);
-            }
+    // Live hook engine to bind elements securely on older UI layers
+    const injectUIFeatures = () => {
+        // 1. Registered ID & Policy Centre Injection
+        const targetProfile = document.getElementById('profileDisplayView') || document.querySelector('.profile-section') || document.getElementById('account-tab');
+        if (targetProfile && !document.getElementById('userRegID')) {
+            const idBox = document.createElement('div');
+            idBox.style = "margin-top: 10px; background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;";
+            idBox.innerHTML = `<i class="fa-solid fa-fingerprint"></i> Registered ID: <span id="userRegID" style="color: #e63946; user-select: all;">${savedRegID}</span>`;
+            targetProfile.appendChild(idBox);
 
-            // Fix Edit Profile Form - Gallery Trigger Link Overlay Method
-            const profileInputs = document.querySelectorAll('input');
-            profileInputs.forEach(input => {
-                if(input.placeholder && input.placeholder.includes("picture URL")) {
-                    const parent = input.parentElement;
-                    if(parent) {
-                        const fileBtn = document.createElement('input');
-                        fileBtn.type = 'file';
-                        fileBtn.accept = 'image/*';
-                        fileBtn.style.margin = "8px 0";
-                        parent.insertBefore(fileBtn, input);
-                        input.style.display = 'none'; // Hide ugly old link URL input text field
-                        
-                        fileBtn.addEventListener('change', function(e) {
-                            if (this.files && this.files[0]) {
-                                const reader = new FileReader();
-                                reader.onload = function(evt) {
-                                    const avatar = document.querySelector('.profile-avatar img') || document.querySelector('.avatar');
-                                    if(avatar) avatar.src = evt.target.result;
-                                    alert("Success: Profile picture updated from gallery!");
-                                    syncUserDataWithSheet("Profile Photo Uploaded", "Gallery File Upload Completed");
-                                };
-                                reader.readAsDataURL(this.files[0]);
-                            }
-                        });
-                    }
-                }
-            });
+            const policyBtn = document.createElement('button');
+            policyBtn.type = "button";
+            policyBtn.style = "width: 100%; margin-top: 12px; background: #fff1f2; border: 1px solid #ffe4e6; padding: 12px; border-radius: 8px; color: #e63946; font-weight: bold; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;";
+            policyBtn.innerHTML = `<i class="fa-solid fa-shield-halved"></i> Trust & Policy Centre`;
+            policyBtn.onclick = () => { document.getElementById('policyCenterModal').style.display = 'flex'; };
+            targetProfile.appendChild(policyBtn);
+        }
 
-            // Fix Live Camera Hardware Binding Overlay safely
-            const buttons = document.querySelectorAll('button');
-            buttons.forEach(btn => {
-                if(btn.innerText && btn.innerText.includes("Open Live Camera")) {
-                    btn.removeAttribute('onclick');
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        const cameraInput = document.createElement('input');
-                        cameraInput.type = 'file';
-                        cameraInput.accept = 'image/*';
-                        cameraInput.capture = 'environment';
-                        cameraInput.onchange = event => {
-                            if(event.target.files[0]) {
-                                btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Capture Done!`;
-                                btn.style.background = "#0f172a";
-                                syncUserDataWithSheet("Order Proof Captured", "Camera capture success");
-                            }
-                        };
-                        cameraInput.click();
+        // 2. Profile Photo Native Gallery Binding Upgrade
+        const profileInputs = document.querySelectorAll('input');
+        profileInputs.forEach(input => {
+            if(input.placeholder && input.placeholder.includes("picture URL") && input.style.display !== 'none') {
+                const parent = input.parentElement;
+                if(parent) {
+                    const fileBtn = document.createElement('input');
+                    fileBtn.type = 'file';
+                    fileBtn.accept = 'image/*';
+                    fileBtn.style.margin = "8px 0";
+                    parent.insertBefore(fileBtn, input);
+                    input.style.display = 'none';
+                    
+                    fileBtn.addEventListener('change', function(e) {
+                        if (this.files && this.files[0]) {
+                            const reader = new FileReader();
+                            reader.onload = function(evt) {
+                                const avatar = document.querySelector('.profile-avatar img') || document.querySelector('.avatar') || document.getElementById('profAvatar');
+                                if(avatar) {
+                                    if(avatar.tagName === 'IMG') avatar.src = evt.target.result;
+                                    else avatar.innerHTML = `<img src="${evt.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
+                                }
+                                alert("Success: Profile picture loaded from native gallery!");
+                                syncUserDataWithSheet("Profile Photo Uploaded", "Gallery File Verified");
+                            };
+                            reader.readAsDataURL(this.files[0]);
+                        }
                     });
                 }
-            });
-
-            // Fix Wallet Section dashboard inject safely without breaking layouts
-            const targetWallet = document.getElementById('wallet-tab') || document.querySelector('.wallet-section');
-            if (targetWallet) {
-                const walletTemplate = document.getElementById('hidden-wallet-template').innerHTML;
-                targetWallet.insertAdjacentHTML('beforeend', walletTemplate);
-                renderLiveTransactions();
             }
+        });
 
-        }, 800);
-    });
+        // 3. Live Native Camera Binding Framework
+        const buttons = document.querySelectorAll('button');
+        buttons.forEach(btn => {
+            if(btn.innerText && btn.innerText.includes("Open Live Camera") && !btn.hasAttribute('data-cam-active')) {
+                btn.setAttribute('data-cam-active', 'true');
+                btn.removeAttribute('onclick');
+                btn.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const cameraInput = document.createElement('input');
+                    cameraInput.type = 'file';
+                    cameraInput.accept = 'image/*';
+                    cameraInput.capture = 'environment';
+                    cameraInput.onchange = event => {
+                        if(event.target.files[0]) {
+                            btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Capture Complete!`;
+                            btn.style.background = "#0f172a";
+                            syncUserDataWithSheet("Order Proof Captured", "Camera capture success");
+                        }
+                    };
+                    cameraInput.click();
+                });
+            }
+        });
 
-    // Sync activity log rows database engine 
+        // 4. Advanced Ledger Payout Box Injection 
+        const targetWallet = document.getElementById('wallet-tab') || document.querySelector('.wallet-section');
+        if (targetWallet && !document.getElementById('walletUpiInput')) {
+            const walletBox = document.createElement('div');
+            walletBox.style = "margin-top:20px; background:white; padding:15px; border-radius:12px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.05); font-family:sans-serif;";
+            walletBox.innerHTML = `
+                <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw Coins (पैसे निकालें)</h4>
+                <div style="margin-bottom:10px;"><label style="font-size:12px; font-weight:bold; color:#475569;">Enter UPI ID:</label><input type="text" id="walletUpiInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="example@upi"></div>
+                <div style="margin-bottom:12px;"><label style="font-size:12px; font-weight:bold; color:#475569;">Coins to Withdraw:</label><input type="number" id="walletCoinsInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="Minimum 100 Coins"><small style="color:#e63946; font-size:11px; font-weight:bold; display:block; margin-top:4px;">* Note: Minimum payout is 100 Coins (₹10)</small></div>
+                <button type="button" id="submitWithdrawalBtn" style="width:100%; background:#e63946; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">Submit Withdrawal Request</button>
+                <h4 style="font-size:14px; color:#1e293b; margin-top:20px; margin-bottom:10px;"><i class="fa-solid fa-clock-rotate-left"></i> Real Transaction History</h4>
+                <div id="realTransactionContainer" style="display:flex; flex-direction:column; gap:8px;"></div>
+            `;
+            targetWallet.appendChild(walletBox);
+            document.getElementById('submitWithdrawalBtn').addEventListener('click', processWalletWithdrawal);
+            renderLiveTransactions();
+        }
+    };
+
+    // Global communication network link with Sheet
     function syncUserDataWithSheet(activity, details) {
-        if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("YAHAN_APNI_WEB_APP")) return;
         let uName = localStorage.getItem('username') || "User_" + savedRegID;
         let uPhone = localStorage.getItem('userphone') || "N/A";
         fetch(GOOGLE_SHEET_URL, {
@@ -841,9 +792,8 @@
         });
     }
 
-    // Live automatic sync mechanism for balance display blocks
+    // Dynamic Live Currency Balances Synchronization Block
     function fetchCoinsBalance() {
-        if(!GOOGLE_SHEET_URL || GOOGLE_SHEET_URL.includes("YAHAN_APNI_WEB_APP")) return;
         let uName = localStorage.getItem('username') || "User_" + savedRegID;
         fetch(GOOGLE_SHEET_URL, {
             method: 'POST',
@@ -878,7 +828,7 @@
         });
     };
 
-    window.processWalletWithdrawal = function() {
+    function processWalletWithdrawal() {
         const upi = document.getElementById('walletUpiInput').value.trim();
         const amount = parseInt(document.getElementById('walletCoinsInput').value);
         if(!upi || !amount) { alert("Please fill fields properly!"); return; }
@@ -895,34 +845,37 @@
         alert("Success: Withdrawal request saved directly to Sheet!");
     };
 
-    window.openPolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'flex'; };
-    window.closePolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'none'; };
-
-    // Native Safe Search Hook Interceptor
-    const nativeSearch = document.getElementById('searchInput') || document.querySelector('input[type="search"]');
-    if (nativeSearch) {
-        nativeSearch.addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase().trim();
-            let cards = document.querySelectorAll('.product-card');
-            let matchCount = 0;
-            cards.forEach(card => {
-                let name = card.innerHTML.toLowerCase();
-                if(name.includes(filter)) matchCount++;
-            });
-            if (filter.length > 2 && matchCount === 0) {
-                document.getElementById('searchFeedbackModal').style.display = 'flex';
-            }
-        });
-    }
-
-    window.submitCustomFeedback = function() {
+    function submitCustomFeedback() {
         const text = document.getElementById('searchFeedbackText').value.trim();
         if(!text) { alert('Please write details first!'); return; }
         syncUserDataWithSheet("Search Feedback Box", "Product Demand: " + text);
         alert('Thank you! Feedback recorded successfully.');
         document.getElementById('searchFeedbackText').value = '';
         document.getElementById('searchFeedbackModal').style.display = 'none';
-    };
+    }
+
+    // Interval system to loop injection and safeguard layout switches
+    window.addEventListener('DOMContentLoaded', () => { setupHTMLDOM(); });
+    setInterval(() => { setupHTMLDOM(); injectUIFeatures(); }, 1000);
+
+    // Native Product Search Not Found Hook Interceptor Linker
+    setInterval(() => {
+        const nativeSearch = document.getElementById('searchInput') || document.querySelector('input[type="search"]');
+        if (nativeSearch && !nativeSearch.hasAttribute('data-hook-bound')) {
+            nativeSearch.setAttribute('data-hook-bound', 'true');
+            nativeSearch.addEventListener('keyup', function() {
+                let filter = this.value.toLowerCase().trim();
+                let cards = document.querySelectorAll('.product-card');
+                let matchCount = 0;
+                cards.forEach(card => {
+                    if(card.innerHTML.toLowerCase().includes(filter)) matchCount++;
+                });
+                if (filter.length > 2 && matchCount === 0) {
+                    document.getElementById('searchFeedbackModal').style.display = 'flex';
+                }
+            });
+        }
+    }, 1000);
 })();
 </script>
     </body>
