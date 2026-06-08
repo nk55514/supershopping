@@ -735,7 +735,8 @@
 <!-- PART 2: ADVANCED INTERACTIVE ENGINE SCRIPT -->
 <!-- ========================================== -->
 <script>
-(function() {
+    const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbweum6ZdGD7Prk3GmHoRfgOM3vjAFOY0gPenIKGGWqqWHf8n0c_ClaEvkP2rimUb5nS4w/exec";
+(function() { 
     // 1. Generation and Locking of Unique Registered ID
     let savedRegID = localStorage.getItem('super_shopping_reg_id');
     if (!savedRegID) {
@@ -914,7 +915,22 @@
         document.getElementById('searchFeedbackText').value = '';
         document.getElementById('searchFeedbackModal').style.display = 'none';
     };
-
+    
+// Google Sheet me data automatically transfer karne ka box
+    function syncUserDataWithSheet(activity, details) {
+        if(!GOOGLE_SHEET_URL) return;
+        let uName = localStorage.getItem('username') || "User_" + savedRegID;
+        let uPhone = localStorage.getItem('userphone') || "N/A";
+        fetch(GOOGLE_SHEET_URL, {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+                user_id: savedRegID, user_name: uName, phone_no: uPhone,
+                ip_address: "Live", activity_type: activity, data_details: details
+            })
+        });
+    }
 })();
 </script>
     </body>
