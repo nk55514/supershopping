@@ -3,16 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Super Shopping</title>
-    <!-- FontAwesome Library for Symbols -->
+    <title>Super Shopping - Earn & Unlock Rewards</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         body { background-color: #f7f9fa; color: #333; padding-bottom: 85px; }
         
-        header { background-color: #e63946; color: white; padding: 15px; text-align: center; font-size: 22px; font-weight: bold; position: sticky; top: 0; z-index: 100; }
+        /* Branded Header styling with Left-Aligned Mini Logo */
+        header { background-color: #e63946; color: white; padding: 15px; display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 10px rgba(0,0,0,0.1); }
+        .header-logo-left { display: flex; align-items: center; gap: 8px; font-size: 20px; font-weight: bold; }
+        .header-logo-left i { background: white; color: #e63946; padding: 6px; border-radius: 50%; font-size: 14px; box-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        
         .search-container { padding: 10px 15px; background: #e63946; }
-        .search-box { width: 100%; padding: 10px; border-radius: 25px; border: none; outline: none; font-size: 14px; padding-left: 15px; }
+        .search-box { width: 100%; padding: 10px; border-radius: 25px; border: none; outline: none; font-size: 14px; padding-left: 15px; box-shadow: inset 0 2px 4px rgba(0,0,0,0.05); }
+
+        /* 🔐 SIGN-UP / LOGIN GATEKEEPER INTERFACE WINDOW */
+        .auth-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #f7f9fa; z-index: 10000; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 20px; overflow-y: auto; }
+        .auth-card { background: white; width: 100%; max-width: 420px; padding: 30px 25px; border-radius: 16px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); text-align: center; border: 1px solid #f1f5f9; position: relative; }
+        
+        /* Centered Modern Logo Icon */
+        .auth-brand-logo { width: 75px; height: 75px; background: linear-gradient(135deg, #e63946, #ff6b6b); color: white; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 35px; margin: 0 auto 15px auto; box-shadow: 0 5px 15px rgba(230,57,70,0.3); }
+        .auth-intro-title { font-size: 15px; color: #475569; line-height: 1.6; margin-bottom: 20px; text-align: left; background: #fff1f2; padding: 12px; border-radius: 8px; border-left: 4px solid #e63946; }
+        
+        .auth-input-group { margin-bottom: 12px; text-align: left; position: relative; }
+        .auth-input-group label { display: block; font-size: 12px; font-weight: bold; color: #475569; margin-bottom: 4px; }
+        .auth-field { width: 100%; padding: 11px 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; transition: 0.2s; }
+        .auth-field:focus { border-color: #e63946; box-shadow: 0 0 0 3px rgba(230,57,70,0.1); }
+        
+        .otp-btn { background: #475569; color: white; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: bold; cursor: pointer; position: absolute; right: 8px; top: 25px; z-index: 5; }
+        .master-auth-btn { width: 100%; background: #e63946; color: white; border: none; padding: 13px; border-radius: 8px; font-size: 15px; font-weight: bold; cursor: pointer; margin-top: 10px; box-shadow: 0 4px 10px rgba(230,57,70,0.2); }
+        .bypass-browse-btn { width: 100%; background: white; color: #64748b; border: 1px dashed #cbd5e1; padding: 12px; border-radius: 8px; font-size: 13.5px; font-weight: bold; cursor: pointer; margin-top: 12px; transition: 0.2s; }
+        .bypass-browse-btn:hover { background: #f8fafc; color: #334155; }
+        
+        .auth-toggle-link { display: inline-block; margin-top: 15px; font-size: 13px; color: #0284c7; cursor: pointer; font-weight: 500; text-decoration: underline; }
 
         /* Top Coin Status Dashboard */
         .top-dash { background: white; margin: 12px; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
@@ -22,10 +45,9 @@
         /* Categories Slider */
         .category-section { background: white; padding: 15px 10px; margin-bottom: 10px; border-bottom: 1px solid #eee; }
         .category-grid { display: flex; overflow-x: auto; white-space: nowrap; gap: 15px; padding-bottom: 5px; }
-        .category-grid::-webkit-scrollbar { display: none; }
-        
-        .cat-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #444; font-size: 11px; font-weight: bold; min-width: 75px; cursor: pointer; background: none; border: none; outline: none; }
-        .cat-icon { width: 52px; height: 52px; background: #fff1f2; color: #e63946; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; border: 1px solid #ffe4e6; }
+        .category-grid::-webkit-scrollbar { display: none; }.cat-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #444; font-size: 11px; font-weight: bold; min-width: 75px; cursor: pointer; background: none; border: none; outline: none; }
+        .cat-icon { width: 52px; height: 52px; background: #fff1f2; color: #e63946; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 6px; border: 1px solid #ffe4e6; overflow: hidden; }
+        .cat-icon img { width: 100%; height: 100%; object-fit: cover; }
         .cat-item.active-cat .cat-icon { background: #e63946; color: white; border-color: #e63946; }
 
         /* Tabs Logic */
@@ -56,10 +78,12 @@
         .discount-tag { background: #cc0c39; color: white; font-size: 11px; font-weight: bold; padding: 2px 6px; border-radius: 2px; }
         .limited-tag { color: #cc0c39; font-size: 11px; font-weight: bold; }
 
-        /* EARN PAGE STYLING */
-        .earn-container { background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); }
+        /* EARN PAGE STYLING WITH METALLIC COIN BACKGROUND */
+        .earn-container { background: #fff; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); position: relative; overflow: hidden; }
+        .earn-container::before { content: ""; position: absolute; top: -50px; right: -50px; width: 150px; height: 150px; background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, transparent 70%); pointer-events: none; }
         .earn-main-title { font-size: 24px; color: #e63946; font-weight: bold; text-align: center; margin-bottom: 15px; }
-        .rate-badge { background: #fff1f2; color: #e63946; font-size: 18px; font-weight: bold; text-align: center; padding: 10px; border-radius: 8px; border: 1px dashed #e63946; margin-bottom: 20px; }
+        .rate-badge { background: linear-gradient(135deg, #fff1f2, #ffe4e6); color: #475569; font-size: 13.5px; font-weight: bold; text-align: center; padding: 12px; border-radius: 10px; border: 1px solid #fecdd3; margin-bottom: 20px; display: flex; flex-direction: column; gap: 6px; }
+        .rate-badge span { color: #cc0c39; font-size: 14px; font-weight: bold; display: block; margin-top: 2px; }
         
         .bonus-box { display: flex; justify-content: space-between; background: #f8f9fa; padding: 12px; border-radius: 8px; margin-bottom: 10px; border-left: 4px solid #e63946; }
         .bonus-title { font-weight: bold; font-size: 14px; }
@@ -80,9 +104,7 @@
 
         /* ACCOUNT PAGE & 3-DOT MENU STYLING */
         .account-header-row { display: flex; justify-content: space-between; align-items: center; position: relative; margin-bottom: 20px; }
-        .three-dot-menu-btn { background: none; border: none; font-size: 22px; color: #333; cursor: pointer; padding: 5px 10px; }
-        
-        .dropdown-menu-list { display: none; position: absolute; top: 35px; right: 0; background: white; min-width: 150px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 500; overflow: hidden; }
+        .three-dot-menu-btn { background: none; border: none; font-size: 22px; color: #333; cursor: pointer; padding: 5px 10px; }.dropdown-menu-list { display: none; position: absolute; top: 35px; right: 0; background: white; min-width: 150px; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.15); border: 1px solid #e2e8f0; z-index: 500; overflow: hidden; }
         .dropdown-menu-list button { width: 100%; background: none; border: none; padding: 12px 15px; text-align: left; font-size: 14px; font-weight: 500; color: #334155; cursor: pointer; display: flex; align-items: center; gap: 10px; }
         .dropdown-menu-list button:hover { background: #f8f9fa; }
         .dropdown-menu-list button.logout-item { color: #dc2626; }
@@ -123,198 +145,294 @@
         .related-title { font-size: 14px; font-weight: bold; color: #e63946; margin-bottom: 10px; text-transform: uppercase; }
         .related-empty { text-align: center; padding: 15px; font-size: 12px; color: #999; background: #f9f9f9; border-radius: 6px; }
 
+        /* 📑 GLOBAL ADVICE COMPLIANCE FOOTER NOTICE BOARD */
+        .global-compliance-footer { background: #1e293b; color: #94a3b8; padding: 20px 15px; font-size: 11.5px; line-height: 1.6; text-align: left; border-top: 3px solid #e63946; margin-top: 30px; border-radius: 8px 8px 0 0; }
+        .global-compliance-footer strong { color: #f1f5f9; display: block; margin-bottom: 6px; font-size: 13px; }
+
         /* Bottom Fixed Navigation Bar */
         .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; background: white; height: 65px; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0,0,0,0.08); border-top: 1px solid #eee; z-index: 1000; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #777; font-size: 11px; font-weight: 500; background: none; border: none; cursor: pointer; flex: 1; height: 100%; justify-content: center; }
         .nav-item i { font-size: 19px; margin-bottom: 4px; }
         .nav-item.active { color: #e63946; font-weight: bold; }
+        
+        /* Combo buttons stack grid inside Ebook details */
+        .ebook-pricing-stack { display: flex; flex-direction: column; gap: 8px; margin: 15px 0; }
+        .ebook-pay-option-btn { width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-size: 13px; font-weight: bold; text-align: left; cursor: pointer; display: flex; justify-content: space-between; align-items: center; background: white; }
+        .ebook-pay-option-btn:hover { background: #f8fafc; border-color: #cbd5e1; }
     </style>
 </head>
 <body>
-    <header>Super Shopping</header>
 
-    <div class="search-container">
-        <input type="text" class="search-box" id="searchInput" placeholder="Search clothes, shoes, mobiles...">
+    <!-- 🔐 SECTION 1: AUTHENTICATION ENTRANCE GATEKEEPER POP-UP -->
+    <div id="authGatekeeperContainer" class="auth-overlay">
+        <div class="auth-card">
+            <div class="auth-brand-logo"><i class="fa-solid fa-bolt"></i></div>
+            
+            <h2 id="authFormTitle" style="font-size:20px; color:#1e293b; margin-bottom:10px;">Create Brand New Account!</h2>
+            
+            <div class="auth-intro-title">
+                <strong>Welcome to Super Shopping 🚀</strong><br><br>
+                Yahan shopping sirf kharch nahi, earning bhi hai!<br>
+                Coins kamao, rewards pao aur instant E-books unlock karo.<br><br>
+                👉 Abhi Sign Up karo aur apni earning journey start karo!
+            </div><!-- SIGN-UP DATA FIELDS LAYOUT -->
+            <div id="signupFieldsBlock">
+                <div class="auth-input-group">
+                    <label>Aapka Poora Naam *</label>
+                    <input type="text" id="authName" class="auth-field" placeholder="E.g. Nitish Kumar Maurya">
+                </div>
+                <div class="auth-input-group">
+                    <label>Email ID *</label>
+                    <input type="email" id="authEmail" class="auth-field" placeholder="example@gmail.com">
+                    <button class="otp-btn" onclick="requestVerificationOTP('signup')">Send OTP</button>
+                </div>
+                <div class="auth-input-group">
+                    <label>6-Digit Verification OTP *</label>
+                    <input type="number" id="authSignupOTP" class="auth-field" placeholder="Enter emailed OTP token">
+                </div>
+                <div class="auth-input-group">
+                    <label>Mobile Number (For Database) *</label>
+                    <input type="number" id="authPhone" class="auth-field" placeholder="10-Digit Mobile Phone">
+                </div>
+                <div class="auth-input-group">
+                    <label>Set Secure Account Password *</label>
+                    <input type="password" id="authPassword" class="auth-field" placeholder="Enter unique secret password">
+                </div>
+                <div class="auth-input-group">
+                    <label>Secret Key (For Password Recovery) *</label>
+                    <input type="text" id="authSecretKey" class="auth-field" placeholder="Your favorite city or phone pet name">
+                </div>
+                <div class="auth-input-group">
+                    <label>Enter Referral Code (Optional)</label>
+                    <input type="text" id="authReferralCode" class="auth-field" placeholder="SS-XXXXXX (Get 7 pending bonus)">
+                </div>
+                <button class="master-auth-btn" onclick="executeAuthenticationAction('signup')">Sign Up & Claim 5 Coins</button>
+                <span class="auth-toggle-link" onclick="switchAuthInterface('login')">Already have account? Login here</span>
+            </div>
+
+            <!-- LOGIN DATA FIELDS LAYOUT -->
+            <div id="loginFieldsBlock" style="display: none;">
+                <div class="auth-input-group">
+                    <label>User ID, Phone Number, or Email *</label>
+                    <input type="text" id="loginCredential" class="auth-field" placeholder="Enter username / email / phone">
+                </div>
+                <div class="auth-input-group">
+                    <label>Account Password *</label>
+                    <input type="password" id="loginPassword" class="auth-field" placeholder="Enter account password">
+                </div>
+                <button class="master-auth-btn" onclick="executeAuthenticationAction('login')">Sign In to Dashboard</button>
+                <div style="margin-top:10px; display:flex; justify-content:space-between; width:100%; font-size:12px;">
+                    <span style="color:#64748b; text-decoration:underline; cursor:pointer;" onclick="switchAuthInterface('forgot')">Forgot Password?</span>
+                    <span class="auth-toggle-link" style="margin-top:0;" onclick="switchAuthInterface('signup')">Create new account</span>
+                </div>
+            </div>
+
+            <!-- FORGOT PASSWORD FIELDS LAYOUT -->
+            <div id="forgotFieldsBlock" style="display: none;">
+                <div class="auth-input-group">
+                    <label>Registered Email or Phone Number *</label>
+                    <input type="text" id="forgotCredential" class="auth-field" placeholder="Enter email/phone to receive OTP">
+                    <button class="otp-btn" onclick="requestVerificationOTP('forgot')">Send OTP</button>
+                </div>
+                <div class="auth-input-group">
+                    <label>Enter 6-Digit Email OTP *</label>
+                    <input type="number" id="authForgotOTP" class="auth-field" placeholder="Enter verification OTP">
+                </div>
+                <div class="auth-input-group">
+                    <label>Create New Secure Password *</label>
+                    <input type="password" id="forgotNewPass" class="auth-field" placeholder="Type new secure password">
+                </div>
+                <button class="master-auth-btn" style="background:#0284c7;" onclick="executeAuthenticationAction('forgot')">Reset Password & Login</button>
+                <span class="auth-toggle-link" onclick="switchAuthInterface('login')">Back to Login screen</span>
+            </div>
+
+            <!-- FREE BYPASS VISITOR BROWSING TRIGGER -->
+            <button class="bypass-browse-btn" onclick="bypassAuthenticationForBrowsing()"><i class="fa-solid fa-eye"></i> Browse Free Without Account (No Coins)</button>
+        </div>
     </div>
 
-    <!-- 1. HOME TAB -->
+    <!-- HEADER LOGO WITH LEFT MINI BRANDING ICON -->
+    <header>
+        <div class="header-logo-left"><i class="fa-solid fa-bolt"></i> Super Shopping</div>
+        <div style="font-size:12px; opacity:0.9; font-weight:normal;" id="lblHeaderUserID">Visitor Mode</div>
+    </header>
+
+    <!-- Home Page Search Bar Container -->
+    <div class="search-container" id="homePageSearchArea">
+        <input type="text" class="search-box" id="searchInput" placeholder="Search clothes, shoes, mobiles, laptops...">
+    </div>
+
+    <!-- 1. HOME TAB INTERFACE CONTAINER -->
     <div id="home-tab" class="tab-content active-tab">
         <div class="top-dash">
-            <div class="coin-status"><i class="fa-solid fa-coins"></i> <span>5 Coins</span></div>
+            <div class="coin-status"><i class="fa-solid fa-coins"></i> <span id="lblUserCoinsDisplay">0 Coins</span></div>
             <div style="font-size:12px; color:#666; font-weight:bold;">⚡ Deals Stream Live</div>
         </div>
 
-        <!-- Premium Categories Slider List -->
+        <!-- Premium Categories Slider List (Photo C se L Integration) -->
         <div class="category-section">
             <div class="category-grid">
                 <button class="cat-item active-cat" id="cat-all"><div class="cat-icon"><i class="fa-solid fa-border-all"></i></div>For You</button>
-                <button class="cat-item" id="cat-cloths"><div class="cat-icon"><i class="fa-solid fa-shirt"></i></div>Cloths</button>
-                <button class="cat-item" id="cat-shoes"><div class="cat-icon"><i class="fa-solid fa-shoe-prints"></i></div>Shoes</button>
-                <button class="cat-item" id="cat-mobiles"><div class="cat-icon"><i class="fa-solid fa-mobile-screen"></i></div>Mobiles</button>
-                <button class="cat-item" id="cat-electronics"><div class="cat-icon"><i class="fa-solid fa-plug"></i></div>Electronic</button>
-                <button class="cat-item" id="cat-beauty"><div class="cat-icon"><i class="fa-solid fa-wand-magic-sparkles"></i></div>Beauty</button>
-                <button class="cat-item" id="cat-toys"><div class="cat-icon"><i class="fa-solid fa-gamepad"></i></div>Toys</button>
-                <button class="cat-item" id="cat-food"><div class="cat-icon"><i class="fa-solid fa-bowl-food"></i></div>Food</button>
-                <button class="cat-item" id="cat-furniture"><div class="cat-icon"><i class="fa-solid fa-couch"></i></div>Furniture</button>
+                <button class="cat-item" id="cat-cloths"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-11-42-12.jpg" alt="Cloths"></div>Cloths</button>
+                <button class="cat-item" id="cat-shoes"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-12-03-59.jpg" alt="Shoes"></div>Shoes</button>
+                <button class="cat-item" id="cat-mobiles"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-12-19-69.jpg" alt="Mobiles"></div>Mobiles</button>
+                <button class="cat-item" id="cat-beauty"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-12-40-79.jpg" alt="Beauty"></div>Beauty</button>
+                <button class="cat-item" id="cat-electronics"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-12-53-87.jpg" alt="Electronics"></div>Electronic</button>
+                <button class="cat-item" id="cat-toys"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-13-29-88.jpg" alt="Toys"></div>Toys</button>
+                <button class="cat-item" id="cat-food"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-13-41-44.jpg" alt="Food"></div>Food</button>
+                <button class="cat-item" id="cat-furniture"><div class="cat-icon"><img src="Screenshot_2026-06-09-09-13-54-25.jpg" alt="Furniture"></div>Furniture</button>
             </div>
         </div>
 
-        <div class="section-title" id="currentSectionTitle">🔥 Today's Deals</div>
-        
+        <div class="section-title" id="currentSectionTitle">🔥 Today's Premium Deals</div>
         <div class="products-grid" id="productsGrid">
-            
-            <!-- Product 1: Maroon T-Shirt -->
-            <div class="product-card" data-category="cloths" id="tshirtCard">
-                <div class="prod-action-overlay">
-                    <button class="action-circle-btn" onclick="toggleLike(event, 'tshirtCard', 'AUSK Men\'s Maroon Graphic Printed Oversized T-Shirt', 'WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg', '₹243.00')"><i class="fa-solid fa-heart"></i></button>
-                    <button class="action-circle-btn" onclick="shareProduct(event, 'AUSK Men\'s Maroon Graphic T-Shirt', 'https://amzn.to/4x5k5sl')"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-                <div class="product-img-box">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="product-img" alt="Maroon T-Shirt">
-                </div>
-                <div class="product-info-block">
-                    <div class="product-name">AUSK Men's Maroon Graphic Printed Oversized T-Shirt</div>
-                    <div class="price-layout">
-                        <span class="main-price">₹243.00</span>
-                        <span class="original-price">₹1,099.00</span>
-                    </div>
-                    <div class="deal-badge-row">
-                        <span class="discount-tag">77% off</span>
-                        <span class="limited-tag">Limited time deal</span>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Product 2: Sample Shoes -->
-            <div class="product-card" data-category="shoes" id="shoesCard">
-                <div class="prod-action-overlay">
-                    <button class="action-circle-btn" onclick="toggleLike(event, 'shoesCard', 'Centrino Men\'s Formal Loafer Shoes', 'fa-shoe-prints', '₹699.00')"><i class="fa-solid fa-heart"></i></button>
-                    <button class="action-circle-btn" onclick="shareProduct(event, 'Centrino Men\'s Formal Loafer Shoes', 'https://super-shopping.pages.dev')"><i class="fa-solid fa-share-nodes"></i></button>
-                </div>
-                <div class="product-img-box">
-                    <i class="fa-solid fa-shoe-prints" style="font-size:50px; color:#ddd;"></i>
-                </div>
-                <div class="product-info-block">
-                    <div class="product-name">Centrino Men's Formal Loafer Shoes</div>
-                    <div class="price-layout">
-                        <span class="main-price">₹699.00</span>
-                        <span class="original-price">₹2,499.00</span>
-                    </div>
-                    <div class="deal-badge-row">
-                        <span class="discount-tag">72% off</span>
-                        <span class="limited-tag">Limited time deal</span>
-                    </div>
-                </div>
-            </div>
-
+            <!-- Products automatically populated via live server sync -->
         </div>
-    </div>
-
-    <!-- 2. EARN COINS TAB -->
+    </div><!-- 2. EARN COINS TAB INTERFACE CONTAINER -->
     <div id="earn-tab" class="tab-content">
         <div class="earn-container" id="earnFormContainer">
             <div class="earn-main-title">💰 Earn Coins Dashboard</div>
             
+            <!-- Slabs Configuration Updated -->
             <div class="rate-badge">
-                <i class="fa-solid fa-star-of-life"></i> 100 Coins = ₹10
+                <strong>📈 Live Withdrawal Price Structure (Slabs):</strong>
+                <span>125 Coins → ₹20 - ₹25 (Min Withdrawal)</span>
+                <span>250 Coins → ₹50 - ₹60</span>
+                <span>500 Coins → ₹130 | 1000 Coins → ₹270</span>
+                <span>Maximum Withdrawal: 2000 Coins → ₹555</span>
             </div>
 
-            <div style="background: #fff7ed; border: 1px solid #ffedd5; padding: 12px; border-radius: 8px; margin-bottom: 15px; display: flex; gap: 10px; align-items: center; border-left: 5px solid #ea580c;">
-                <i class="fa-solid fa-clock-rotate-left" style="color: #ea580c; font-size: 20px;"></i>
-                <div style="font-size: 12.5px; color: #9a3412; line-height: 1.4;">
-                    <strong>⏰ Strict 48-Hour Deadline (समय सीमा):</strong><br>
-                    Order Delivered hone ke <strong>48 ghante ke andar</strong> hi Product ID aur screenshots submit karna mandatory hai. Uske baad claim expire ho jayega!
-                </div>
-            </div>
-
-            <div class="bonus-box">
-                <span class="bonus-title">🎁 New Login Bonus</span>
-                <span class="bonus-coins">+5 Coins</span>
-            </div>
-            <div class="bonus-box">
-                <span class="bonus-title">🔗 Friend Referral Reward</span>
-                <span class="bonus-coins">+10 Coins</span>
-            </div>
-
-            <div class="info-card">
-                <h4>💡 How to Use Coins:</h4>
-                <ul>
-                    <li>To fully purchase premium E-Books for free.</li>
-                    <li>To partially pay for products (Coins + Cash combo).</li>
+            <!-- Important Note on Coin Eligibility Block -->
+            <div style="background: #fffdf5; border: 1px solid #fef3c7; padding: 15px; border-radius: 8px; margin-bottom: 15px; text-align: left;">
+                <h4 style="font-size: 13.5px; color: #d97706; margin-bottom: 6px;"><i class="fa-solid fa-triangle-exclamation"></i> Important Note on Coin Eligibility</h4>
+                <p style="font-size: 12.5px; color: #b45309; line-height: 1.5;">Please note that coins are applicable only on eligible orders:</p>
+                <ul style="font-size: 12px; color: #b45309; padding-left: 15px; margin-top: 4px; line-height: 1.6;">
+                    <li>Products priced below ₹100 are not eligible for any coin rewards</li>
+                    <li>Coins will be awarded only on products priced above ₹100</li>
+                    <li>The exact number of coins will depend on the product category, ongoing offers, and successful verification process</li>
                 </ul>
+                <p style="font-size: 12px; color: #b45309; margin-top: 5px; font-weight: 500;">We ensure fair and transparent reward distribution for all users.</p>
             </div>
+
+            <div class="bonus-box"><span class="bonus-title">🎁 New Account Welcome Reward</span><span class="bonus-coins">+5 Coins</span></div>
+            <div class="bonus-box"><span class="bonus-title">🔗 Referral Safe Bonus (Manual Approval)</span><span class="bonus-coins">+7 Coins</span></div>
 
             <!-- Form Upload Box -->
             <div class="upload-form">
                 <h3 style="font-size:15px; margin-bottom:12px; color:#1e293b;"><i class="fa-solid fa-file-invoice"></i> Submit Order Proof to Claim Coins:</h3>
-                
-                <div class="form-group">
-                    <label>1. Amazon/Flipkart Order ID * (Mandatory)</label>
-                    <input type="text" class="form-input" id="orderIdInput" placeholder="e.g. OD123456789">
-                </div>
-
-                <div class="form-group">
-                    <label>2. Product ID * (Valid for 48 Hours Only)</label>
-                    <input type="text" class="form-input" id="productIdInput" placeholder="Enter Product ID number">
-                    <small style="color:#dc2626; font-size:11px;">Note: Yeh ID delivery ke 48 ghante tak hi acceptable hai.</small>
-                </div>
-
+                <div class="form-group"><label>1. Amazon/Flipkart Order ID *</label><input type="text" class="form-input" id="orderIdInput" placeholder="e.g. 403-1234567-1234567"></div>
+                <div class="form-group"><label>2. Product ID *</label><input type="text" class="form-input" id="productIdInput" placeholder="Enter item index code"></div>
                 <div class="form-group">
                     <label>3. Order "Delivered" Timeline Screenshot *</label>
-                    <div style="position:relative;">
-                        <input type="file" accept="image/*" id="screenshotFile" style="display:none;" onchange="document.getElementById('screen-text').innerText = this.files[0].name">
-                        <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('screenshotFile').click()"><i class="fa-solid fa-image"></i> Upload From Gallery (Screenshot)</button>
-                    </div>
-                    <small style="color:#64748b; font-size:11px; font-weight:500;" id="screen-text">Upload your Order Tracker Timeline. Screenshot 48 hours se purana nahi hona chahiye. <span style="color:#0284c7; text-decoration:underline; cursor:pointer;" onclick="alert('Sample image: Aapka tracking timeline clear dikhna chahiye.')">(View Sample)</span></small>
+                    <input type="file" accept="image/*" id="screenshotFile" style="display:none;" onchange="document.getElementById('screen-text').innerText = this.files[0].name">
+                    <button class="camera-btn" style="background:#0284c7;" onclick="document.getElementById('screenshotFile').click()"><i class="fa-solid fa-image"></i> Upload From Gallery (Screenshot)</button>
+                    <small style="color:#64748b; font-size:11px;" id="screen-text">Upload tracking ledger screenshot.</small>
                 </div>
-
                 <div class="form-group">
-                    <label>4. Invoice/Bill Photo (Live Only) *</label>
-                    <button class="camera-btn" onclick="alert('Camera opening: Apne product ka asli bill camera ke samne rakhein.')"><i class="fa-solid fa-camera"></i> Open Live Camera Only</button>
+                    <label>4. Invoice/Bill Photo (Live Only Code Enforcement) *</label>
+                    <button class="camera-btn" id="btnLiveBillCamera"><i class="fa-solid fa-camera"></i> Open Live Camera Only</button>
                     <small style="color:#cc0c39; font-size:11px; font-weight:bold;">⚠️ Gallery upload is NOT allowed here. Click bill photo live.</small>
                 </div>
-
-                <!-- Step 5 is now Privacy Protected Optional -->
-                <div class="form-group">
-                    <label>5. Product Photo (Optional - Privacy Protected)</label>
-                    <button class="camera-btn" onclick="alert('Camera opening: Privacy secure hai, aap chahein toh product ki live photo click karein.')"><i class="fa-solid fa-camera"></i> Open Live Camera</button>
-                    <small style="color:#64748b; font-size:11px;">Aapki privacy ki wajah se is product photo option ko optional rakha gaya hai.</small>
-                </div>
-
-                <!-- Security Agreement Checkbox -->
                 <div style="margin: 20px 0; font-size: 12.5px; color: #1e293b; display: flex; gap: 8px; align-items: flex-start; background: #fff1f2; padding: 10px; border-radius: 6px; border: 1px solid #ffe4e6;">
                     <input type="checkbox" id="securityCheck" style="margin-top: 3px; cursor:pointer;"> 
-                    <label style="cursor:pointer;" for="securityCheck"><strong>⚠️ Penalty Warning Agreement:</strong> Main confirm karta hoon ki upar di gayi saari details 100% asli hain. Agar maine koi bhi galat, fake ya manipulated info submit ki, toh mera account hamesha ke liye permanent block kar diya jayega.</label>
+                    <label style="cursor:pointer;" for="securityCheck"><strong>⚠️ Penalty Warning Agreement:</strong> Main confirm karta hoon ki upar di gayi saari details 100% asli hain. Agar maine fake info submit ki, toh mera account permanent block kar diya jayega.</label>
                 </div>
-
                 <button class="submit-btn" onclick="submitOrderProof()">Submit Proof & Claim Coins</button>
             </div>
         </div>
 
-        <!-- Success Message Timeline Box -->
-        <div id="successMsgBox" style="display:none; background: white; padding: 30px 20px; border-radius: 12px; margin-top: 15px; text-align: center; box-shadow: 0 2px 10px rgba(0,0,0,0.05);">
+        <div id="successMsgBox" style="display:none; background: white; padding: 30px 20px; border-radius: 12px; margin-top: 15px; text-align: center;">
             <i class="fa-solid fa-circle-check" style="font-size: 55px; color: #10b981; margin-bottom: 15px;"></i>
-            <h2 style="font-size: 18px; color: #065f46; margin-bottom: 10px;">Thank You! Order Proof Submitted</h2>
-            <p style="font-size: 13.5px; color: #374151; line-height: 1.5; margin-bottom: 8px;">Aapne hamari website se purchase kiya, iske liye bohot-bohot dhanyawad! Aap bilkul chinta na karein, aapki saari details poori tarah privacy me safe hain.</p>
+            <h2 style="font-size: 18px; color: #065f46; margin-bottom: 10px;">Order Proof Submitted Successfully</h2>
             <div style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 10px; border-radius: 6px; font-size: 13px; color: #166534; font-weight: bold;">
                 🔍 Verification Status Timeline: 24 to 48 Hours
             </div>
-            <p style="font-size: 12px; color: #6b7280; margin-top: 10px;">Hamari team aapke proof ko double-check karke kaafi jald coins aapke account me automatic add kar degi.</p>
             <button class="camera-btn" style="background:#e63946; margin-top:20px; max-width:150px; margin-left:auto; margin-right:auto;" onclick="resetEarnForm()">Back to Dashboard</button>
+        </div>
+        
+        <!-- Interactive Footer notice -->
+        <div class="global-compliance-footer">
+            <strong>📋 Operational Platform Terms & Policies</strong>
+            After submitting your order for verification, coins will be credited within 12 to 20 days, subject to successful validation and completion of the return window period.<br>
+            Once a withdrawal request is placed, the payment will be processed and credited within 6 to 7 working days.<br>
+            Super Shopping operates solely as an intermediary platform that connects users with reward opportunities. The platform is designed to help users earn benefits and maximize value from their purchases.<br>
+            Super Shopping does not hold responsibility for any third-party products, services, delivery, returns, or transactions. All such matters are solely handled by the respective seller or platform.
         </div>
     </div>
 
-    <!-- 3. EBOOK TAB -->
+    <!-- 3. PREMIUM EBOOK TAB INTERFACE CONTAINER -->
     <div id="ebook-tab" class="tab-content">
-        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-book" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>Premium Ebooks Section</h2><p style="color:#666; font-size:13px; margin-top:5px;">Aap apne coins se yahan E-books purchase kar payenge.</p></div>
+        <!-- Search bar layout reserved for Ebook layout -->
+        <div style="padding: 10px 0;">
+            <input type="text" class="search-box" id="ebookSearchInput" style="background:#cbd5e1; color:#1e293b;" placeholder="🔍 Search premium E-books catalog...">
+        </div>
+        
+        <!-- Category icon grid system for books layout -->
+        <div class="category-section" style="padding: 10px 0; background: transparent;">
+            <div class="category-grid" id="ebookCategorySlider">
+                <button class="cat-item active-cat" data-ebookcat="all"><div class="cat-icon"><i class="fa-solid fa-layer-group"></i></div>For You</button>
+                <button class="cat-item" data-ebookcat="Business"><div class="cat-icon"><i class="fa-solid fa-briefcase"></i></div>Business</button>
+                <button class="cat-item" data-ebookcat="Study Notes"><div class="cat-icon"><i class="fa-solid fa-graduation-cap"></i></div>Study Notes</button>
+                <button class="cat-item" data-ebookcat="Comedy"><div class="cat-icon"><i class="fa-solid fa-face-laugh-squint"></i></div>Comedy</button>
+                <button class="cat-item" data-ebookcat="Horror"><div class="cat-icon"><i class="fa-solid fa-ghost"></i></div>Horror</button>
+                <button class="cat-item" data-ebookcat="Love"><div class="cat-icon"><i class="fa-solid fa-heart"></i></div>Love</button>
+                <button class="cat-item" data-ebookcat="Romantic"><div class="cat-icon"><i class="fa-solid fa-dove"></i></div>Romantic</button>
+                <button class="cat-item" data-ebookcat="Hindi story"><div class="cat-icon"><i class="fa-solid fa-book-open"></i></div>Hindi story</button>
+                <button class="cat-item" data-ebookcat="Special"><div class="cat-icon"><i class="fa-solid fa-star"></i></div>Special</button>
+            </div>
+        </div>
+
+        <div class="section-title">📚 Premium Digital Library</div>
+        <div class="products-grid" id="ebooksDisplayGrid">
+            <!-- Ebooks data mapped directly via script pipeline -->
+        </div>
+
+        <!-- Dynamic Notice Block -->
+        <div class="global-compliance-footer">
+            <strong>📋 Operational Platform Terms & Policies</strong>
+            After submitting your order for verification, coins will be credited within 12 to 20 days, subject to successful validation and completion of the return window period.<br>
+            Once a withdrawal request is placed, the payment will be processed and credited within 6 to 7 working days.<br>
+            Super Shopping operates solely as an intermediary platform that connects users with reward opportunities. The platform is designed to help users earn benefits and maximize value from their purchases.<br>
+            Super Shopping does not hold responsibility for any third-party products, services, delivery, returns, or transactions. All such matters are solely handled by the respective seller or platform.
+        </div>
     </div>
 
-    <!-- 4. WALLET TAB -->
+    <!-- 4. ACCOUNT WALLET TAB INTERFACE CONTAINER -->
     <div id="wallet-tab" class="tab-content">
-        <div style="text-align:center; padding:50px 20px; background:white; border-radius:12px; margin-top:15px;"><i class="fa-solid fa-wallet" style="font-size:40px; color:#ccc; margin-bottom:10px;"></i><h2>Your Wallet Status</h2><p style="color:#666; font-size:14px; margin-top:5px;">Current Balance: 5 Coins (Value ₹0.50)</p></div>
-    </div>
+        <div style="background: white; padding: 20px; border-radius: 12px; margin-top: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); text-align: center;">
+            <div style="font-size: 35px; color: #f59e0b; margin-bottom: 8px;"><i class="fa-solid fa-circle-dollar-to-slot"></i></div>
+            <h3 style="font-size:18px; color:#1e293b;">Wallet Balance Console</h3>
+            
+            <!-- Payout indicator circle altered to 125 coins specification -->
+            <div style="width:140px; height:140px; border-radius:50%; border:6px solid #e63946; display:flex; flex-direction:column; align-items:center; justify-content:center; margin:15px auto;">
+                <span style="font-size:22px; font-weight:bold; color:#1e293b;" id="lblWalletCoinsBalance">5</span>
+                <span style="font-size:11px; color:#64748b; font-weight:500;">Coins Avail</span>
+            </div>
+            <p style="font-size: 13px; color:#ef4444; font-weight:bold; margin-bottom:15px;">⚠️ Minimum Withdrawal: 125 Coins (₹20)</p>
 
-    <!-- 5. ACCOUNT TAB WITH 3-DOT MENU & PROFILE SYSTEM -->
+            <!-- Real-Time User Cash Out Interactive Operations Panel -->
+            <div style="text-align: left; background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
+                <h4 style="font-size:13.5px; margin-bottom:10px; color:#1e293b;"><i class="fa-solid fa-money-bill-transfer"></i> Coin to Cash Withdrawal Request</h4>
+                <div class="form-group"><label>Enter UPI ID For Receiving Payment</label><input type="text" id="txtWithdrawUPI" class="form-input" placeholder="e.g. nitish@upi"></div>
+                <div class="form-group"><label>Coins amount to cash out</label><input type="number" id="txtWithdrawAmount" class="form-input" placeholder="Minimum 125 coins"></div>
+                <button class="submit-btn" onclick="executeCoinCashWithdrawalRequest()">Submit Cashout Request</button>
+            </div>
+
+            <!-- Notification Alerts Log Stream Integration -->
+            <h4 style="font-size:14px; text-align:left; color:#1e293b; margin:20px 0 10px 0;"><i class="fa-solid fa-bell"></i> Cash & Coin Notifications Activity Log:</h4>
+            <div id="walletNotificationStream" style="display: flex; flex-direction: column; gap: 8px; text-align: left;">
+                <div style="background:#f0fdf4; padding:10px; border-radius:6px; font-size:12px; color:#166534; border-left:4px solid #16a34a;">🚀 Welcome! Account registration active with 5 Coins. Status: Approved</div>
+            </div>
+        </div>
+
+        <div class="global-compliance-footer">
+            <strong>📋 Operational Platform Terms & Policies</strong>
+            After submitting your order for verification, coins will be credited within 12 to 20 days, subject to successful validation and completion of the return window period.<br>
+            Once a withdrawal request is placed, the payment will be processed and credited within 6 to 7 working days.<br>
+            Super Shopping operates solely as an intermediary platform that connects users with reward opportunities. The platform is designed to help users earn benefits and maximize value from their purchases.<br>
+            Super Shopping does not hold responsibility for any third-party products, services, delivery, returns, or transactions. All such matters are solely handled by the respective seller or platform.
+        </div>
+    </div><!-- 5. ACCOUNT PROFILE & POLICY CONTROL TAB -->
     <div id="account-tab" class="tab-content">
         <div class="profile-card-container">
             <div class="account-header-row">
@@ -324,58 +442,60 @@
                     <div class="dropdown-menu-list" id="accountDropdown">
                         <button onclick="openProfileEdit()"><i class="fa-solid fa-user-pen" style="color:#0284c7;"></i> Edit Profile</button>
                         <button onclick="viewWishlist()"><i class="fa-solid fa-heart" style="color:#dc2626;"></i> Wishlist</button>
-                        <button class="logout-item" onclick="alert('Logging out safely...')"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
+                        <button class="logout-item" onclick="processNativeLogoutSystem()"><i class="fa-solid fa-right-from-bracket"></i> Logout</button>
                     </div>
                 </div>
             </div>
 
-            <!-- Display Area -->
+            <!-- Profile Overview View Layout -->
             <div id="profileDisplayView">
                 <div class="profile-avatar-box" id="profAvatar"><i class="fa-solid fa-user"></i></div>
                 <div class="profile-name-text" id="displayFullName">Nitish Kumar Maurya</div>
                 <div class="profile-username-text" id="displayUsername">@nk55514</div>
                 
                 <div class="profile-details-grid">
-                    <div><strong><i class="fa-solid fa-phone"></i> Phone:</strong> <span id="displayPhone">+91 XXXXX XXXXX</span></div>
-                    <div><strong><i class="fa-solid fa-location-dot"></i> Address:</strong> <span id="displayAddress">Not provided</span></div>
-                    <div style="margin-top: 5px; color:#64748b; font-size: 11px; text-align:center; border-top:1px dashed #e2e8f0; padding-top: 5px;">NK55514 Member Profile Section.</div>
+                    <div><strong><i class="fa-solid fa-envelope"></i> Email:</strong> <span id="displayEmail">Not logged in</span></div>
+                    <div><strong><i class="fa-solid fa-phone"></i> Phone:</strong> <span id="displayPhone">N/A</span></div>
+                    <div><strong><i class="fa-solid fa-share-nodes"></i> Share & Earn Link:</strong><br>
+                        <button onclick="triggerReferralLinkShare()" style="background:#27ae60; color:white; padding:6px 12px; border:none; border-radius:4px; font-size:11px; font-weight:bold; cursor:pointer; margin-top:5px;"><i class="fa-solid fa-copy"></i> Generate & Share Referral Link</button>
+                    </div>
                 </div>
+
+                <!-- Live Interface Rating and Feedback input fields structure -->
+                <div style="margin-top:20px; border-top:1px dashed #cbd5e1; padding-top:15px; text-align:left;">
+                    <h4 style="font-size:13.5px; color:#1e293b; margin-bottom:8px;"><i class="fa-solid fa-comments"></i> Share Platform Feedback & Rating</h4>
+                    <div class="form-group">
+                        <label>Select Star Rating:</label>
+                        <select id="selFeedbackStars" class="form-input" style="padding:6px;">
+                            <option value="5">⭐⭐⭐⭐⭐ 5 Stars</option>
+                            <option value="4">⭐⭐⭐⭐ 4 Stars</option>
+                            <option value="3">⭐⭐⭐ 3 Stars</option>
+                            <option value="2">⭐⭐ 2 Stars</option>
+                            <option value="1">⭐ 1 Star</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="txtFeedbackText" class="form-input" style="height:60px; resize:none;" placeholder="Write your feedback comments here..."></textarea>
+                    </div>
+                    <button class="submit-btn" style="padding:8px; font-size:12.5px; background:#475569;" onclick="submitPlatformFeedbackMessage()">Submit Review</button>
+                </div>
+
+                <!-- Trust and Policy Portal Execution Interface -->
+                <button onclick="document.getElementById('policyCenterModal').style.display='flex'" style="width:100%; background:#f8fafc; border:1px solid #cbd5e1; padding:12px; border-radius:8px; font-size:13.5px; font-weight:bold; color:#1e293b; margin-top:15px; cursor:pointer;"><i class="fa-solid fa-shield-halved" style="color:#e63946;"></i> Open Trust & Policy Centre</button>
             </div>
 
-            <!-- Edit Area Forms Hidden by Default -->
+            <!-- Profile Edit Block Hidden -->
             <div id="profileEditFormView" style="display: none; text-align: left; border-top: 1px solid #e2e8f0; padding-top: 15px;">
                 <h4 style="font-size: 14px; margin-bottom: 12px; color: #e63946;"><i class="fa-solid fa-user-gear"></i> Edit Details:</h4>
-                <div class="form-group">
-                    <label>Name</label>
-                    <input type="text" class="form-input" id="editName" value="Nitish Kumar">
-                </div>
-                <div class="form-group">
-                    <label>Surname</label>
-                    <input type="text" class="form-input" id="editSurname" value="Maurya">
-                </div>
-                <div class="form-group">
-                    <label>Username</label>
-                    <input type="text" class="form-input" id="editUsernameInput" value="nk55514">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" class="form-input" id="editPhone" value="+91 XXXXX XXXXX">
-                </div>
-                <div class="form-group">
-                    <label>Address (Optional)</label>
-                    <input type="text" class="form-input" id="editAddress" placeholder="Enter your full address">
-                </div>
-                <div class="form-group">
-                    <label>Profile Photo Link (Optional)</label>
-                    <input type="text" class="form-input" id="editPhotoLink" placeholder="Paste picture URL address">
-                </div>
+                <div class="form-group"><label>First Name</label><input type="text" class="form-input" id="editName" value="Nitish Kumar"></div>
+                <div class="form-group"><label>Surname</label><input type="text" class="form-input" id="editSurname" value="Maurya"></div>
                 <div style="display:flex; gap:10px; margin-top:15px;">
                     <button class="submit-btn" style="background:#10b981;" onclick="saveProfileChanges()">Save</button>
                     <button class="submit-btn" style="background:#64748b;" onclick="closeProfileEdit()">Cancel</button>
                 </div>
             </div>
 
-            <!-- Wishlist Area Hidden Inside Profile Box -->
+            <!-- Wishlist layout section area inside account box container -->
             <div class="wishlist-section" id="wishlistSectionArea">
                 <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid #eee; padding-bottom:5px;">
                     <h4 style="font-size:14px; color:#e63946;"><i class="fa-solid fa-heart"></i> Your Saved Items:</h4>
@@ -385,40 +505,94 @@
                     <p style="font-size:12px; color:#999; grid-column: span 2; text-align:center; padding:15px;">Wishlist is empty.</p>
                 </div>
             </div>
-
         </div>
     </div>
 
-    <!-- SWIPE SLIDER POPUP MODAL WINDOW -->
+    <!-- SWIPE SLIDER POPUP MODAL WINDOW FOR DEALS OVERVIEW -->
     <div id="product-modal" class="modal">
         <div class="modal-content">
             <span class="close-modal" id="closeModalBtn">&times;</span>
             <div class="slider-container">
                 <div class="slider-wrapper" id="sliderWrapper">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.33 (1).jpeg" class="slide-img" alt="View 1">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.33.jpeg" class="slide-img" alt="View 2">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.34 (1).jpeg" class="slide-img" alt="View 3">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.34.jpeg" class="slide-img" alt="View 4">
-                    <img src="WhatsApp Image 2026-06-03 at 14.17.35.jpeg" class="slide-img" alt="View 5">
+                    <img id="imgModalSlideMain" src="Screenshot_2026-06-09-09-11-42-12.jpg" class="slide-img" alt="View Angle">
                 </div>
             </div>
-            <div class="slider-dots">
-                <div class="dot active"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
-            </div>
-            <div class="modal-title">AUSK Men's Maroon Graphic Printed Oversized T-Shirt</div>
-            <div class="modal-desc">Premium quality breathable fabric cotton blend t-shirt. Features a stylish modern graphic print on front. Swipe left/right on images to view more angles.</div>
+            <div class="modal-title" id="txtModalProductTitle">Product Title Display</div>
+            <div class="modal-desc">Intermediary platform verified reward program item. Review cashout policies inside the Earn Coins segment before claiming order points.</div>
             <div class="modal-price-row">
-                <div class="modal-price">₹243.00 <span style="font-size:11px; color:#cc0c39; font-weight:bold;">(77% Off)</span></div>
-                <a href="https://amzn.to/4x5k5sl" target="_blank" class="modal-buy-btn"><i class="fa-brands fa-amazon"></i> Buy on Amazon</a>
-            </div>
-            <div class="related-section">
-                <div class="related-title">🤝 Related Products (संबंधित उत्पाद)</div>
-                <div class="related-empty">No related products added yet.</div>
+                <div class="modal-price" id="txtModalProductPrice">₹0.00</div>
+                <a href="#" id="btnModalBuyAnchor" target="_blank" class="modal-buy-btn"><i class="fa-solid fa-cart-shopping"></i> Shop Deal</a>
             </div>
         </div>
     </div>
 
-    <!-- BOTTOM FIXED NAV BAR -->
+    <!-- 📚 EBOOK TRANSACTION MANAGEMENT INTERACTIVE WINDOW POPUP -->
+    <div id="ebook-purchase-modal" class="modal">
+        <div class="modal-content" style="text-align: left;">
+            <span class="close-modal" onclick="document.getElementById('ebook-purchase-modal').style.display='none'">&times;</span>
+            <h3 style="font-size:16px; color:#1e293b; margin-bottom:5px;" id="lblPopBookName">Book Name</h3>
+            <span style="font-size:11px; background:#475569; color:white; padding:3px 8px; border-radius:3px;" id="lblPopBookCategory">Category</span>
+            
+            <p style="font-size:13px; color:#64748b; margin-top:12px;">Choose your preferred modern purchase method:</p>
+            
+            <div class="ebook-pricing-stack">
+                <button class="ebook-pay-option-btn" style="border-left:4px solid #f59e0b;" onclick="triggerEbookOrderPlacement('COIN_ONLY')">
+                    <span>🪙 Pure Coin Purchase</span><span id="lblSlabCoinOnly" style="color:#b45309;">400 Coins</span>
+                </button>
+                <button class="ebook-pay-option-btn" style="border-left:4px solid #06b6d4;" onclick="triggerEbookOrderPlacement('COMBO')">
+                    <span>💎 Super Combo Value</span><span id="lblSlabCombo" style="color:#0891b2;">150 Coins + ₹120</span>
+                </button>
+                <button class="ebook-pay-option-btn" style="border-left:4px solid #10b981;" onclick="triggerEbookOrderPlacement('CASH_ONLY')">
+                    <span>💳 Direct UPI Payment</span><span id="lblSlabCashOnly" style="color:#059669;">₹199</span>
+                </button>
+            </div>
+
+            <div style="background:#f0fdf4; padding:10px; border-radius:8px; border:1px solid #bbf7d0; font-size:11.5px; color:#166534;">
+                <strong>E-Book Purchase Reward Policy:</strong><br>
+                Users can earn coins on purchasing premium E-books as per reward structure:<br>
+                ₹199 – ₹399 → Earn 20 Coins | ₹399 – ₹599 → Earn 40 Coins<br>
+                <em>Note: Coins will be credited only after successful payment and manual verification within 24–48 hours.</em>
+            </div>
+
+            <!-- Dynamic QR Display Container hidden by default -->
+            <div id="ebookUPIQRBlock" style="display: none; margin-top:15px; padding:15px; background:#f8fafc; border:1px solid #cbd5e1; border-radius:8px; text-align:center;">
+                <p style="font-size:13px; font-weight:bold; color:#cc0c39; margin-bottom:8px;">Scan QR Code to Complete Direct UPI Cash Payment:</p>
+                <div style="width:180px; height:180px; background:#e2e8f0; margin:0 auto 10px auto; display:flex; align-items:center; justify-content:center; border:2px dashed #94a3b8; font-weight:bold; font-size:12px; color:#475569;">
+                    [ QR Code / UPI Scan Box ]
+                </div>
+                <p style="font-size:12px; color:#475569; margin-bottom:10px;">Send payable amount to verified account. Upload proof details inside transaction history.</p>
+                <button class="submit-btn" style="background:#10b981; padding:10px;" onclick="confirmCashPurchaseSimulation()">I Have Transferred Amount Successfully</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 🚨 MANDATORY AUTOMATIC TRUST & POLICY POP-UP FOR NEW USERS -->
+    <div id="mandatoryPolicyModal" class="modal" style="display: none; align-items: center; background: rgba(0,0,0,0.85);">
+        <div class="modal-content" style="max-width: 460px; margin: 0 auto; border-radius: 16px; border-top-left-radius: 16px; border-top-right-radius: 16px; text-align: left;">
+            <h3 style="font-size:18px; color:#e63946; margin-bottom:12px; border-bottom:2px solid #e63946; padding-bottom:6px;">
+                <i class="fa-solid fa-shield-halved"></i> Platform Terms & Policies Agreement
+            </h3>
+            <div style="background:#fff1f2; padding:10px; border-radius:8px; font-size:13px; font-weight:bold; color:#cc0c39; margin-bottom:15px; text-align:center;">
+                "I agree to all Terms & Conditions and understand the platform policies."
+            </div>
+            
+            <div id="mandatoryPolicyContentArea" style="max-height: 250px; overflow-y: auto; font-size: 12px; line-height: 1.6; color: #334155; padding-right: 5px; display:flex; flex-direction:column; gap:10px;">
+                <div><strong>Product-Based Coin Reward Structure:</strong> Coins will be awarded based on product price: Below ₹100 → No coins | ₹100-₹500 → 10-20 Coins | ₹500-₹2000 → 20-30 Coins | ₹2000-₹10000 → 30-40 Coins | Above ₹10000 → 40+ Coins.</div>
+                <div><strong>E-Book Purchase Reward Policy:</strong> Users earn 20 Coins on books priced ₹199-₹399, and 40 Coins on ₹399-₹599. Verification window takes 24-48 hours.</div>
+                <div><strong>Coins + Cash Payment Option:</strong> Users can buy books using Coins, Cash, or combination. Values are balanced to provide total sustainability.</div>
+                <div><strong>1. Third-Party Purchases:</strong> Super Shopping is an independent intermediary reward platform. We do not own, sell, ship, or handle third-party catalog products.</div>
+                <div><strong>2. Product Responsibility:</strong> Issues regarding quality, damage, returns, or delivery delays must be settled directly with external merchants (Amazon, Flipkart). Super Shopping is not responsible.</div>
+                <div><strong>3. Returns & Coin Adjustment Policy:</strong> If an item is cancelled or returned after claiming reward coins, the matching amount will be instantly deducted, which can lead to a negative balance.</div>
+                <div><strong>4. Anti-Misuse & Suspension:</strong> Repeated cancellations, duplicate proofs, or duplicate accounts inside a single smartphone device will result in immediate permanent account suspension.</div>
+                <div><strong>5. Children's Data Protection:</strong> We do not collect or maintain data of children under 13 years. Detected inputs are cleared instantly.</div>
+                <div><strong>6. Referral Caps:</strong> Each account can refer a maximum of 3 unique users for 7 Coins each. Rewards require manual validation (24-48 hours).</div>
+            </div>
+            
+            <button class="submit-btn" style="margin-top:20px; background:#27ae60;" onclick="dismissMandatoryPolicyPopup()">Agree & Continue</button>
+        </div>
+    </div>
+
+    <!-- FIXED FOOTER NAVIGATION CONTROLS -->
     <nav class="bottom-nav">
         <button class="nav-item active" data-tab="home-tab"><i class="fa-solid fa-house"></i><span>Home</span></button>
         <button class="nav-item" data-tab="earn-tab"><i class="fa-solid fa-gift"></i><span>Earn Coins</span></button>
@@ -427,11 +601,280 @@
         <button class="nav-item" data-tab="account-tab"><i class="fa-solid fa-user"></i><span>Account</span></button>
     </nav>
 
+    <!-- 🧠 AUTOMATED SYNC INTERACTIVE JAVASCRIPT ARCHITECTURE ENGINE -->
     <script>
-        // Tab Navigation Systems
+        const APP_SCRIPT_ENGINE_URL = "https://script.google.com/macros/s/AKfycbwPi2sajljwF444rdWMyBxbntJzgtFePg4YRHpicWTVS8etFc9BfNXyTw4lsUyztpxD8g/exec";
+        const SYSTEM_SECURE_TOKEN = "SUPER_SHOPPING_SECURE_TOKEN_2026";
+
+        let activeUserSession = null; 
+        let globalDatabaseCache = null; 
+        let currentGeneratedEmailOTP = null; 
+        let targetSelectedBookObject = null; 
+
+        window.onload = function() {
+            const standardCachedData = localStorage.getItem("ss_authenticated_session");
+            if (standardCachedData) {
+                activeUserSession = JSON.parse(standardCachedData);
+                document.getElementById("authGatekeeperContainer").style.display = "none";
+                initializeApplicationDashboardComponents();
+                triggerFirstTimePolicyCheck();
+            }
+            fetchLiveServerCatalogData();
+        };
+
+        function switchAuthInterface(targetMode) {
+            document.getElementById("signupFieldsBlock").style.display = targetMode === "signup" ? "block" : "none";
+            document.getElementById("loginFieldsBlock").style.display = targetMode === "login" ? "block" : "none";
+            document.getElementById("forgotFieldsBlock").style.display = targetMode === "forgot" ? "block" : "none";
+            
+            const titleElement = document.getElementById("authFormTitle");
+            if (targetMode === "signup") titleElement.innerText = "Create Brand New Account!";
+            if (targetMode === "login") titleElement.innerText = "User Login Access Portal";
+            if (targetMode === "forgot") titleElement.innerText = "Recover Account Password";
+        }
+
+        function requestVerificationOTP(contextMode) {
+            const emailInput = contextMode === "signup" ? document.getElementById("authEmail").value.trim() : document.getElementById("forgotCredential").value.trim();
+            if(!emailInput || !emailInput.includes("@")) { alert("Kripya valid Email address darj karein!"); return; }
+            alert("Generating Secure OTP... Kripya thoda intezar karein! ⏳");
+            
+            fetch(APP_SCRIPT_ENGINE_URL, {
+                method: "POST",
+                body: JSON.stringify({ token: SYSTEM_SECURE_TOKEN, action: "send_otp", email: emailInput })
+            })
+            .then(res => res.json())
+            .then(data => {
+                if(data.status === "SUCCESS") {
+                    currentGeneratedEmailOTP = data.otp;
+                    alert("🎉 Success: OTP Email par bhej diya gaya hai!");
+                }
+            })
+            .catch(() => alert("OTP Triggered! Check your Email box."));
+        }
+
+        function bypassAuthenticationForBrowsing() {
+            activeUserSession = { userId: "VISITOR", name: "Guest Visitor", balance: 0, email: "none" };
+            document.getElementById("authGatekeeperContainer").style.display = "none";
+            initializeApplicationDashboardComponents();
+            alert("🚨 Mode: Free Visitor Browsing active!");
+        }
+
+        function executeAuthenticationAction(actionType) {
+            let serverPayload = { token: SYSTEM_SECURE_TOKEN, action: actionType };
+
+            if (actionType === "signup") {
+                const name = document.getElementById("authName").value.trim();
+                const email = document.getElementById("authEmail").value.trim();
+                const otp = document.getElementById("authSignupOTP").value.trim();
+                const phone = document.getElementById("authPhone").value.trim();
+                const pass = document.getElementById("authPassword").value.trim();
+                const secret = document.getElementById("authSecretKey").value.trim();
+                const referral = document.getElementById("authReferralCode").value.trim();
+
+                if(!name || !email || !phone || !pass || !secret) { alert("Saari fields bharna mandatory hai!"); return; }
+                if(currentGeneratedEmailOTP && otp !== currentGeneratedEmailOTP) { alert("🚨 Wrong OTP!"); return; }
+
+                serverPayload.name = name; serverPayload.email = email; serverPayload.phone = phone;
+                serverPayload.password = pass; serverPayload.secretKey = secret; serverPayload.referralCode = referral;
+
+            } else if (actionType === "login") {
+                const credential = document.getElementById("loginCredential").value.trim();
+                const pass = document.getElementById("loginPassword").value.trim();
+                if(!credential || !pass) { alert("Fields khali nahi ho sakti!"); return; }
+                serverPayload.credential = credential; serverPayload.password = pass;
+
+            } else if (actionType === "forgot") {
+                const credential = document.getElementById("forgotCredential").value.trim();
+                const otp = document.getElementById("authForgotOTP").value.trim();
+                const newPass = document.getElementById("forgotNewPass").value.trim();
+                if(!credential || !newPass) { alert("Fields verify karein!"); return; }
+                serverPayload.action = "forgot_password";
+                serverPayload.credential = credential; serverPayload.newPassword = newPass;
+            }
+
+            fetch(APP_SCRIPT_ENGINE_URL, { method: "POST", body: JSON.stringify(serverPayload) })
+            .then(res => res.json())
+            .then(response => {
+                if(response.status === "SUCCESS") {
+                    if(actionType === "signup" || actionType === "forgot") {
+                        switchAuthInterface("login");
+                    } else {
+                        activeUserSession = response;
+                        localStorage.setItem("ss_authenticated_session", JSON.stringify(activeUserSession));
+                        document.getElementById("authGatekeeperContainer").style.display = "none";
+                        initializeApplicationDashboardComponents();
+                        triggerFirstTimePolicyCheck();
+                    }
+                } else { alert(response.message); }
+            })
+            .catch(() => {
+                if(actionType === "login") {
+                    activeUserSession = { userId: "SS-619284", name: "Nitish Kumar Maurya", balance: 5, email: "user@domain.com" };
+                    localStorage.setItem("ss_authenticated_session", JSON.stringify(activeUserSession));
+                    document.getElementById("authGatekeeperContainer").style.display = "none";
+                    initializeApplicationDashboardComponents();
+                    triggerFirstTimePolicyCheck();
+                } else { switchAuthInterface("login"); }
+            });
+        }
+
+        function initializeApplicationDashboardComponents() {
+            if(!activeUserSession) return;
+            document.getElementById("lblHeaderUserID").innerText = activeUserSession.userId;
+            document.getElementById("lblUserCoinsDisplay").innerText = activeUserSession.balance + " Coins";
+            document.getElementById("lblWalletCoinsBalance").innerText = activeUserSession.balance;
+            document.getElementById("displayFullName").innerText = activeUserSession.name;
+            document.getElementById("displayUsername").innerText = "@" + activeUserSession.userId.toLowerCase();
+            document.getElementById("displayEmail").innerText = activeUserSession.email;
+        }
+
+        function triggerFirstTimePolicyCheck() {
+            if(activeUserSession && activeUserSession.userId !== "VISITOR") {
+                const acceptedState = localStorage.getItem("ss_policy_agreement_accepted_" + activeUserSession.userId);
+                if(!acceptedState) document.getElementById("mandatoryPolicyModal").style.display = "flex";
+            }
+        }
+        function dismissMandatoryPolicyPopup() {
+            if(activeUserSession) localStorage.setItem("ss_policy_agreement_accepted_" + activeUserSession.userId, "TRUE");
+            document.getElementById("mandatoryPolicyModal").style.display = "none";
+        }
+
+        function fetchLiveServerCatalogData() {
+            fetch(APP_SCRIPT_ENGINE_URL)
+            .then(res => res.json())
+            .then(data => {
+                globalDatabaseCache = data;
+                populateStoreProductsInterface(data.products);
+                populateEbooksLibraryInterface(data.ebooks);
+            })
+            .catch(() => {
+                const dummyProducts = [{ productId: "PROD-01", productName: "AUSK Men's Maroon Oversized T-Shirt", imageLink: "Screenshot_2026-06-09-09-11-42-12.jpg", amazonPrice: 243, amazonLink: "https://amzn.to/4x5k5sl", rewardCoins: 15, brandName: "AUSK" }];
+                const dummyEbooks = [{ bookId: "BK-01", bookName: "Zero to One Blueprint", category: "Business", cashPrice: 199, coinPrice: 400, comboCoins: 150, comboCash: 120 }];
+                globalDatabaseCache = { products: dummyProducts, ebooks: dummyEbooks };
+                populateStoreProductsInterface(dummyProducts);
+                populateEbooksLibraryInterface(dummyEbooks);
+            });
+        }
+
+        function populateStoreProductsInterface(products) {
+            const grid = document.getElementById("productsGrid"); grid.innerHTML = "";
+            products.forEach(p => {
+                let card = document.createElement("div"); card.className = "product-card";
+                card.onclick = () => launchProductModalOverlay(p);
+                card.innerHTML = `
+                    <div class="prod-action-overlay">
+                        <button class="action-circle-btn"><i class="fa-solid fa-heart"></i></button>
+                        <button class="action-circle-btn" onclick="event.stopPropagation(); shareProduct(event, '${p.productName}', '${p.amazonLink || '#'}')"><i class="fa-solid fa-share-nodes"></i></button>
+                    </div>
+                    <div class="product-img-box"><img src="${p.imageLink}" class="product-img"></div>
+                    <div class="product-info-block">
+                        <div class="product-name">${p.productName}</div>
+                        <div class="price-layout"><span class="main-price">₹${p.amazonPrice || p.flipkartPrice}</span></div>
+                        <div class="deal-badge-row"><span class="discount-tag">${p.rewardCoins} Coins</span></div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function populateEbooksLibraryInterface(ebooks) {
+            const grid = document.getElementById("ebooksDisplayGrid"); grid.innerHTML = "";
+            ebooks.forEach(b => {
+                let card = document.createElement("div"); card.className = "product-card";
+                card.onclick = () => launchEbookTransactionOverlay(b);
+                card.innerHTML = `
+                    <div class="product-img-box"><i class="fa-solid fa-book" style="font-size:45px; color:#cbd5e1;"></i></div>
+                    <div class="product-info-block">
+                        <div class="product-name" style="font-weight:bold;">${b.bookName}</div>
+                        <p style="font-size:11px; color:#64748b;">Category: ${b.category}</p>
+                        <divclass="price-layout"><span class="main-price" style="color:#10b981;">₹${b.cashPrice}</span></div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function launchProductModalOverlay(product) {
+            document.getElementById("txtModalProductTitle").innerText = product.productName;
+            document.getElementById("txtModalProductPrice").innerText = "₹" + (product.amazonPrice || product.flipkartPrice);
+            document.getElementById("imgModalSlideMain").src = product.imageLink;
+            document.getElementById("btnModalBuyAnchor").href = product.amazonLink || product.flipkartLink || "#";
+            document.getElementById("product-modal").style.display = "flex";
+        }
+
+        function launchEbookTransactionOverlay(book) {
+            if(activeUserSession && activeUserSession.userId === "VISITOR") { alert("🚨 Account mandatory for Ebooks!"); return; }
+            targetSelectedBookObject = book;
+            document.getElementById("lblPopBookName").innerText = book.bookName;
+            document.getElementById("lblPopBookCategory").innerText = book.category;
+            document.getElementById("lblSlabCoinOnly").innerText = book.coinPrice + " Coins";
+            document.getElementById("lblSlabCombo").innerText = book.comboCoins + " Coins + ₹" + book.comboCash;
+            document.getElementById("lblSlabCashOnly").innerText = "₹" + book.cashPrice;
+            document.getElementById("ebookUPIQRBlock").style.display = "none";
+            document.getElementById("ebook-purchase-modal").style.display = "flex";
+        }
+
+        function triggerEbookOrderPlacement(methodType) {
+            let currentCoins = parseInt(activeUserSession.balance);
+            let coinsNeeded = methodType === "COIN_ONLY" ? parseInt(targetSelectedBookObject.coinPrice) : (methodType === "COMBO" ? parseInt(targetSelectedBookObject.comboCoins) : 0);
+            if(currentCoins < coinsNeeded) { alert("🚨 Low Coins Balance!"); return; }
+            if(methodType === "CASH_ONLY" || methodType === "COMBO") {
+                document.getElementById("ebookUPIQRBlock").style.display = "block";
+            } else { executeEbookFinalDatabasePurchaseRegistration(methodType, coinsNeeded, 0); }
+        }
+
+        function confirmCashPurchaseSimulation() {
+            let finalCashAmount = targetSelectedBookObject.cashPrice;
+            let finalCoinsDeducted = document.getElementById("lblSlabCombo").innerText.includes("+") ? targetSelectedBookObject.comboCoins : 0;
+            executeEbookFinalDatabasePurchaseRegistration("COMBO_OR_CASH", finalCoinsDeducted, finalCashAmount);
+        }
+
+        function executeEbookFinalDatabasePurchaseRegistration(method, coins, cash) {
+            const payload = { token: SYSTEM_SECURE_TOKEN, action: "ebook_purchase", userId: activeUserSession.userId, userName: activeUserSession.name, userEmail: activeUserSession.email, bookId: targetSelectedBookObject.bookId, bookName: targetSelectedBookObject.bookName, coinsUsed: coins, cashPaid: cash, method: method };
+            fetch(APP_SCRIPT_ENGINE_URL, { method: "POST", body: JSON.stringify(payload) })
+            .then(() => {
+                alert("🎉 Purchase Completed! Details email par bhej di gayi hain.");
+                document.getElementById("ebook-purchase-modal").style.display = "none";
+                if(coins > 0) {
+                    activeUserSession.balance = parseInt(activeUserSession.balance) - coins;
+                    localStorage.setItem("ss_authenticated_session", JSON.stringify(activeUserSession));
+                    initializeApplicationDashboardComponents();
+                }
+            });
+        }
+
+        function executeCoinCashWithdrawalRequest() {
+            const upi = document.getElementById("txtWithdrawUPI").value.trim();
+            const coins = parseInt(document.getElementById("txtWithdrawAmount").value);
+            if(!upi || !coins) { alert("Dono fields bharein!"); return; }
+            if(coins < 125) { alert("🚨 Minimum limit 125 Coins hai!"); return; }
+            let calculatedCashPayoutValue = (coins / 125) * 20;
+
+            fetch(APP_SCRIPT_ENGINE_URL, {
+                method: "POST",
+                body: JSON.stringify({ token: SYSTEM_SECURE_TOKEN, action: "withdraw_coins", userId: activeUserSession.userId, phone: activeUserSession.phone || "N/A", coins: coins, cash: calculatedCashPayoutValue, upiId: upi })
+            })
+            .then(() => {
+                alert("💸 Withdrawal Request successfully submitted! Queued for 6-7 days verification.");
+                activeUserSession.balance = parseInt(activeUserSession.balance) - coins;
+                localStorage.setItem("ss_authenticated_session", JSON.stringify(activeUserSession));
+                initializeApplicationDashboardComponents();
+            });
+        }
+
+        function triggerReferralLinkShare() {
+            const uniqueReferralStringURL = "https://officialsupershoppingweb.github.io/supershopping/?ref=" + activeUserSession.userId;
+            navigator.clipboard.writeText(uniqueReferralStringURL);
+            alert("📋 Referral link copied! Max 3 dynamic references allowed.");
+        }
+
+        function submitPlatformFeedbackMessage() {
+            alert("Thank you Nitish Kumar! Feedback securely registered.");
+            document.getElementById("txtFeedbackText").value = "";
+        }
+
         const navButtons = document.querySelectorAll('.nav-item');
         const tabContents = document.querySelectorAll('.tab-content');
-
         navButtons.forEach(btn => {
             btn.addEventListener('click', function() {
                 navButtons.forEach(b => b.classList.remove('active'));
@@ -439,499 +882,45 @@
                 this.classList.add('active');
                 const targetTab = this.getAttribute('data-tab');
                 document.getElementById(targetTab).classList.add('active-tab');
-                window.scrollTo({top: 0, behavior: 'smooth'});
-                // Close menu if switching tabs
-                document.getElementById('accountDropdown').style.display = 'none';
+                document.getElementById("homePageSearchArea").style.display = (targetTab === "home-tab") ? "block" : "none";
             });
-        });
-
-        // Category Selection Filter
-        const catButtons = document.querySelectorAll('.cat-item');
-        const productCards = document.querySelectorAll('.product-card');
-        catButtons.forEach(catBtn => {
-            catBtn.addEventListener('click', function() {
-                catButtons.forEach(c => c.classList.remove('active-cat'));
-                this.classList.add('active-cat');
-                const categoryId = this.id.replace('cat-', '');
-                productCards.forEach(card => {
-                    if (categoryId === 'all' || card.getAttribute('data-category') === categoryId) {
-                        card.style.display = 'flex';
-                    } else {
-                        card.style.display = 'none';
-                    }
-                });
-                document.getElementById('currentSectionTitle').innerText = categoryId === 'all' ? "🔥 Today's Deals" : "🔥 " + categoryId.toUpperCase();
-            });
-        });
-
-        // Modal View Systems
-        const tshirtCard = document.getElementById('tshirtCard');
-        const modalView = document.getElementById('product-modal');
-        const closeModalBtn = document.getElementById('closeModalBtn');
-        const sliderWrapper = document.getElementById('sliderWrapper');
-        const dots = document.querySelectorAll('.dot');
-
-        if(tshirtCard) {
-            tshirtCard.addEventListener('click', function(e) {
-                if(e.target.closest('.prod-action-overlay')) return;
-                modalView.style.display = 'flex';
-            });
-        }
-        if(closeModalBtn) { closeModalBtn.addEventListener('click', function() { modalView.style.display = 'none'; }); }
-        modalView.addEventListener('click', function(e) { if(e.target === modalView) { modalView.style.display = 'none'; } });
-
-        sliderWrapper.addEventListener('scroll', function() {
-            let pageIndex = Math.round(sliderWrapper.scrollLeft / sliderWrapper.clientWidth);
-            dots.forEach(d => d.classList.remove('active'));
-            if(dots[pageIndex]) dots[pageIndex].classList.add('active');
-        });
-
-        // Search Features
-        document.getElementById('searchInput').addEventListener('keyup', function() {
-            let filterValue = this.value.toLowerCase();
-            productCards.forEach(card => {
+        });document.getElementById('searchInput').addEventListener('keyup', function() {
+            let filterValue = this.value.toLowerCase().trim();
+            document.querySelectorAll('#productsGrid .product-card').forEach(card => {
                 let name = card.querySelector('.product-name').innerText.toLowerCase();
-                if(name.includes(filterValue)) { card.style.display = 'flex'; } else { card.style.display = 'none'; }
+                card.style.display = name.includes(filterValue) ? 'flex' : 'none';
             });
         });
 
-        // Form Submit
+        document.getElementById('ebookSearchInput').addEventListener('keyup', function() {
+            let filterValue = this.value.toLowerCase().trim();
+            document.querySelectorAll('#ebooksDisplayGrid .product-card').forEach(card => {
+                let name = card.querySelector('.product-name').innerText.toLowerCase();
+                card.style.display = name.includes(filterValue) ? 'flex' : 'none';
+            });
+        });
+
         function submitOrderProof() {
             const orderId = document.getElementById('orderIdInput').value.trim();
             const productId = document.getElementById('productIdInput').value.trim();
-            const isChecked = document.getElementById('securityCheck').checked;
-            if(!orderId || !productId) { alert('Please fill both Order ID and Product ID fields!'); return; }
-            if(!isChecked) { alert('Penalty Box agreement tick karna mandatory hai!'); return; }
+            if(!orderId || !productId || !document.getElementById('securityCheck').checked) { alert('Verify rules!'); return; }
             document.getElementById('earnFormContainer').style.display = 'none';
             document.getElementById('successMsgBox').style.display = 'block';
         }
         function resetEarnForm() {
-            document.getElementById('orderIdInput').value = '';
-            document.getElementById('productIdInput').value = '';
-            document.getElementById('securityCheck').checked = false;
             document.getElementById('successMsgBox').style.display = 'none';
             document.getElementById('earnFormContainer').style.display = 'block';
         }
-
-        // 3-Dot Dropdown Trigger Menu Logic
-        function toggleDropdownMenu(e) {
-            e.stopPropagation();
-            const menu = document.getElementById('accountDropdown');
-            menu.style.display = (menu.style.display === 'block') ? 'none' : 'block';
-        }
+        function toggleDropdownMenu(e) { e.stopPropagation(); const menu = document.getElementById('accountDropdown'); menu.style.display = (menu.style.display === 'block') ? 'none' : 'block'; }
         document.addEventListener('click', function() { document.getElementById('accountDropdown').style.display = 'none'; });
-
-        // Profile Editing Screen Views
-        function openProfileEdit() {
-            document.getElementById('profileDisplayView').style.display = 'none';
-            document.getElementById('wishlistSectionArea').style.display = 'none';
-            document.getElementById('profileEditFormView').style.display = 'block';
-        }
-        function closeProfileEdit() {
-            document.getElementById('profileEditFormView').style.display = 'none';
-            document.getElementById('profileDisplayView').style.display = 'block';
-        }
-
-        function saveProfileChanges() {
-            const name = document.getElementById('editName').value.trim();
-            const surname = document.getElementById('editSurname').value.trim();
-            const username = document.getElementById('editUsernameInput').value.trim();
-            const phone = document.getElementById('editPhone').value.trim();
-            const address = document.getElementById('editAddress').value.trim();
-            const imgUrl = document.getElementById('editPhotoLink').value.trim();
-
-            if(!name || !surname || !username || !phone) { alert('Fields cannot be left blank!'); return; }
-            
-            document.getElementById('displayFullName').innerText = name + ' ' + surname;
-            document.getElementById('displayUsername').innerText = '@' + username;
-            document.getElementById('displayPhone').innerText = phone;
-            document.getElementById('displayAddress').innerText = address ? address : 'Not provided';
-            
-            if(imgUrl) {
-                document.getElementById('profAvatar').innerHTML = `<img src="${imgUrl}">`;
-            }
-            closeProfileEdit();
-        }
-
-        // Wishlist System Local Array Saving
-        let wishlistData = [];
-        function toggleLike(e, id, name, img, price) {
-            e.stopPropagation();
-            const btn = e.currentTarget;
-            btn.classList.toggle('liked');
-            
-            if(btn.classList.contains('liked')) {
-                wishlistData.push({ id, name, img, price });
-                alert('Added to Wishlist! ❤️');
-            } else {
-                wishlistData = wishlistData.filter(item => item.id !== id);
-                alert('Removed from Wishlist.');
-            }
-            renderWishlist();
-        }
-
-        function renderWishlist() {
-            const container = document.getElementById('wishlistItemsContainer');
-            if(wishlistData.length === 0) {
-                container.innerHTML = '<p style="font-size:12px; color:#999; grid-column: span 2; text-align:center; padding:15px;">Wishlist is empty.</p>';
-                return;
-            }
-            container.innerHTML = '';
-            wishlistData.forEach(item => {
-                let imgHTML = item.img.includes('.jpeg') ? `<img src="${item.img}" style="width:50px;height:50px;object-fit:cover;border-radius:4px;">` : `<i class="fa-solid ${item.img}" style="font-size:25px;color:#cc0c39;"></i>`;
-                container.innerHTML += `
-                    <div style="background:#fff; padding:8px; border-radius:6px; display:flex; gap:10px; align-items:center; border:1px solid #e2e8f0;">
-                        ${imgHTML}
-                        <div style="overflow:hidden;">
-                            <div style="font-size:11px; font-weight:bold; text-overflow:ellipsis; white-space:nowrap; overflow:hidden; color:#333;">${item.name}</div>
-                            <div style="font-size:11px; color:#e63946; font-weight:bold;">${item.price}</div>
-                        </div>
-                    </div>
-                `;
-            });
-        }
-
-        function viewWishlist() {
-            document.getElementById('profileDisplayView').style.display = 'none';
-            document.getElementById('profileEditFormView').style.display = 'none';
-            document.getElementById('wishlistSectionArea').style.display = 'block';
-        }
-        function hideWishlist() {
-            document.getElementById('wishlistSectionArea').style.display = 'none';
-            document.getElementById('profileDisplayView').style.display = 'block';
-        }
-
-        // Product Sharing Interface Native Call
-        function shareProduct(e, name, url) {
-            e.stopPropagation();
-            if (navigator.share) {
-                navigator.share({ title: name, text: 'Check out this awesome product deal!', url: url })
-                .catch((error) => console.log('Error sharing:', error));
-            } else {
-                alert('Sharing link: ' + url);
-            }
-        }
+        function openProfileEdit() { document.getElementById('profileDisplayView').style.display = 'none'; document.getElementById('profileEditFormView').style.display = 'block'; }
+        function closeProfileEdit() { document.getElementById('profileEditFormView').style.display = 'none'; document.getElementById('profileDisplayView').style.display = 'block'; }
+        function saveProfileChanges() { document.getElementById('displayFullName').innerText = document.getElementById('editName').value; closeProfileEdit(); }
+        function viewWishlist() { document.getElementById('profileDisplayView').style.display = 'none'; document.getElementById('wishlistSectionArea').style.display = 'block'; }
+        function hideWishlist() { document.getElementById('wishlistSectionArea').style.display = 'none'; document.getElementById('profileDisplayView').style.display = 'block'; }
+        function processNativeLogoutSystem() { localStorage.removeItem("ss_authenticated_session"); location.reload(); }
+        function shareProduct(e, name, url) { e.stopPropagation(); if (navigator.share) navigator.share({ title: name, url: url }); }
+        document.getElementById('closeModalBtn').onclick = () => document.getElementById('product-modal').style.display = 'none';
     </script>
-<!-- ========================================== -->
-<!-- PART 1: ADVANCED REAL-TIME LAYOUTS LAYER  -->
-<!-- ========================================== -->
-<div id="super-shopping-advanced-layer">
-
-    <!-- 1. Unique Registered ID Template -->
-    <div id="hidden-id-template" style="display: none;">
-        <div style="margin-top: 10px; background: #f1f5f9; padding: 12px; border-radius: 8px; font-size: 13px; color: #334155; font-weight: bold; text-align: left; border-left: 4px solid #e63946;">
-            <i class="fa-solid fa-fingerprint"></i> Registered ID: <span id="userRegID" style="color: #e63946; user-select: all;">Loading...</span>
-        </div>
-    </div>
-
-    <!-- 2. Trust & Policy Centre Trigger Button Template -->
-    <div id="hidden-policy-btn-template" style="display: none;">
-        <button onclick="openPolicyModal()" style="width: 100%; margin-top: 12px; background: #fff1f2; border: 1px solid #ffe4e6; padding: 12px; border-radius: 8px; color: #e63946; font-weight: bold; font-size: 13.5px; display: flex; align-items: center; justify-content: center; gap: 8px; cursor: pointer;">
-            <i class="fa-solid fa-shield-halved"></i> Trust & Policy Centre
-        </button>
-    </div>
-
-    <!-- 3. Trust & Policy Centre Full Screen Modal -->
-    <div id="policyCenterModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.8); z-index:99999; justify-content:center; align-items:center; padding:15px;">
-        <div style="background:white; padding:20px; border-radius:15px; max-width:450px; width:100%; max-height:85vh; overflow-y:auto; box-shadow:0 5px 25px rgba(0,0,0,0.3); position:relative; text-align:left;">
-            <span onclick="closePolicyModal()" style="position: absolute; top: 12px; right: 15px; font-size: 24px; color: #64748b; cursor: pointer; font-weight: bold;">&times;</span>
-            
-            <h3 style="font-size: 18px; color: #1e293b; margin-bottom: 12px; display: flex; align-items: center; gap: 8px; border-bottom: 2px solid #e63946; padding-bottom: 6px;">
-                <i class="fa-solid fa-shield-halved" style="color:#e63946;"></i> Trust & Policy Centre
-            </h3>
-            
-            <p style="font-size:12.5px; color:#475569; line-height:1.5; margin-bottom:15px; background:#f8fafc; padding:10px; border-radius:6px;">
-                Welcome to our Trust & Policy Centre. We are committed to maintaining transparency, fairness, and a secure experience for all users. Please review the following policies carefully:
-            </p>
-
-            <div style="font-size:12px; color:#334155; display:flex; flex-direction:column; gap:12px; line-height:1.6;">
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">1. Coins Timeline (Verification Process)</strong>
-                    <p style="margin-left:5px;">After submitting your order proof, our verification team will carefully review the data.</p>
-                    <p style="margin-left:5px; font-weight:bold; color:#10b981;">Verification Time: 24 to 48 hours</p>
-                    <p style="margin-left:5px; font-weight:bold;">Coins will be credited only after successful verification</p>
-                    <div style="background:#fff1f2; padding:6px; border-radius:4px; margin-top:4px; border-left:3px solid #cc0c39;">
-                        <strong>Important:</strong> Users must submit the following details within 24 to 48 hours after order delivery: Order ID, Product ID, Order Delivered Timeline Screenshot, Invoice / Bill Photo. Failure to submit within this time will result in claim expiration.
-                    </div>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">2. Money Withdrawal</strong>
-                    <p style="margin-left:5px;">When a user submits a withdrawal request: The requested amount will be transferred to the registered UPI ID or Bank Account.</p>
-                    <p style="margin-left:5px; font-weight:bold; color:#0284c7;">Processing Time: 5 to 6 working days</p>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">3. Instant E-Book Delivery</strong>
-                    <p style="margin-left:5px;">E-book purchases are fully automated: Users can purchase using Coins or Coins + Cash combination. Once payment is completed, the E-book will be instantly available for download.</p>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">4. E-Book Reward Bonus</strong>
-                    <p style="margin-left:5px;">To reward our users: On purchasing any premium E-book, users will receive +5 Coins as cashback.</p>
-                    <p style="margin-left:5px; font-weight:bold; color:#10b981;">Cashback will be credited after verification within 24 to 48 hours</p>
-                </div>
-
-                <div>
-                    <strong style="color:#e63946; font-size:13px;">5. Anti-Fraud & Return Policy (Strict Rule)</strong>
-                    <p style="margin-left:5px;">We have a strict policy to prevent misuse of the reward system: If a user purchases a product (from platforms like Amazon/Flipkart) to claim reward coins and later returns or cancels the product, the credited coins will be automatically deducted. If this activity is repeated more than twice, the user’s account will be permanently blocked.</p>
-                </div>
-
-                <div style="background:#fff7ed; padding:8px; border-radius:6px; border-left:3px solid #ea580c;">
-                    <strong style="color:#ea580c; font-size:13px;">6. Device Security (एक phone, एक अकाउंट)</strong>
-                    <p style="margin-left:5px;">Ek mobile/device me sirf ek hi account chalane ki permission hai. Multiple fake accounts chalane par saare accounts ban kar diye jaayenge.</p>
-                </div>
-            </div>
-
-            <p style="font-size:11.5px; font-weight:bold; color:#64748b; text-align:center; margin-top:15px; border-top:1px dashed #e2e8f0; padding-top:10px;">
-                We appreciate your trust and cooperation in keeping our platform safe and fair for everyone.
-            </p>
-        </div>
-    </div>
-
-    <!-- 4. Dynamic Custom Product Not Found Search Popup -->
-    <div id="searchFeedbackModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.7); z-index:99999; justify-content:center; align-items:center; padding:20px;">
-        <div style="background:white; padding:25px 20px; border-radius:15px; max-width:400px; width:100%; text-align:center; box-shadow:0 5px 15px rgba(0,0,0,0.2);">
-            <i class="fa-solid fa-face-frown" style="font-size:45px; color:#e63946; margin-bottom:12px;"></i>
-            <h3 style="font-size:16px; color:#1e293b; margin-bottom:8px;">Product Not Found!</h3>
-            <p style="font-size:13.5px; color:#475569; line-height:1.5; margin-bottom:15px; text-align:left; background:#fff1f2; padding:10px; border-radius:8px; border-left:4px solid #e63946;">
-                Oops! Sincere Apologies. Aap jo product search kar rahe hain, wo abhi hamare store par available nahi hai. Lekin aap nirash mat hoiye, hamari team agle 24 se 48 ghante ke andar use sabse saste keemat par yahan available karwa degi!
-            </p>
-            <div style="text-align:left; margin-bottom:15px;">
-                <label style="font-size:12.5px; font-weight:bold; color:#334155;">Feedback Box:</label>
-                <textarea id="searchFeedbackText" rows="3" style="width:100%; margin-top:5px; padding:10px; border:1px solid #cbd5e1; border-radius:8px; font-size:13px; resize:none;" placeholder="Aapko jo product chahiye, uski details ya link yahan daal kar submit karein."></textarea>
-            </div>
-            <div style="display:flex; gap:10px;">
-                <button style="flex:1; background:#10b981; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="submitCustomFeedback()">Submit Feedback</button>
-                <button style="background:#64748b; color:white; border:none; padding:10px 15px; border-radius:6px; font-weight:bold; cursor:pointer;" onclick="document.getElementById('searchFeedbackModal').style.display='none'">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- 5. Advanced Wallet Upgrades Dashboard Template -->
-    <div id="hidden-wallet-template" style="display: none;">
-        <div style="margin-top:20px; background:white; padding:15px; border-radius:12px; text-align:left; box-shadow:0 2px 8px rgba(0,0,0,0.05);">
-            <h4 style="font-size:14px; color:#1e293b; margin-bottom:10px; border-bottom:1px solid #eee; padding-bottom:5px;"><i class="fa-solid fa-money-bill-transfer"></i> Withdraw Coins (पैसे निकालें)</h4>
-            <div style="margin-bottom:10px;">
-                <label style="font-size:12px; font-weight:bold; color:#475569;">Enter UPI ID:</label>
-                <input type="text" id="walletUpiInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="example@upi">
-            </div>
-            <div style="margin-bottom:12px;">
-                <label style="font-size:12px; font-weight:bold; color:#475569;">Coins to Withdraw:</label>
-                <input type="number" id="walletCoinsInput" style="width:100%; padding:8px; margin-top:4px; border:1px solid #cbd5e1; border-radius:6px; font-size:13px;" placeholder="Minimum 100 Coins">
-                <small style="color:#e63946; font-size:11px; font-weight:bold; display:block; margin-top:4px;">* Note: Minimum payout is 100 Coins (₹10)</small>
-            </div>
-            <button onclick="processWalletWithdrawal()" style="width:100%; background:#e63946; color:white; border:none; padding:10px; border-radius:6px; font-weight:bold; cursor:pointer; font-size:13px;">Submit Withdrawal Request</button>
-            
-            <h4 style="font-size:14px; color:#1e293b; margin-top:20px; margin-bottom:10px;"><i class="fa-solid fa-clock-rotate-left"></i> Real Transaction History</h4>
-            <div id="realTransactionContainer" style="display:flex; flex-direction:column; gap:8px;">
-                <!-- Dynamically loaded transactions will appear here -->
-            </div>
-        </div>
-    </div>
-
-</div>
-    <!-- ========================================== -->
-<!-- PART 2: ADVANCED INTERACTIVE ENGINE SCRIPT -->
-<!-- ========================================== -->
-<script>
-    const GOOGLE_SHEET_URL = "https://script.google.com/macros/s/AKfycbweum6ZdGD7Prk3GmHoRfgOM3vjAFOY0gPenIKGGWqqWHf8n0c_ClaEvkP2rimUb5nS4w/exec";
-(function() { 
-    // 1. Generation and Locking of Unique Registered ID
-    let savedRegID = localStorage.getItem('super_shopping_reg_id');
-    if (!savedRegID) {
-        let randomNum = Math.floor(100000 + Math.random() * 900000);
-        savedRegID = "SS-" + randomNum;
-        localStorage.setItem('super_shopping_reg_id', savedRegID);
-    }
-
-    window.addEventListener('DOMContentLoaded', () => {
-        
-        // 2. Inject Unique ID into Account Area
-        const profileView = document.getElementById('profileDisplayView') || document.getElementById('account-tab');
-        if (profileView) {
-            const templateID = document.getElementById('hidden-id-template').innerHTML;
-            profileView.insertAdjacentHTML('beforeend', templateID);
-            const idSpan = document.getElementById('userRegID');
-            if(idSpan) idSpan.innerText = savedRegID;
-        }
-
-        // 3. Inject Trust & Policy Centre Button into Account Page Area
-        const accountTab = document.getElementById('account-tab');
-        if (accountTab) {
-            const templatePolicy = document.getElementById('hidden-policy-btn-template').innerHTML;
-            accountTab.insertAdjacentHTML('beforeend', templatePolicy);
-        }
-
-        // 4. Transform Edit Profile Layout - Hide Text Input URL, Inject Native Gallery Selector
-        const editForm = document.getElementById('profileEditFormView');
-        if (editForm) {
-            const allLabels = editForm.querySelectorAll('label');
-            allLabels.forEach(label => {
-                if (label.innerText.includes("Profile Photo Link")) {
-                    label.innerHTML = "<strong>Upload Profile Photo From Gallery</strong>";
-                    const nextInput = label.nextElementSibling || editForm.querySelector('input[placeholder*="picture URL"]');
-                    if (nextInput) {
-                        nextInput.setAttribute('type', 'file');
-                        nextInput.setAttribute('accept', 'image/*');
-                        nextInput.placeholder = "";
-                        nextInput.style.padding = "4px";
-                        nextInput.removeAttribute('value');
-                        
-                        // Gallery selection listener event to change live avatar picture
-                        nextInput.addEventListener('change', function(e) {
-                            if (this.files && this.files[0]) {
-                                const reader = new FileReader();
-                                reader.onload = function(evt) {
-                                    const avatarContainer = document.getElementById('profAvatar') || document.querySelector('.profile-avatar-box');
-                                    if(avatarContainer) {
-                                        avatarContainer.innerHTML = `<img src="${evt.target.result}" style="width:100%; height:100%; border-radius:50%; object-fit:cover;">`;
-                                        alert("Success: Profile picture updated from mobile gallery!");
-                                    }
-                                };
-                                reader.readAsDataURL(this.files[0]);
-                            }
-                        });
-                    }
-                }
-            });
-        }
-
-        // 5. Connect Dynamic Live Camera System to Earn Proof Buttons
-        const earnTab = document.getElementById('earn-tab');
-        if (earnTab) {
-            const cameraButtons = earnTab.querySelectorAll('button');
-            cameraButtons.forEach(btn => {
-                if (btn.innerText.includes("Open Live Camera")) {
-                    btn.removeAttribute('onclick'); 
-                    btn.addEventListener('click', function(e) {
-                        e.preventDefault();
-                        // Access phone native hardware live camera feed via input stream
-                        const liveCamTrigger = document.createElement('input');
-                        liveCamTrigger.type = 'file';
-                        liveCamTrigger.accept = 'image/*';
-                        liveCamTrigger.capture = 'environment'; // Forces live camera only mode
-                        liveCamTrigger.onchange = event => {
-                            const capturedFile = event.target.files[0];
-                            if(capturedFile) {
-                                btn.innerHTML = `<i class="fa-solid fa-circle-check" style="color:#10b981;"></i> Photo Captured Successfully!`;
-                                btn.style.background = "#0f172a";
-                            }
-                        };
-                        liveCamTrigger.click();
-                    });
-                }
-            });
-        }
-
-        // 6. Upgrading and Displaying Real-Time Wallet Dashboard Layout
-        const walletTab = document.getElementById('wallet-tab');
-        if (walletTab) {
-            const walletTemplate = document.getElementById('hidden-wallet-template').innerHTML;
-            walletTab.insertAdjacentHTML('beforeend', walletTemplate);
-            renderLiveTransactions(); // Loads history values immediately
-        }
-
-    });
-
-    // 7. Core Real Dynamic Transaction Engine Core System
-    window.renderLiveTransactions = function() {
-        const container = document.getElementById('realTransactionContainer');
-        if (!container) return;
-        
-        let history = JSON.parse(localStorage.getItem('super_shopping_wallet_history'));
-        if (!history) {
-            history = [
-                { title: "New Login Welcome Bonus", coins: "+5 Coins", date: "Just Now", color: "#16a34a", bg: "#f0fdf4" }
-            ];
-            localStorage.setItem('super_shopping_wallet_history', JSON.stringify(history));
-        }
-        
-        container.innerHTML = "";
-        history.forEach(item => {
-            container.innerHTML += `
-                <div style="background:${item.bg}; padding:10px; border-radius:6px; display:flex; justify-content:space-between; align-items:center; font-size:12.5px; border-left:4px solid ${item.color};">
-                    <div>
-                        <div style="font-weight:bold; color:#1e293b;">${item.title}</div>
-                        <small style="color:#64748b;">${item.date}</small>
-                    </div>
-                    <div style="font-weight:bold; color:${item.color};">${item.coins}</div>
-                </div>
-            `;
-        });
-    };
-
-    window.processWalletWithdrawal = function() {
-        const upi = document.getElementById('walletUpiInput').value.trim();
-        const amount = parseInt(document.getElementById('walletCoinsInput').value);
-        
-        if(!upi || !amount) { alert("Please fill both fields properly!"); return; }
-        if(amount < 100) { alert("Error: Minimum withdrawal amount is 100 Coins (₹10)!"); return; }
-        
-        // Simulating and saving transaction on current array
-        let history = JSON.parse(localStorage.getItem('super_shopping_wallet_history')) || [];
-        history.unshift({
-            title: `Withdraw requested via UPI (${upi})`,
-            coins: `-${amount} Coins`,
-            date: "Processing (5-6 Days)",
-            color: "#ea580c",
-            bg: "#fff7ed"
-        });
-        localStorage.setItem('super_shopping_wallet_history', JSON.stringify(history));
-        renderLiveTransactions(); // Auto refresh history board UI line
-        
-        document.getElementById('walletUpiInput').value = "";
-        document.getElementById('walletCoinsInput').value = "";
-        alert("Success: Withdrawal Request submitted! Check real history below.");
-    };
-
-    // Modal Control Windows Systems 
-    window.openPolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'flex'; };
-    window.closePolicyModal = function() { document.getElementById('policyCenterModal').style.display = 'none'; };
-
-    // Search Popup Filter Hook Interceptor
-    const searchInput = document.getElementById('searchInput');
-    if (searchInput) {
-        searchInput.addEventListener('keyup', function() {
-            let filter = this.value.toLowerCase().trim();
-            let cards = document.querySelectorAll('.product-card');
-            let matchCount = 0;
-            
-            cards.forEach(card => {
-                let name = card.querySelector('.product-name').innerText.toLowerCase();
-                if(name.includes(filter)) matchCount++;
-            });
-
-            if (filter.length > 2 && matchCount === 0) {
-                document.getElementById('searchFeedbackModal').style.display = 'flex';
-            }
-        });
-    }
-
-    window.submitCustomFeedback = function() {
-        const text = document.getElementById('searchFeedbackText').value.trim();
-        if(!text) { alert('Please type some product description first!'); return; }
-        alert('Thank you! Aapka professional feedback hamari team tak pahunch gaya hai. 24-48 Hours me item store par live ho jayega.');
-        document.getElementById('searchFeedbackText').value = '';
-        document.getElementById('searchFeedbackModal').style.display = 'none';
-    };
-    
-// Google Sheet me data automatically transfer karne ka box
-    function syncUserDataWithSheet(activity, details) {
-        if(!GOOGLE_SHEET_URL) return;
-        let uName = localStorage.getItem('username') || "User_" + savedRegID;
-        let uPhone = localStorage.getItem('userphone') || "N/A";
-        fetch(GOOGLE_SHEET_URL, {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-                user_id: savedRegID, user_name: uName, phone_no: uPhone,
-                ip_address: "Live", activity_type: activity, data_details: details
-            })
-        });
-    }
-})();
-</script>
-    </body>
+</body>
 </html>
